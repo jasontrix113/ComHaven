@@ -1,0 +1,75 @@
+{% extends 'partial/layout.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %} Add New Account Logins {% endblock %}
+
+{% block body %}
+
+<section>
+	<div class="section-body">
+		<div class="row">
+
+			<!-- BEGIN  - FORM -->
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-head style-primary">
+						<header><h3>Add new account login</h3></header>
+						<!--<div class="tools">
+							<a class="btn btn-icon-toggle btn-collapse"><i class="fa fa-angle-down"></i></a>
+							<a class="btn btn-icon-toggle btn-close"><i class="md md-close"></i></a>
+						</div>-->
+					</div>
+					<div class="card-body">
+						<form class="form" role="form" action="" method="post">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group floating-label">
+										{{ form.login_target_url | add_class:'form-control' }}
+										<label>Target Url</label>
+									</div>
+									<div class="form-group floating-label">
+										{{ form.login_name | add_class:'form-control' }}
+										<label>Name</label>
+									</div>
+									<div class="form-group floating-label">
+										{{ form.login_haven_folder | add_class:'form-control' | attr:'rows:2'}}
+										<label>Haven Folder</label>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<br>
+									<div class="form-group floating-label">
+										{{ form.login_username | add_class:'form-control' | attr:'type:date'}}
+										<label>Username</label>
+									</div>
+									<div class="form-group floating-label">
+										{{ form.login_password | add_class:'form-control' | attr:'rows:2'}}
+										<label>Password</label>
+									</div>
+									<div class="form-group floating-label">
+										{{ form.login_notes | add_class:'form-control' | attr:'rows:2'}}
+										<label>Notes</label>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<hr>
+									<div class="card-actionbar-row">
+										<input type="submit" class="btn btn-primary ink-reaction" value="Save">
+										<a href="{% url 'home' %}">
+											<input type="submit" class="btn btn-primary ink-reaction" value="Cancel">
+										</a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div><!--end .card-body -->
+				</div><!--end .card -->
+			</div><!--end .col -->
+			<!-- END FORM - TIME ON SITE -->
+		</div><!--end .row -->
+	</div><!--end .section-body -->
+</section>
+
+{% endblock %}

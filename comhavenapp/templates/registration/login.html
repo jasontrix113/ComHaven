@@ -1,0 +1,73 @@
+{% extends 'partial/base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+<html>
+	<head>
+	</head>
+	{% block content %}
+	<body class="menubar-hoverable header-fixed" style="background-color: white">
+	<div class="row col-sm-12" style="padding:0; margin:0;">
+		<!--<div class="img-backdrop"></div>-->
+		<div class="col-sm-6 text-center">
+			<img src="{% static 'img/comhaven_logo4.png' %}" id="app-logo">
+		</div>
+		<div class="col-sm-6 mr-0">
+			<!-- BEGIN LOGIN SECTION -->
+			<section class="section-account">
+				<br>
+				<br>
+				<div class="card contain-sm style-transparent" style="max-width:450px; background: transparent;">
+					<div class="card-body">
+						<div class="card">
+							<div class="card-body">
+								<h2 class="text-primary text-bold text-center">Log in</h2>
+								<form class="form floating-label" action="{% url 'login' %}" accept-charset="utf-8" method="post">
+								<br>
+									{% if form.errors %}
+										<div class="alert alert-danger">
+											<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+											Your username or password is incorrect.
+										</div>
+									{% endif %}
+									{% csrf_token %}
+									<div class="form-group">
+										{{ form.username|add_class:"form-control" }}
+										<label>Username</label>
+									</div>
+									<div class="form-group">
+										{{ form.password|add_class:"form-control" }}
+										<label>Password</label>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-xs-12 text-center mb-2">
+											<br>
+											<button class="btn btn-primary btn-block" type="submit">Log in</button>
+											<br>
+										</div><!--end .col -->
+										<div class="col-xs-6 text-left">
+											<a href="#" class="text-dark">
+												<input type="checkbox">
+											</a> Remember me
+										</div><!--end .col -->
+										<div class="col-xs-6 text-right">
+											<a href="{% url 'password_reset' %}" class="text-primary">Forgot Password?</a>
+											<br>
+											<br>
+										</div><!--end .col -->
+										<div class="col-xs-12 text-left">
+											<p>Need an account? <a href="{% url 'signup' %}" class="text-primary"> Create an account.</a> </p>
+										</div><!--end .col -->
+									</div><!--end .row -->
+								</form>
+							</div><!--end .card-body-->
+						</div><!--end .card-->
+					</div><!--end .card-body -->
+				</div><!--end .card sm-main-->
+			</section><!--end .section-->
+			<!-- END LOGIN SECTION -->
+		</div><!--end .col-sm-->
+	</div><!--end .row-->
+	</body>
+	{% endblock %}
+</html>

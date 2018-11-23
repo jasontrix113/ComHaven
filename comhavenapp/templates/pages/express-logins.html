@@ -1,0 +1,45 @@
+{% extends 'partial/layout.html' %}
+{% load widget_tweaks %}
+{% block title %} Dashboard {% endblock %}
+
+{% block body %}
+<section>
+
+    <div class="section-body" style="padding: 20px;">
+        <a href="{% url 'new_login' %}">
+            <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add" style="float: right; color: white; background-color: #2b323a;"> Add an account</button>
+        </a>
+        <br>
+        <!-- BEGIN ACCOUNTS -->
+        <!-- Static Data -->
+        <div class="row">
+            {% for folders in haven_folder %}
+                <h2>{{ folders.login_haven_folder }}</h2>
+            {% endfor %}
+            <br>
+            <br>
+            {% for login in new_login %}
+            <div class="d-inline p-2 bg-primary text-white">
+                <!--first-card -->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-head style-primary">
+                            <header>{{ login.login_name }}</header>
+                            <div class="tools">
+                                <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
+                                <a href="{% url 'delete' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <p>Email: {{ login.login_username }}</p>
+                            <p>URL: {{ login.login_target_url }}</p>
+                        </div><!--end .card-body -->
+                    </div><!--end .card -->
+                </div><!--end .col -->
+            {% endfor %}
+            </div><!--end d-inline -->
+        </div><!--end .row -->
+        <!-- END ACCOUNTS -->
+    </div><!--end .section-body -->
+</section>
+{% endblock %}

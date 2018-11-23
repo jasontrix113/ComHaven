@@ -1,0 +1,56 @@
+{% load staticfiles %}
+{% load widget_tweaks %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="your,keywords">
+        <meta name="description" content="Short explanation about this website">
+        <!-- END META -->
+        <!-- BEGIN STYLESHEETS -->
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/materialadmin.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/material-design-iconic-font.min.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/custom-css.css' %}" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <!-- END STYLESHEETS -->
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>-->
+    </head>
+    <body>
+      <main>
+        {% block content %}
+        {% endblock %}
+      </main>
+    </body>
+    <!-- END STYLESHEETS -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="../../assets/js/libs/utils/html5shiv.js?1403934957"></script>
+    <script type="text/javascript" src="../../assets/js/libs/utils/respond.min.js?1403934956"></script>
+    <![endif]-->
+    <!-- BEGIN JAVASCRIPT -->
+    <script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+    <script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/core/AppForm.js' %}"></script>
+    <!-- DATATABLE -->
+    <script src="{% static 'js/libs/DataTables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/libs/DataTables/extensions/ColVis/js/dataTables.colVis.min.js' %}"></script>
+    <script src="{% static 'js/libs/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js' %}"></script>
+    <!-- APP JS -->
+    <script src="{% static 'js/core/App.js' %}"></script>
+    <script src="{% static 'js/core/AppNavigation.js' %}"></script>
+    <script src="{% static 'js/core/AppOffcanvas.js' %}"></script>
+    <script src="{% static 'js/core/AppCard.js' %}"></script>
+    <script src="{% static 'js/core/AppForm.js' %}"></script>
+    <script src="{% static 'js/core/AppVendor.js' %}"></script>
+    <script src="{% static 'js/core/Demo.js' %}"></script>
+    <script src="{% static 'js/core/DemoTableDynamic.js' %}"></script>
+
+    <!--<script src="{% static 'js/zxcvbn.js' %}"></script>-->
+    <!-- END JAVASCRIPT -->
+</html>

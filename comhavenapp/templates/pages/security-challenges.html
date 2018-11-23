@@ -1,0 +1,16 @@
+{% extends 'partial/base.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>Points</p>
+
+    {% load pinax_points_tags %}
+
+    {% points_for_object post as points %}
+    <div class="user-points">{{ points }}</div>
+</body>
+</html>

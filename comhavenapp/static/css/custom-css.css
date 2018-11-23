@@ -1,0 +1,9 @@
+#app-logo
+{
+    max-width: 100%;
+    max-height: 400px;
+    margin-top: 120px;
+}
+#main-menu > .nav-link.active  {
+    color:white;
+}

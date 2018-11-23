@@ -1,0 +1,183 @@
+{% extends 'partial/base.html' %}
+{% load staticfiles %}
+
+<html lang="en">
+	<head>
+		<title>{% block title %} {% endblock %} | COMHAVEN</title>
+	</head>
+	{% block content %}
+	<body class="menubar-pin menubar-hoverable header-fixed">
+		<!-- BEGIN HEADER-->
+		<header id="header" style="background: #2b323a; color: white;">
+			<div class="headerbar">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="headerbar-left">
+					<ul class="header-nav header-nav-options">
+						<li class="header-nav-brand" >
+							<div class="brand-holder">
+								<a href="{% url 'home' %}">
+									<img src="{% static 'img/comhaven_logo3.png' %}"><span class="text-lg text-bold">COMHAVEN</span>
+								</a>
+							</div>
+						</li>
+						<li>
+							<a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+								<i class="fa fa-bars"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="headerbar-right">
+					<ul class="header-nav header-nav-profile">
+						<li class="dropdown">
+							<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
+								<span class="profile-info">
+									{% if user.is_authenticated %}
+										<h4 class="text-lg text-bold text-light"><span><i class="fa fa-user-circle"></i> </span> {{ user.username }} </h4>
+									{% endif %}
+								</span>
+							</a>
+							<ul class="dropdown-menu animation-dock">
+								<!--<li class="dropdown-header">My profile</li>-->
+								<!--<li class="divider"></li>-->
+								<br>
+								<li><a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
+							</ul><!--end .dropdown-menu -->
+						</li><!--end .dropdown -->
+					</ul><!--end .header-nav-profile -->
+				</div><!--end #header-navbar-collapse -->
+			</div>
+		</header>
+		<!-- END HEADER-->
+
+		<!-- BEGIN BASE-->
+		<div id="base">
+			<!-- BEGIN OFFCANVAS LEFT -->
+			<div class="offcanvas">
+			</div><!--end .offcanvas-->
+			<!-- END OFFCANVAS LEFT -->
+
+			<!-- BEGIN CONTENT-->
+			<div id="content">
+
+
+				{% if messages %}
+					{% for message in messages %}
+						<p {% if message.tags %} class="alert {{ message.tags }} text-center"{% endif %}>
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							{{ message }}
+						</p>
+					{% endfor %}
+				{% endif %}
+                {% block body %}
+
+
+                {% endblock %}
+
+			</div><!--end #content-->
+			<!-- END CONTENT -->
+
+			<!-- BEGIN MENUBAR-->
+			<div id="menubar" class="menubar-inverse ">
+				<div class="menubar-fixed-panel">
+					<div>
+						<a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+							<i class="fa fa-bars"></i>
+						</a>
+					</div>
+					<div class="expanded">
+						<a href="{% url 'home' %}">
+						</a>
+					</div>
+				</div>
+				<div class="menubar-scroll-panel" id="menu">
+
+					<!-- BEGIN MAIN MENU -->
+					<ul id="main-menu" class="gui-controls">
+
+						<!-- BEGIN DASHBOARD -->
+						<li class="nav-link active">
+							<a href="{% url 'home' %}">
+								<div class="gui-icon"><i class="md md-home"></i></div>
+								<span class="title">Dashboard</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END DASHBOARD -->
+
+						<!-- BEGIN ACCOUNTS -->
+						<li class="nav-link">
+							<a href="{% url 'home' %}">
+								<div class="gui-icon"><i class="fa fa-file"></i></div>
+								<span class="title">ACCOUNTS</span>
+							</a>
+						</li><!--end /menu-li -->
+
+						<!-- END ACCOUNTS -->
+
+						<!-- BEGIN EXPRESS-LOGIN -->
+						<li class="nav-link">
+							<a href="{% url 'express-login' %}">
+								<div class="gui-icon"><i class="fa fa-paper-plane"></i></div>
+								<span class="title">EXPRESS LOGINS</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END EXPRESS-LOGIN -->
+
+						<!-- BEGIN ACCESS-CONTROL -->
+						<li class="nav-link">
+							<a href="{% url 'access-control' %}">
+								<div class="gui-icon"><i class="fa fa-lock"></i></div>
+								<span class="title">ACCESS CONTROL</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END ACCESS-CONTROL -->
+
+						<!-- BEGIN SECURITY-CHALLENGES  -->
+						<li class="nav-link">
+							<a href="{% url 'security-challenges' %}">
+								<div class="gui-icon"><i class="fa fa-shield-alt"></i></div>
+								<span class="title">SECURITY CHALLENGES</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END SECURITY-CHALLENGES -->
+
+						<!-- BEGIN SHAREDHAVEN -->
+						<li class="nav-link">
+							<a href="{% url 'sharedhaven' %}">
+								<div class="gui-icon"><i class="fa fa-share-alt-square"></i></div>
+								<span class="title">SHAREDHAVEN</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END SHAREDHAVEN -->
+
+						<!-- BEGIN GENERATE-PASSWORD -->
+						<li class="nav-link">
+							<a href="{% url 'generate-password' %}">
+								<div class="gui-icon"><i class="fa fa-key"></i></div>
+								<span class="title">GENERATE PASSWORD</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END GENERATE-PASSWORD -->
+
+					</ul><!--end .main-menu -->
+					<!-- END MAIN MENU -->
+
+					<div class="menubar-foot-panel">
+						<small class="no-linebreak hidden-folded">
+							<span class="opacity-75">Crafted by</span> <strong>FIGHTING DUGTRIO</strong>
+						</small>
+					</div>
+				</div><!--end .menubar-scroll-panel-->
+			</div><!--end #menubar-->
+			<!-- END MENUBAR -->
+		</div><!--end #base-->
+	</body>
+	<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+	<script>
+		$('#main-menu .nav-link').click(function(){
+			$('#main-menu .nav-link').removeClass('active');
+			$(this).addClass('active');
+		})
+	</script>
+	{% endblock %}
+</html>
