@@ -27,6 +27,7 @@ urlpatterns = [
 
     url(r'^auto_login/$', views.auto_login, name='auto_login'),
 
-    url(r'^sent_mail/$', views.sent_mail, name='sent_mail')
+    url(r'^sent_mail/$', views.sent_mail, name='sent_mail'),
+    url(r'^pass_reset/$', views.pass_reset, name='pass_reset')
 
 ]

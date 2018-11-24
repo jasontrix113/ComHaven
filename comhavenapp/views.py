@@ -27,6 +27,8 @@ from pinax.points.models import points_awarded
 #DeviceDetector#
 from device_detector import DeviceDetector
 
+#send Email
+from django.core.mail import send_mail
 
 @login_required
 def auto_login(request, login_id):
@@ -251,3 +253,9 @@ def sent_mail(request):
 
     return render(request, 'pages/sharedhaven.html')
 
+
+def pass_reset(request):
+
+    send_mail('Subject here', 'Here is the message.', 'jsnjocsin@gmail.com', ['jpskrilljap@gmail.com'], fail_silently=False)
+
+    return render(request, 'registration/password_reset_form.html')
