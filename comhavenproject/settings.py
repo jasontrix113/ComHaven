@@ -26,7 +26,9 @@ SECRET_KEY = 'n^2of3kzym=ob(8!&fi3n&r@n&j+3bc6!ts--a7$@t7$#dmtc#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'comhaven-app.herokuapp.com',
+]
 
 
 # Application definition
