@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a44e852-003c-4f7d-8e8b-522ef931cabc" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/express-logins.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/express-logins.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/views.py" afterPath="$PROJECT_DIR$/comhavenapp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/.gitignore" afterPath="$PROJECT_DIR$/comhavenapp/.gitignore" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -100,11 +99,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="express-logins.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="express-logins.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/express-logins.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
               <caret line="33" column="50" lean-forward="false" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/comhavenapp/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="5" lean-forward="true" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -206,7 +215,6 @@
         <option value="$PROJECT_DIR$/comhavenapp/templates/registration/login.html" />
         <option value="$PROJECT_DIR$/comhavenproject/urls.py" />
         <option value="$PROJECT_DIR$/comhavenapp/forms.py" />
-        <option value="$PROJECT_DIR$/comhavenapp/.gitignore" />
         <option value="$PROJECT_DIR$/runtime.txt" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/comhavenproject/wsgi.py" />
@@ -215,6 +223,7 @@
         <option value="$PROJECT_DIR$/comhavenproject/settings.py" />
         <option value="$PROJECT_DIR$/comhavenapp/views.py" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/express-logins.html" />
+        <option value="$PROJECT_DIR$/comhavenapp/.gitignore" />
       </list>
     </option>
   </component>
@@ -254,19 +263,6 @@
               <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
               <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
               <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
@@ -713,14 +709,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comhavenapp/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="5" lean-forward="false" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/comhavenproject/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -787,6 +775,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="33" column="50" lean-forward="false" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenapp/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="5" lean-forward="true" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
           <folding />
         </state>
       </provider>
