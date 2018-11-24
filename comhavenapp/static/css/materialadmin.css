@@ -7972,3 +7972,7 @@ li.L8 {
 }
 /* Alternate shading for lines */
 
+@media screen and (min-width: 769px) {
+    #header: background: #2b323a;
+    color: white;
+}

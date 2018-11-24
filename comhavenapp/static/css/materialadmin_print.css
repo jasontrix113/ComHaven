@@ -1,5 +1,8 @@
 #menubar,
-#header,
+#header{
+    background:green;
+},
+
 #content .section-header,
 .offcanvas-holder {
 	display: none;
@@ -16,7 +19,10 @@
 .card-printable .card-head {
 	display: none;
 }
-
+@media screen and (min-width: 768px) {
+    #header: background-color: #2b323a;
+    color: white;
+}
 body,
 #content > section {
 	background-color: #ffffff;
