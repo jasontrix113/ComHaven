@@ -31,18 +31,7 @@ from pinax.points.models import points_awarded
 from django.core.mail import send_mail
 
 @login_required
-def auto_login(request, login_id):
-    login = NewAccountLogin.objects.get(id=login_id)
-    if request.POST:
-        form = NewAccountLoginForm(request.POST, instance=login)
-        if form.is_valid():
-
-            if form.save():
-                return redirect('/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
-            else:
-                return redirect('/', messages.error(request, 'Data is not saved', 'alert-danger'))
-        else:
-            return redirect('/', messages.error(request, 'Form is not valid', 'alert-danger'))
+def auto_login(request):
 
     usernameStr = 'jsnjocsin@gmail.com'
     passwordStr = 'Jpskrilljap11398'

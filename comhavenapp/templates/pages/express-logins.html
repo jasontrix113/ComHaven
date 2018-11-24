@@ -13,30 +13,32 @@
         <!-- BEGIN ACCOUNTS -->
         <!-- Static Data -->
         <div class="row">
-            {% for folders in haven_folder %}
-                <h2>{{ folders.login_haven_folder }}</h2>
-            {% endfor %}
+
             <br>
             <br>
-            {% for login in new_login %}
+
             <div class="d-inline p-2 bg-primary text-white">
                 <!--first-card -->
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-head style-primary">
-                            <header>{{ login.login_name }}</header>
+                            <header></header>
                             <div class="tools">
-                                <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
-                                <a href="{% url 'delete' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
+                                <a href="" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
+                                <a href="" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
                             </div>
                         </div>
                         <div class="card-body text-center">
-                            <p>Email: {{ login.login_username }}</p>
-                            <p>URL: {{ login.login_target_url }}</p>
+                            <p>Email: </p>
+                            <p>URL: </p>
+                            <a href="{% url 'auto_login' %}">
+                                <button type="submit" class="btn btn-primary">Launch</button>
+                            </a>
                         </div><!--end .card-body -->
+
                     </div><!--end .card -->
                 </div><!--end .col -->
-            {% endfor %}
+
             </div><!--end d-inline -->
         </div><!--end .row -->
         <!-- END ACCOUNTS -->
