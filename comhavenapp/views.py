@@ -25,7 +25,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from pinax.points.models import points_awarded
 
 #DeviceDetector#
-from device_detector import DeviceDetector
+#from device_detector import DeviceDetector
 
 #send Email
 from django.core.mail import send_mail
@@ -108,11 +108,11 @@ def signup(request):
                     print("Success")
                     return redirect('login')
             else:
-                dd = 'Mozilla/5.0 (Linux; Android 4.3; C5502 Build/10.4.1.B.0.101) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.136 Mobile Safari/537.36'
-                # Parse UA string and load data to dict of 'os', 'client', 'device' keys
-                device = DeviceDetector(dd).parse()
-                dt = device.device_type()
-                print(dt)
+                #dd = 'Mozilla/5.0 (Linux; Android 4.3; C5502 Build/10.4.1.B.0.101) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.136 Mobile Safari/537.36'
+                ## Parse UA string and load data to dict of 'os', 'client', 'device' keys
+                #device = DeviceDetector(dd).parse()
+                #dt = device.device_type()
+                print("hello")
         else:
             print("Sign Up Failed");
     else:
