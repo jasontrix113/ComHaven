@@ -108,10 +108,6 @@ def signup(request):
                     print("Success")
                     return redirect('login')
             else:
-                #dd = 'Mozilla/5.0 (Linux; Android 4.3; C5502 Build/10.4.1.B.0.101) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.136 Mobile Safari/537.36'
-                ## Parse UA string and load data to dict of 'os', 'client', 'device' keys
-                #device = DeviceDetector(dd).parse()
-                #dt = device.device_type()
                 print("hello")
         else:
             print("Sign Up Failed");
