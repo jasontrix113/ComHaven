@@ -96,17 +96,17 @@
 					<ul id="main-menu" class="gui-controls">
 
 						<!-- BEGIN DASHBOARD -->
-						<li class="nav-link active">
+						<li class="nav-link">
 							<a href="{% url 'home' %}">
-								<div class="gui-icon"><i class="md md-home"></i></div>
-								<span class="title">Dashboard</span>
+								<div class="gui-icon"><i class="fa fa-home"></i></div>
+								<span class="title">DASHBOARD</span>
 							</a>
 						</li><!--end /menu-li -->
 						<!-- END DASHBOARD -->
 
 						<!-- BEGIN ACCOUNTS -->
 						<li class="nav-link">
-							<a href="{% url 'home' %}">
+							<a href="{% url 'accounts' %}">
 								<div class="gui-icon"><i class="fa fa-file"></i></div>
 								<span class="title">ACCOUNTS</span>
 							</a>
@@ -174,10 +174,12 @@
 	</body>
 	<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
 	<script>
-		$('#main-menu .nav-link').click(function(){
-			$('#main-menu .nav-link').removeClass('active');
-			$(this).addClass('active');
-		})
+		$("ul>li").each(function() {
+		var navItem = $(this);
+		if (navItem.find("a").attr("href") == location.pathname) {
+		  navItem.addClass("active");
+    	}
+		});
 	</script>
 	{% endblock %}
 </html>

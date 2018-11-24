@@ -12,6 +12,7 @@ urlpatterns = [
 
     # Page URLs #
     url(r'^$', views.index, name='home'),
+    url(r'^accounts$', views.accounts, name='accounts'),
     url(r'^express-login/', views.expresslogins, name='express-login'),
     url(r'^access-control/', views.accesscontrol, name='access-control'),
     url(r'^security-challenges/', views.securitychallenges, name='security-challenges'),

@@ -16,7 +16,7 @@
 
             <br>
             <br>
-
+            {% for login in new_login %}
             <div class="d-inline p-2 bg-primary text-white">
                 <!--first-card -->
                 <div class="col-lg-4">
@@ -29,8 +29,8 @@
                             </div>
                         </div>
                         <div class="card-body text-center">
-                            <p>Email: </p>
-                            <p>URL: </p>
+                            <p>Email: {{ login.login_username }}</p>
+                            <p>URL: {{ login.login_target_url }}</p>
                             <a href="{% url 'auto_login' %}">
                                 <button type="submit" class="btn btn-primary">Launch</button>
                             </a>
@@ -38,7 +38,7 @@
 
                     </div><!--end .card -->
                 </div><!--end .col -->
-
+            {% endfor %}
             </div><!--end d-inline -->
         </div><!--end .row -->
         <!-- END ACCOUNTS -->

@@ -32,12 +32,14 @@ from django.core.mail import send_mail
 
 @login_required
 def auto_login(request):
+    new_login = NewAccountLogin.objects.all()
+    context_login = {'new_login': new_login}
 
     usernameStr = 'jsnjocsin@gmail.com'
     passwordStr = 'Jpskrilljap11398'
 
     #express login function for schoology site
-    browser = webdriver.Chrome(os.path.join("D:\Backup\Recent\ComHaven\comhavenapp\chromedriver.exe"))
+    browser = webdriver.Chrome("D:\Backup\Recent\ComHaven\comhavenapp\chromedriver.exe")
     browser.get('https://app.schoology.com/login')
     #fill in username and hit the next button
     username = browser.find_element_by_id('edit-mail')
@@ -69,7 +71,7 @@ def auto_login(request):
     #   EC.presence_of_element_located((By.ID, 'Password')))
     # password.send_keys(passwordStr)
 
-    return render(request, 'pages/home-accounts.html')
+    return render(request, 'pages/express-logins.html', context_login)
 
 #@login_required
 #def autologin(request):
@@ -143,6 +145,10 @@ def index(request):
     new_login = NewAccountLogin.objects.all()
     context_login = {'new_login': new_login}
     return render(request, 'pages/home-accounts.html', context_login)
+def accounts(request):
+    new_login = NewAccountLogin.objects.all()
+    context_login = {'new_login': new_login}
+    return render(request, 'pages/home-accounts.html', context_login)
 
 @login_required
 def haven_folder(request):
@@ -151,10 +157,11 @@ def haven_folder(request):
     return render(request, 'pages/home-accounts.html',  context_folder)
 
 
-
 @login_required
 def expresslogins(request):
-    return render(request, 'pages/express-logins.html')
+    new_login = NewAccountLogin.objects.all()
+    context_login = {'new_login': new_login}
+    return render(request, 'pages/express-logins.html', context_login)
 
 @login_required
 def accesscontrol(request):
