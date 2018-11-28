@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^security-challenges/', views.securitychallenges, name='security-challenges'),
     url(r'^sharedhaven/', views.sent_mail, name='sharedhaven'),
     url(r'^generate-password/', views.generatepassword, name='generate-password'),
-    #url(r'^user_profile/$', views.user_profile, name='user_profile')
+    url(r'^user_profile/$', views.user_profile, name='user_profile'),
 
     # Page CRUD URLs #
     url(r'^logins/new_haven_folder/$', views.new_haven_folder, name='new_haven_folder'),

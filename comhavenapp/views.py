@@ -8,7 +8,7 @@ from comhavenapp.forms import SignUpForm
 
 from django.contrib.auth.decorators import login_required
 
-from .models import HavenFolder, NewAccountLogin
+from .models import HavenFolder, NewAccountLogin, PinaxPoints, AccessList
 from .forms import NewAccountLoginForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -39,7 +39,7 @@ def auto_login(request):
     passwordStr = 'Jpskrilljap11398'
 
     #express login function for schoology site
-    browser = webdriver.Chrome("D:\Backup\Recent\ComHaven\comhavenapp\chromedriver.exe")
+    browser = webdriver.Chrome(os.path.join(os.getcwd(), 'comhavenapp/chromedriver.exe'))
     browser.get('https://app.schoology.com/login')
     #fill in username and hit the next button
     username = browser.find_element_by_id('edit-mail')
@@ -88,7 +88,8 @@ def signup(request):
         if form.is_valid():
             filename = os.path.expandvars(r"C:")
             if os.path.exists(filename):
-                filename = os.path.expandvars(r"C:\Users\jason\AppData\Local\AccessID\cpuinfo.bin")
+                path = os.getenv('LOCALAPPDATA')
+                filename = os.path.join(path, r"AccessID\cpuinfo.bin")
                 directory = os.path.dirname(filename)
                 os.mkdir(directory)
                 with open(filename, "w") as f:
@@ -105,40 +106,8 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
-#def login(request):
-    #if request.method == 'POST':
-    #    form = SignUpForm(request.POST)
-    #    if form.is_valid():
-    #        print("form is valid")
-    #        username = form.cleaned_data.get('username')
-    #        raw_password = form.cleaned_data.get('password1')
-    #        print(raw_password)
-    #        print(username)
-    #        print("authenticate")
-    #        user = authenticate(username=username, password=raw_password)
-    #        login(request, user)
-    #        return redirect('home')
-    #    else:
-    #        print("form is invalid")
-    #        username = form.cleaned_data.get('username')
-    #        raw_password = form.cleaned_data.get('password1')
-    #        print(username)
-    #        print(raw_password)
-    #        user = authenticate(username=username, password=raw_password)
-    #        login(user)
-    #        return redirect('home')
-    #dirName = Path("/Access_ID/access.txt")
-    #if os.path.exists(dirName):
-    #   print('directory found')
-        #print('ready to authenticate')
 
-    #else:
-    #    print('directory does not exist')
-    #    form = LoginForm()
-    #    return render(request, 'registration/login.html', {'form': form})
-    #else:
-    #    form = SignUpForm()
-    #return render(request, 'registration/login.html', {'form': form})
+
 # Page Views #
 @login_required
 def index(request):
@@ -165,13 +134,16 @@ def expresslogins(request):
 
 @login_required
 def accesscontrol(request):
-    return render(request, 'pages/access-control.html')
+    device_Name = AccessList.objects.all()
+    context_AC = {'deviceName': device_Name}
+    return render(request, 'pages/access-control.html', context_AC)
 
 @login_required
 def securitychallenges(request):
-    user = request.user
-    points = points_awarded(user)
-    return render(request, 'pages/security-challenges.html')
+    award_point_values = PinaxPoints.objects.all()
+    context_points = {'award_point_values': award_point_values}
+    points_awarded(user)
+    return render(request, 'pages/security-challenges.html', context_points)
 
 @login_required
 def sharedhaven(request):
@@ -236,8 +208,8 @@ def login_destroy(request, login_id):
     login.delete()
     return redirect('/', messages.success(request, 'Account was successfully deleted.', 'alert-success'))
 
-#def user_profile(request):
-#    return render(request, 'user_profile.html')
+def user_profile(request):
+    return render(request, 'pages/user_profile.html')
 
 @login_required
 def sent_mail(request):

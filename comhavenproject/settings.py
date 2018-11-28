@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'zxcvbn_password',
     'pinax.points',
+    'django_zxcvbn_password_validator',
 ]
 
 MIDDLEWARE = [
@@ -113,6 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
             'user_attributes': ('username', 'email', 'first_name', 'last_name')
         }
     },
+    {
+		'NAME': 'django_zxcvbn_password_validator.ZxcvbnPasswordValidator',
+	},
 ]
 
 
