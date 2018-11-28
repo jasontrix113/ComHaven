@@ -39,7 +39,7 @@ def auto_login(request):
     passwordStr = 'Jpskrilljap11398'
 
     #express login function for schoology site
-    browser = webdriver.Chrome(os.path.join(os.getcwd(), r"comhavenapp/chromedriver.exe"))
+    browser = webdriver.Chrome(executable_path=r'comhavenapp/chromedriver.exe')
     browser.get('https://app.schoology.com/login')
     #fill in username and hit the next button
     username = browser.find_element_by_id('edit-mail')
