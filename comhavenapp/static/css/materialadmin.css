@@ -1185,13 +1185,14 @@ a.text-success:hover {
   right: 0;
   height: 64px;
   z-index: 1005;
-  background: #ffffff;
-  color: rgba(49, 53, 52, 0.6);
+  background: #2b323a;
+  color: white;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
 }
 .header-fixed #header {
   position: fixed;
+
 }
 .no-sidebar #header {
   right: 12px;
@@ -1394,6 +1395,8 @@ a.text-success:hover {
 @media (max-width: 768px) {
   #header {
     position: relative;
+    background: #2b323a;
+    color: white;
   }
   .header-fixed #header {
     position: relative;
@@ -7971,8 +7974,3 @@ li.L8 {
   list-style-type: none;
 }
 /* Alternate shading for lines */
-
-@media screen and (min-width: 769px) {
-    #header: background: #2b323a;
-    color: white;
-}

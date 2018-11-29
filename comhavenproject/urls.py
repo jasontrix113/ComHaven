@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^sharedhaven/', views.sharedhaven, name='sharedhaven'),
     url(r'^generate-password/', views.generatepassword, name='generate-password'),
 
+    url('user_login/', views.user_login, name='user_login'),
 
     # Page CRUD URLs #
     url(r'^logins/new_haven_folder/$', views.new_haven_folder, name='new_haven_folder'),

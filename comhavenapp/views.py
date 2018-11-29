@@ -31,6 +31,8 @@ from pinax.points.models import points_awarded
 from django.core.mail import send_mail
 from django.template import loader
 from selenium.webdriver.common.keys import Keys
+
+
 @login_required
 def auto_login(request):
     new_login = NewAccountLogin.objects.all()
@@ -60,15 +62,21 @@ def user_login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        print('hello')
         if user:
             # Is the account active? It could have been disabled.
             if user.is_active:
-                login(request, user)
-                print('login')
-                return redirect('home')
+                if request.user_agent.is_pc == True:
+                    path = os.getenv('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    if os.path.exists(path_exist):
+                        login(request, user)
+                        return redirect('home')
+                    else:
+                        return redirect('/accounts/login', messages.success(request, 'Cannot find access ID', 'alert-danger'))
         else:
-            return redirect('signup')
+            return redirect('/accounts/login', messages.error(request, 'username or password is incorrect.', 'alert-danger'))
 
 def signup(request):
     if request.method == 'POST':
