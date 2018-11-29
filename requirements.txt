@@ -68,3 +68,6 @@ WTForms==2.1
 zope.interface==4.6.0
 zxcvbn==4.4.27
 zxcvbn-python==4.4.24
+django-user-agents==0.3.2
+ua-parser==0.8.0
+user-agents==1.1.0
