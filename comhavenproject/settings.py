@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'zxcvbn_password',
     'pinax.points',
     'django_zxcvbn_password_validator',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'comhavenproject.urls'
@@ -163,7 +165,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "jsnjocsin@gmail.com"
 EMAIL_HOST_PASSWORD = "Jpskrilljap11398"
 
-
+USER_AGENTS_CACHE = 'default'
 #KEY = getattr(settings, 'AUTOMATIC_LOGIN_KEY', 'mtkn')
 #MAX_AGE = getattr(settings, 'AUTOMATIC_LOGIN_MAX_AGE', 60 * 60 * 24 * 90)
 #SALT_FIELDS = getattr(settings, 'AUTOMATIC_LOGIN_SALT_FIELDS', ('password',))

@@ -74,29 +74,31 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            filename = os.path.expandvars(r"C:")
-            if os.path.exists(filename):
-                    path = os.getenv('LOCALAPPDATA')
-                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                    directory = os.path.dirname(filename)
-                    path_exist = directory
-                    if os.path.exists(path_exist):
-                        try:
-                            return redirect('/accounts/login', messages.success(request, 'Path Already exist.','alert-danger'))
-                            print('hello')
-                        except:
-                            print("file exist")
-                    else:
-                        os.mkdir(directory)
-                        with open(filename, "w") as f:
-                            info = cpuinfo.get_cpu_info()
-                            CPUINFO = {'CPUINFO': info}
-                            f.write(json.dumps(CPUINFO))
-                            form.save()
-                            print("Success")
-                            return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
-            else:
-                print("hello")
+            if request.user_agent.is_pc == True:
+                filename = os.path.expandvars(r"C:")
+                if os.path.exists(filename):
+                        path = os.getenv('LOCALAPPDATA')
+                        filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                        directory = os.path.dirname(filename)
+                        path_exist = directory
+                        if os.path.exists(path_exist):
+                            try:
+                                return redirect('/accounts/login', messages.success(request, 'Path Already exist.','alert-danger'))
+                            except:
+                                print("file exist")
+                        else:
+                            os.mkdir(directory)
+                            with open(filename, "w") as f:
+                                info = cpuinfo.get_cpu_info()
+                                CPUINFO = {'CPUINFO': info}
+                                f.write(json.dumps(CPUINFO))
+                                form.save()
+                                print("Success")
+                                return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
+                else:
+                    print("hello")
+            elif request.user_agent.is_mobile == True:
+                 form.save()
         else:
             print("Sign Up Failed");
     else:
@@ -136,10 +138,8 @@ def accesscontrol(request):
 
 @login_required
 def securitychallenges(request):
-    award_point_values = PinaxPoints.objects.all()
-    context_points = {'award_point_values': award_point_values}
-    points_awarded(user)
-    return render(request, 'pages/security-challenges.html', context_points)
+
+    return render(request, 'pages/security-challenges.html')
 
 @login_required
 def sharedhaven(request):
