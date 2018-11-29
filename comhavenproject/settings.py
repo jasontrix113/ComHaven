@@ -148,16 +148,20 @@ db_from_env = dj_database_url.config()
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
+
+
+
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 #SMTP CONFIGURATIONS
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'sendgrid_username'
-EMAIL_HOST_PASSWORD = 'sendgrid_password'
-EMAIL_POST = 587
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "jsnjocsin@gmail.com"
+EMAIL_HOST_PASSWORD = "Jpskrilljap11398"
 
 
 #KEY = getattr(settings, 'AUTOMATIC_LOGIN_KEY', 'mtkn')

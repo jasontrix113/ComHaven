@@ -25,13 +25,13 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Username</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{ user.username }}">
+                                  <input type="text" class="form-control" disabled="true" value="{{ user }}">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Email address</label>
-                                  <input type="email" class="form-control" disabled="true" value="{{ user.userprofile.email }}">
+                                  <input type="email" class="form-control" disabled="true" value="{{ user.email }}">
                                 </div>
                               </div>
                             </div>
@@ -39,13 +39,13 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">First Name</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{ user.userprofile.firstname }}">
+                                  <input type="text" class="form-control" value="{{ firstname }}">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="floating-label">Last Name</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{ user.userprofile.lastname }}">
+                                  <input type="text" class="form-control">
                                 </div>
                               </div>
                             </div>
@@ -53,7 +53,27 @@
                               <div class="col-md-12">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Address (Optional)</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{user.userprofile.address}}">
+                                  <input type="text" class="form-control">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label class="bmd-label-floating">City (Optional)</label>
+                                  <input type="text" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label class="bmd-label-floating">Country (Optional)</label>
+                                  <input type="text" class="form-control">
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label class="bmd-label-floating">Postal Code (Optional)</label>
+                                  <input type="text" class="form-control">
                                 </div>
                               </div>
                             </div>
@@ -62,12 +82,12 @@
                                 <div class="form-group">
                                   <label>Notes</label>
                                   <div class="form-group">
-                                    <textarea class="form-control" rows="3" disabled="true">{{ user.userprofile.notes }}</textarea>
+                                    <textarea class="form-control" rows="5"></textarea>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <a href="" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;">Update Profile</a>
+                             <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle">Update Profile</a>
                             <div class="clearfix"></div>
                           </form>
                         </div>
@@ -76,6 +96,11 @@
                   </div>
                 </div>
             </div>
+            <p>Username: {{ user }}</p>
+            <p>First name: {{ user.firstname }}</p>
+            <p>Last name: {{ user.lastname }}</p>
+            <p>Email: {{ user.email }}</p>
+            <p></p>
         </div><!--end .row -->
         <!-- END ACCOUNTS -->
     </div><!--end .section-body -->

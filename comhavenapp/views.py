@@ -4,12 +4,12 @@ from django.views import generic
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from comhavenapp.forms import SignUpForm
+from comhavenapp.forms import SignUpForm, UserProfileForm
 
 from django.contrib.auth.decorators import login_required
 
-from .models import HavenFolder, NewAccountLogin, PinaxPoints, AccessList
-from .forms import NewAccountLoginForm
+from .models import HavenFolder, NewAccountLogin, PinaxPoints, UserProfile
+from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
 from pathlib import Path
@@ -29,7 +29,8 @@ from pinax.points.models import points_awarded
 
 #send Email
 from django.core.mail import send_mail
-
+from django.template import loader
+from selenium.webdriver.common.keys import Keys
 @login_required
 def auto_login(request):
     new_login = NewAccountLogin.objects.all()
@@ -40,47 +41,34 @@ def auto_login(request):
 
     #express login function for schoology site
     browser = webdriver.Chrome(os.path.join(os.getcwd(),r'comhavenapp/chromedriver.exe'))
+    browser.find_element_by_tag_name('body').send_keys(Keys.COMMAND + 't')
+    #browser = webdriver.Chrome(executable_path='C:/path/to/chromedriver.exe')
     browser.get('https://app.schoology.com/login')
     #fill in username and hit the next button
     username = browser.find_element_by_id('edit-mail')
     username.send_keys(usernameStr)
-    #nextButton = browser.find_element_by_id('identifierNext')
-    #nextButton.click()
     password = browser.find_element_by_id('edit-pass')
     password.send_keys(passwordStr)
-    #Password Fill wait 10 seconds until animation finished
-    #password = WebDriverWait(browser, 10).until(
-    #   EC.presence_of_element_located((By.ID, 'Password')))
-    #password.send_keys(passwordStr)
 
     #signInButton = browser.find_element_by_id('edit-submit');
     #signInButton.click()
 
-    #express login function for edmodo site
-    #browser = webdriver.Chrome("D:\Backup\Recent\ComHaven\comhavenapp\chromedriver.exe")
-    #browser.get('https://www.edmodo.com/?simplified_landing_page=1&go2url=%2Flogin')
-    # fill in username and hit the next button
-    #username = browser.find_element_by_id('un')
-    #username.send_keys(usernameStr)
-    # nextButton = browser.find_element_by_id('identifierNext')
-    # nextButton.click()
-    #password = browser.find_element_by_id('pw')
-    #password.send_keys(passwordStr)
-    # Password Fill wait 10 seconds until animation finished
-    # password = WebDriverWait(browser, 10).until(
-    #   EC.presence_of_element_located((By.ID, 'Password')))
-    # password.send_keys(passwordStr)
-
     return render(request, 'pages/express-logins.html', context_login)
 
-#@login_required
-#def autologin(request):
-#    if request.method == 'POST':
-#        url = 'www.edmodo.com'
-#        username = 'jsnjocsin@gmail.com'
-#        password = 'Jpskrilljap11398'
-#        al = AutoLogin()
-#        cookies = al.auth_cookies_from_url(url, username, password)
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        print('hello')
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+                login(request, user)
+                print('login')
+                return redirect('home')
+        else:
+            return redirect('signup')
 
 def signup(request):
     if request.method == 'POST':
@@ -88,17 +76,25 @@ def signup(request):
         if form.is_valid():
             filename = os.path.expandvars(r"C:")
             if os.path.exists(filename):
-                path = os.getenv('LOCALAPPDATA')
-                filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                directory = os.path.dirname(filename)
-                os.mkdir(directory)
-                with open(filename, "w") as f:
-                    info = cpuinfo.get_cpu_info()
-                    CPUINFO = {'CPUINFO': info}
-                    f.write(json.dumps(CPUINFO))
-                    form.save()
-                    print("Success")
-                    return redirect('login')
+                    path = os.getenv('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    if os.path.exists(path_exist):
+                        try:
+                            return redirect('/accounts/login', messages.success(request, 'Path Already exist.','alert-danger'))
+                            print('hello')
+                        except:
+                            print("file exist")
+                    else:
+                        os.mkdir(directory)
+                        with open(filename, "w") as f:
+                            info = cpuinfo.get_cpu_info()
+                            CPUINFO = {'CPUINFO': info}
+                            f.write(json.dumps(CPUINFO))
+                            form.save()
+                            print("Success")
+                            return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
             else:
                 print("hello")
         else:
@@ -107,13 +103,13 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-
 # Page Views #
 @login_required
 def index(request):
     new_login = NewAccountLogin.objects.all()
     context_login = {'new_login': new_login}
     return render(request, 'pages/home-accounts.html', context_login)
+@login_required
 def accounts(request):
     new_login = NewAccountLogin.objects.all()
     context_login = {'new_login': new_login}
@@ -147,8 +143,11 @@ def securitychallenges(request):
 
 @login_required
 def sharedhaven(request):
-    return render(request, 'pages/sharedhaven.html')
+    new_login = NewAccountLogin.objects.all()
+    context_login = {'new_login': new_login}
 
+
+    return render(request, 'pages/sharedhaven.html', context_login)
 @login_required
 def generatepassword(request):
     return render(request, 'pages/generate-password.html')
@@ -170,6 +169,7 @@ def new_login(request):
         form = NewAccountLoginForm()
         return render(request, 'pages/new_login.html', {'form':form})
 
+@login_required
 def new_haven_folder(request):
     if request.POST:
         form = NewHavenFolderForm(request.POST)
@@ -183,8 +183,6 @@ def new_haven_folder(request):
     else:
         form = NewHavenFolderForm()
         return render(request, 'pages/new_login.html', {'form':form})
-
-
 
 @login_required
 def login_edit(request, login_id):
@@ -208,18 +206,57 @@ def login_destroy(request, login_id):
     login.delete()
     return redirect('/', messages.success(request, 'Account was successfully deleted.', 'alert-success'))
 
+@login_required
 def user_profile(request):
-    return render(request, 'pages/user_profile.html')
+    if request.POST:
+        form = UserProfileForm(request.POST)
+        if form.is_valid():
+            if form.save():
+                return redirect('/users/user_profile', messages.success(request, 'Folder was successfully added.', 'alert-success'))
+            else:
+                return redirect('/users/user_profile', messages.error(request, 'Folder is not saved', 'alert-danger'))
+        else:
+            return redirect('/users/user_profile', messages.error(request, 'Folder is invalid', 'alert-danger'))
+    else:
+        form = UserProfileForm()
+        return render(request, 'pages/user_profile.html', {'form':form})
 
 @login_required
-def sent_mail(request):
-    send_mail('Subject here', 'Here is the message.', 'jsnjocsin@gmail.com', ['jpskrilljap@gmail.com'], fail_silently=False)
+def user_edit(request, profile_id):
+    profile = UserProfile.objects.get(id=profile_id)
+    if request.POST:
+        form = UserProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            if form.save():
+                return redirect('/users/user_profile', messages.success(request, 'Profile was successfully updated.', 'alert-success'))
+            else:
+                return redirect('/users/user_profile', messages.error(request, 'Profile is not saved', 'alert-danger'))
+        else:
+            return redirect('/users/user_profile', messages.error(request, 'Profile is not valid', 'alert-danger'))
+    else:
+        form = UserProfileForm(instance=profile)
+        return render(request, 'pages/user_profile_edit.html', {'form': form})
 
-    return render(request, 'pages/sharedhaven.html')
-
-
-def pass_reset(request):
-
-    send_mail('Subject here', 'Here is the message.', 'jsnjocsin@gmail.com', ['jpskrilljap@gmail.com'], fail_silently=False)
-
-    return render(request, 'registration/password_reset_form.html')
+@login_required
+def send_email(request):
+    if request.method == 'GET':
+        form = SharedHavenForm()
+    else:
+        form = SharedHavenForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            to_email = [from_email, 'to_email']
+            html_message = loader.render_to_string(
+                'pages/html_email.html', {
+                    'Username': 'jsnjocsin@gmail.com',
+                    'Password': '***************',
+                }
+            )
+            try:
+                send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('/sharedhaven', messages.success(request, 'Credential is shared', 'alert-success'))
+    return render(request ,"pages/share_credentials.html", {'form': form})

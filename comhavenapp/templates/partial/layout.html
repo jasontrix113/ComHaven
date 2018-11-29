@@ -40,7 +40,9 @@
 							<ul class="dropdown-menu animation-dock">
 								<!--<li class="dropdown-header">My profile</li>-->
 								<!--<li class="divider"></li>-->
-								<br>
+
+								<li><a href="{% url 'user_profile' %}"><i class="fa fa-fw fa-user"></i> Profile</a> </li>
+								<li class="divider"></li>
 								<li><a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
 							</ul><!--end .dropdown-menu -->
 						</li><!--end .dropdown -->

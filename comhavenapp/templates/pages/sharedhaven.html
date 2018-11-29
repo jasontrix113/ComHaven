@@ -1,13 +1,58 @@
-{% extends 'partial/base.html' %}
+{% extends 'partial/layout.html' %}
+{% load widget_tweaks %}
+{% block title %} Dashboard {% endblock %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <a href="{% url 'sent_mail '%}">
-        <button class="btn btn-default">Send</button>
-    </a>
-</body>
-</html>
+{% block body %}
+<section>
+    {% if messages %}
+        {% for message in messages %}
+            <p {% if message.tags %} class="alert {{ message.tags }} text-center"{% endif %}>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </p>
+        {% endfor %}
+    {% endif %}
+    <div class="section-body" style="padding: 20px;">
+
+        <div class="row">
+            <h1 class="text-left mx-auto">&nbsp SharedHaven</h1>
+            <hr>
+        </div>
+        <!--<a href="{% url 'new_login' %}">
+            <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add" style="float: right; color: white; background-color: #2b323a;"> Add an account</button>
+        </a>-->
+        <!-- BEGIN ACCOUNTS -->
+        <!-- Static Data -->
+        <div class="row">
+            {% for folders in haven_folder %}
+                <h2>{{ folders.login_haven_folder }}</h2>
+            {% endfor %}
+            <br>
+            <br>
+            {% for login in new_login %}
+            <div class="d-inline p-2 bg-primary text-white">
+                <!--first-card -->
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-head">
+                            <header>{{ login.login_name }}</header>
+                            <div class="divider"></div>
+                            <div class="tools" style="margin-top: 20px;">
+                                <a href="{% url 'send_email' %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Share</a>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="card-body text-left">
+                            <p><b>Email:</b> {{ login.login_username }}</p>
+                            <p><b>URL: </b>{{ login.login_target_url }}</p>
+
+                        </div><!--end .card-body -->
+                    </div><!--end .card -->
+                </div><!--end .col -->
+            {% endfor %}
+            </div><!--end d-inline -->
+        </div><!--end .row -->
+        <!-- END ACCOUNTS -->
+    </div><!--end .section-body -->
+</section>
+{% endblock %}

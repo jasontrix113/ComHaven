@@ -16,26 +16,29 @@
         <!-- BEGIN ACCOUNTS -->
         <!-- Static Data -->
         <div class="row">
+            {% for folders in haven_folder %}
+                <h2>{{ folders.login_haven_folder }}</h2>
+            {% endfor %}
+            <br>
+            <br>
             {% for login in new_login %}
             <div class="d-inline p-2 bg-primary text-white">
                 <!--first-card -->
                 <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-head style-primary">
-                            <header></header>
-                            <div class="tools">
-                                <a href="" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
-                                <a href="" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
+                        <div class="card-head">
+                            <header>{{ login.login_name }}</header>
+                            <div class="divider"></div>
+                            <div class="tools" style="margin-top: 20px;">
+                                <a href="{% url 'auto_login' %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Launch</a>
                             </div>
+                            <hr>
                         </div>
-                        <div class="card-body text-center">
-                            <p>Email: {{ login.login_username }}</p>
-                            <p>URL: {{ login.login_target_url }}</p>
-                            <a href="{% url 'auto_login' %}">
-                                <button type="submit" class="btn btn-primary">Launch</button>
-                            </a>
-                        </div><!--end .card-body -->
+                        <div class="card-body text-left">
+                            <p><b>Email:</b> {{ login.login_username }}</p>
+                            <p><b>URL: </b>{{ login.login_target_url }}</p>
 
+                        </div><!--end .card-body -->
                     </div><!--end .card -->
                 </div><!--end .col -->
             {% endfor %}

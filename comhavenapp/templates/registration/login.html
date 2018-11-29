@@ -29,6 +29,14 @@
 											Your username or password is incorrect.
 										</div>
 									{% endif %}
+									{% if messages %}
+									{% for message in messages %}
+										<p {% if message.tags %} class="alert {{ message.tags }} text-center"{% endif %}>
+											<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+											{{ message }}
+										</p>
+									{% endfor %}
+									{% endif %}
 									{% csrf_token %}
 									<div class="form-group">
 										{{ form.username|add_class:"form-control" }}
@@ -51,7 +59,7 @@
 											</a> Remember me
 										</div><!--end .col -->
 										<div class="col-xs-6 text-right">
-											<a href="{% url 'pass_reset' %}" class="text-primary">Forgot Password?</a>
+											<a href="{% url 'password_reset' %}" class="text-primary">Forgot Password?</a>
 											<br>
 											<br>
 										</div><!--end .col -->
