@@ -99,6 +99,8 @@ def signup(request):
                     print("hello")
             elif request.user_agent.is_mobile == True:
                  form.save()
+                 return redirect('/accounts/login',
+                            messages.success(request, 'Account created successfully.', 'alert-success'))
         else:
             print("Sign Up Failed");
     else:
