@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a44e852-003c-4f7d-8e8b-522ef931cabc" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/models.py" afterPath="$PROJECT_DIR$/comhavenapp/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenproject/settings.py" afterPath="$PROJECT_DIR$/comhavenproject/settings.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/comhavenapp/templates/password_reset_confirm.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/registration/password_reset_confirm.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -117,24 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="share_credentials.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/share_credentials.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="62" lean-forward="false" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#0;n#div#2;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comhavenproject/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+            <state relative-caret-position="282">
+              <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -152,7 +141,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/comhavenapp/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
@@ -160,6 +149,16 @@
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="password_reset_confirm.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/comhavenapp/templates/registration/password_reset_confirm.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -252,10 +251,10 @@
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/html_email.html" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/sharedhaven.html" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/security-challenges.html" />
-        <option value="$PROJECT_DIR$/comhavenproject/settings.py" />
         <option value="$PROJECT_DIR$/comhavenapp/views.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/comhavenapp/models.py" />
+        <option value="$PROJECT_DIR$/comhavenproject/settings.py" />
       </list>
     </option>
   </component>
@@ -352,9 +351,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Backup\Recent\ComHaven\comhavenapp\templates\registration" />
       <recent name="D:\Backup\Recent\ComHaven\comhavenproject" />
       <recent name="D:\Backup\Recent\ComHaven\comhavenapp" />
-      <recent name="D:\Backup\Recent\ComHaven\comhavenapp\templates\registration" />
       <recent name="D:\Backup\Recent\ComHaven\comhavenapp\templates\pages" />
       <recent name="D:\Backup\Recent\ComHaven\comhavenapp\templates\partial" />
     </key>
@@ -485,13 +484,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/generate-password.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/new_haven_folder.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -790,14 +782,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comhavenproject/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
@@ -833,6 +817,22 @@
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenapp/templates/registration/password_reset_confirm.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenproject/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>

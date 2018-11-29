@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'comhaven-app.herokuapp.com',
-    '127.0.0.1'
+    '127.0.0.1',
+    'comhaven.herokuapp.com'
 ]
 
 
