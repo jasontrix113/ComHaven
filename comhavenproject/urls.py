@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^users/user_profile/$', views.user_profile, name='user_profile'),
     url(r'^users/profile_edit/(?P<user_id>\d+)/$', views.user_edit, name='profile_edit'),
 
-    url(r'^auto_login/$', views.auto_login, name='auto_login'),
+    url(r'^auto_login/(?P<login_id>\d+)', views.auto_login, name='auto_login'),
 
     #SharedHaven
     url('/send_email/', views.send_email, name='send_email'),

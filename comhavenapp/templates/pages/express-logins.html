@@ -1,6 +1,6 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
-{% block title %} Dashboard {% endblock %}
+{% block title %} Express Logins {% endblock %}
 
 {% block body %}
 <section>
@@ -16,7 +16,7 @@
         <!-- BEGIN ACCOUNTS -->
         <!-- Static Data -->
         <div class="row">
-            {% for folders in haven_folder %}
+            {% for folders in login_haven_folder %}
                 <h2>{{ folders.login_haven_folder }}</h2>
             {% endfor %}
             <br>
@@ -30,7 +30,7 @@
                             <header>{{ login.login_name }}</header>
                             <div class="divider"></div>
                             <div class="tools" style="margin-top: 20px;">
-                                <a href="{% url 'auto_login' %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Launch</a>
+                                <a href="{% url 'auto_login' login.id %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Launch</a>
                             </div>
                             <hr>
                         </div>

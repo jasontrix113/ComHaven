@@ -1,10 +1,9 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
-{% block title %} Dashboard {% endblock %}
+{% block title %} Accounts {% endblock %}
 
 {% block body %}
 <section>
-
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto">&nbsp Accounts</h1>
@@ -15,34 +14,36 @@
         </a>
         <!-- BEGIN ACCOUNTS -->
         <!-- Static Data -->
-        <div class="row">
-            {% for folders in haven_folder %}
-                <h2>{{ folders.login_haven_folder }}</h2>
-            {% endfor %}
+        {% for f in haven_folder %}
+                <h2>{{ f.login_haven_folder }}</h2>
+        {% endfor %}
+        <div class="row" id="accordion">
+            <div id="collapseOne" class="collapse.show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                    {% for login in new_login %}
+                    <div class="d-inline p-2 bg-primary text-white">
+                        <!--first-card -->
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-head">
+                                    <header>{{ login.login_name }}</header>
+                                    <div class="divider"></div>
+                                    <div class="tools">
+                                        <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
+                                        <a href="{% url 'delete' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="card-body text-left">
+                                    <p><b>Email:</b> {{ login.login_username }}</p>
+                                    <p><b>URL: </b>{{ login.login_target_url }}</p>
+                                </div><!--end .card-body -->
+                            </div><!--end .card -->
+                        </div><!--end .col -->
+                    </div><!-- /inline-->
+                    {% endfor %}
+                </div>
             <br>
             <br>
-            {% for login in new_login %}
-            <div class="d-inline p-2 bg-primary text-white">
-                <!--first-card -->
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-head">
-                            <header>{{ login.login_name }}</header>
-                            <div class="divider"></div>
-                            <div class="tools">
-                                <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
-                                <a href="{% url 'delete' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
-                            </div>
-                            <hr>
-                        </div>
-                        <div class="card-body text-left">
-                            <p><b>Email:</b> {{ login.login_username }}</p>
-                            <p><b>URL: </b>{{ login.login_target_url }}</p>
-                        </div><!--end .card-body -->
-                    </div><!--end .card -->
-                </div><!--end .col -->
-            {% endfor %}
-            </div><!--end d-inline -->
         </div><!--end .row -->
         <!-- END ACCOUNTS -->
     </div><!--end .section-body -->

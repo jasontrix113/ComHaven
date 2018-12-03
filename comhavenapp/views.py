@@ -8,7 +8,7 @@ from comhavenapp.forms import SignUpForm, UserProfileForm
 
 from django.contrib.auth.decorators import login_required
 
-from .models import HavenFolder, NewAccountLogin, PinaxPoints, UserProfile
+from .models import NewAccountLogin, PinaxPoints, UserProfile
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -20,6 +20,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 
 #Pinax-Points#
 from pinax.points.models import points_awarded
@@ -30,17 +31,21 @@ from pinax.points.models import points_awarded
 #send Email
 from django.core.mail import send_mail
 from django.template import loader
-from selenium.webdriver.common.keys import Keys
+
+#Password Hasher
+import hashlib
+from django.contrib.auth.hashers import make_password, check_password
+from passlib.hash import pbkdf2_sha256
 
 
 @login_required
-def auto_login(request):
+def auto_login(request, login_id):
     new_login = NewAccountLogin.objects.all()
     context_login = {'new_login': new_login}
-
-    usernameStr = 'jsnjocsin@gmail.com'
-    passwordStr = 'Jpskrilljap11398'
-
+    login = NewAccountLogin.objects.get(id=login_id)
+    form = NewAccountLoginForm(request.POST, instance=login)
+    # passwordStr = request.session['l_pass']
+    # print(passwordStr)
     #express login function for schoology site
     browser = webdriver.Chrome(os.path.join(os.getcwd(),r'comhavenapp/chromedriver.exe'))
     browser.find_element_by_tag_name('body').send_keys(Keys.COMMAND + 't')
@@ -50,8 +55,7 @@ def auto_login(request):
     username = browser.find_element_by_id('edit-mail')
     username.send_keys(usernameStr)
     password = browser.find_element_by_id('edit-pass')
-    password.send_keys(passwordStr)
-
+    password.send_keys('asdasdad')
     #signInButton = browser.find_element_by_id('edit-submit');
     #signInButton.click()
 
@@ -72,7 +76,7 @@ def user_login(request):
                     path_exist = directory
                     if os.path.exists(path_exist):
                         login(request, user)
-                        return redirect('home')
+                        return redirect('accounts')
                     else:
                         return redirect('/accounts/login', messages.success(request, 'Cannot find access ID', 'alert-danger'))
         else:
@@ -130,9 +134,8 @@ def accounts(request):
 @login_required
 def haven_folder(request):
     haven_folder = HavenFolder.objects.all()
-    context_folder = {'haven_folder': haven_folder}
+    context_folder = {'login_haven_folder': login_haven_folder}
     return render(request, 'pages/home-accounts.html',  context_folder)
-
 
 @login_required
 def expresslogins(request):
@@ -168,13 +171,29 @@ def generatepassword(request):
 def new_login(request):
     if request.POST:
         form = NewAccountLoginForm(request.POST)
-        if form.is_valid():
-            if form.save():
+        if request.method == 'POST':
+            login_target_url = request.POST['login_target_url']
+            login_name = request.POST['login_name']
+            login_username = request.POST['login_username']
+            login_password = request.POST['login_password']
+            login_notes = request.POST['login_notes']
+            # login_haven_folder = request.POST['login_haven_folder']
+            enc_password = pbkdf2_sha256.encrypt(login_password, rounds=100, salt_size=32)
+            print(enc_password)
+
+            NewAccountLogin.objects.create(
+                login_target_url = login_target_url,
+                login_name = login_name,
+                login_username = login_username,
+                login_password = enc_password,
+                login_notes = login_notes,
+            )
+
+            if form.is_valid():
                 return redirect('/', messages.success(request, 'Account was successfully added.', 'alert-success'))
             else:
                 return redirect('/', messages.error(request, 'Account is not saved', 'alert-danger'))
-        else:
-            return redirect('/', messages.error(request, 'data is invalid', 'alert-danger'))
+
     else:
         form = NewAccountLoginForm()
         return render(request, 'pages/new_login.html', {'form':form})

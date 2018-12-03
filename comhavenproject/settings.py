@@ -121,7 +121,12 @@ AUTH_PASSWORD_VALIDATORS = [
 		'NAME': 'django_zxcvbn_password_validator.ZxcvbnPasswordValidator',
 	},
 ]
-
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -148,7 +153,7 @@ import dj_database_url
 db_from_env = dj_database_url.config()
 
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'accounts'
 LOGOUT_REDIRECT_URL = 'login'
 
 
@@ -163,8 +168,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "jsnjocsin@gmail.com"
-EMAIL_HOST_PASSWORD = "Jpskrilljap11398"
+EMAIL_HOST_USER = "comhaven.test.mail@gmail.com"
+EMAIL_HOST_PASSWORD = "Chtm-2019"
 
 USER_AGENTS_CACHE = 'default'
 #KEY = getattr(settings, 'AUTOMATIC_LOGIN_KEY', 'mtkn')

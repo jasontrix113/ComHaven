@@ -21,23 +21,23 @@ def create_profile(sender, **kwargs):
 
 post_save.connect(create_profile, sender=User)
 
-class NewHavenFolder (models.Model):
-    new_haven_folder = models.CharField(max_length=200, unique=True)
+# class NewHavenFolder (models.Model):
+#     new_haven_folder = models.CharField(max_length=200, unique=True)
+#
+#     def __str__(self):
+#         return self.new_haven_folder
 
-    def __str__(self):
-        return self.new_haven_folder
-
-class HavenFolder (models.Model):
-    login_haven_folder = models.CharField(max_length=200, unique=True, default='Folder')
-
-    def __str__(self):
-        return self.login_haven_folder
+# class HavenFolder (models.Model):
+#     login_haven_folder = models.CharField(max_length=200, unique=True,)
+#
+#     def __str__(self):
+#         return self.login_haven_folder
 
 class NewAccountLogin (models.Model):
-
+    # user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=False)
     login_target_url = models.CharField(max_length=200)
     login_name = models.CharField(max_length=200)
-    login_haven_folder = models.ForeignKey(HavenFolder, on_delete=models.CASCADE, to_field="login_haven_folder")
+    # login_haven_folder = models.ForeignKey(HavenFolder, on_delete=models.CASCADE, to_field="login_haven_folder")
     login_username = models.CharField(max_length=200)
     login_password = models.CharField(max_length=200)
     login_notes = models.CharField(max_length=200)
@@ -52,3 +52,14 @@ class PinaxPoints (models.Model):
     def __str__(self):
         return self.award_point_values
 
+class Tasks(models.Model):
+    tasks = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tasks
+
+class AccessListOfDevices(models.Model):
+    device_model = models.CharField(max_length=30)
+
+    def __str__(selfs):
+        return self.device_model
