@@ -4,30 +4,47 @@
     max-height: 400px;
     margin-top: 120px;
 }
-#main-menu > .nav-link.active  {
-    color:white;
+#menubar-hoverable
+{
+    background-color: white;
 }
-
-@media(max-width: 768px){
-  #header{
-    background: #2b323a;
+#welcome-row
+{
+   padding-top:0;
+   margin-top: 0;
+}
+#btn-add-acc
+{
+    margin-top: 80px;
+    padding: 0 40px;
+}
+#btn-add
+{
+    float: right;
     color: white;
-  }
+    background-color: #2b323a;
 }
+.jumbotron h2
+{
+    font-size: 40px;
+}
+.jumbotron p
+{
+    font-size: 14px;
+}
+.card-head{
 
-[data-toggle="collapse"]:after {
-display: inline-block;
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  content: "\f054";
-  transform: rotate(90deg) ;
-  transition: all linear 0.25s;
-  float: right;
-  }
-[data-toggle="collapse"].collapsed:after {
-  transform: rotate(0deg) ;
+}
+#menu-toggle
+{
+    margin-left: 5px;
+    padding-left: 0;
+    margin-top: -3px;
+}
+.brand-holder img
+{
+    margin-left: -10px;
+}
+@media only screen and (max-width: 768px)  {
+
 }

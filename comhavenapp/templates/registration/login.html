@@ -6,7 +6,7 @@
 	<head>
 	</head>
 	{% block content %}
-	<body class="menubar-hoverable header-fixed" style="background-color: white">
+	<body class="menubar-hoverable header-fixed" id="menubar-hoverable">
 	<div class="row col-sm-12" style="padding:0; margin:0;">
 		<!--<div class="img-backdrop"></div>-->
 		<div class="col-sm-6 text-center">
@@ -65,7 +65,7 @@
 											<br>
 										</div><!--end .col -->
 										<div class="col-xs-12 text-left">
-											<p>Need an account? <a href="{% url 'signup' %}" class="text-primary"> Create an account.</a> </p>
+											<p>Need an account? <a href="{% url 'register' %}" class="text-primary"> Create an account.</a> </p>
 										</div><!--end .col -->
 									</div><!--end .row -->
 								</form>

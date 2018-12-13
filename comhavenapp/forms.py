@@ -11,8 +11,7 @@ class UserProfileForm(UserCreationForm):
     class Meta:
         model = UserProfile
         fields = ('user', 'email', 'firstname', 'lastname', 'address', 'notes')
-
-class SignUpForm(UserCreationForm):
+class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
     class Meta:
         model = User
@@ -24,12 +23,13 @@ def clean_username(self):
     if not username:
         raise forms.ValidationError('username does not exist.')
 class NewAccountLoginForm(ModelForm):
-
+    # user_id = forms.CharField(max_length='200', required=False)
     login_target_url = forms.CharField(max_length='200', required=False)
     login_name = forms.CharField(max_length='200', required=False)
     login_username = forms.CharField(required=False)
-    login_password = forms.CharField(widget = forms.PasswordInput, required=False)
+    login_password = forms.CharField(required=False)
     login_notes = forms.CharField(widget = forms.Textarea, required=False)
+
 
     class Meta:
         model = NewAccountLogin
@@ -41,6 +41,7 @@ class NewAccountLoginForm(ModelForm):
 #         fields = ['new_haven_folder']
 
 # class HavenFolderForm(ModelForm):
+#     # login_haven_folder = forms.ChoiceField(required=False)
 #     class Meta:
 #         model = HavenFolder
 #         fields = ['login_haven_folder']

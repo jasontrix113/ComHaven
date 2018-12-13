@@ -153,11 +153,8 @@ import dj_database_url
 db_from_env = dj_database_url.config()
 
 
-LOGIN_REDIRECT_URL = 'accounts'
+LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
-
-
-
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")

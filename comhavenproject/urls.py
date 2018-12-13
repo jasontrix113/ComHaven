@@ -24,16 +24,17 @@ urlpatterns = [
     url('user_login/', views.user_login, name='user_login'),
 
     # Page CRUD URLs #
-    url(r'^logins/new_haven_folder/$', views.new_haven_folder, name='new_haven_folder'),
+    # url(r'^logins/new_haven_folder/$', views.new_haven_folder, name='new_haven_folder'),
     url(r'^logins/new_login/$', views.new_login, name='new_login'),
     url(r'^logins/edit/(?P<login_id>\d+)/$', views.login_edit, name='edit'),
     url(r'^logins/delete/(?P<login_id>\d+)/$', views.login_destroy, name='delete'),
 
-    url(r'^users/user_profile/$', views.user_profile, name='user_profile'),
-    url(r'^users/profile_edit/(?P<user_id>\d+)/$', views.user_edit, name='profile_edit'),
+    url(r'^users/user_profile/', views.user_profile, name='user_profile'),
+    url(r'^users/user_profile_edit/', views.user_edit, name='user_profile_edit'),
+    url(r'^users/user_profile_save/', views.user_save, name='user_profile_save'),
 
     url(r'^auto_login/(?P<login_id>\d+)', views.auto_login, name='auto_login'),
-
+    # url('auto_login/', views.auto_login, name='auto_login'),
     #SharedHaven
     url('/send_email/', views.send_email, name='send_email'),
 ]

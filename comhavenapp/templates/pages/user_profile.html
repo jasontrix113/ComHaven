@@ -18,20 +18,22 @@
                       <div class="card">
                         <div class="card-head" style="background: #2b323a; color: white; height: 80px;">
                           <h2 class="text-left" style="margin-left: 20px;"> User Information</h2>
+
                         </div>
                         <div class="card-body">
                           <form>
                             <div class="row">
+                              <p class="text-danger" style="margin-left: 10px;">*Complete your profile.</p>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Username</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{ user.username }}">
+                                  <input type="text" class="form-control" disabled="true" value="{{ user }}">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Email address</label>
-                                  <input type="email" class="form-control" disabled="true" value="{{ user.userprofile.email }}">
+                                  <input type="email" class="form-control" disabled="true" value="{{ user.email }}">
                                 </div>
                               </div>
                             </div>
@@ -39,21 +41,13 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">First Name</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{ user.userprofile.firstname }}">
+                                  <input type="text" class="form-control" disabled="true" value="">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="floating-label">Last Name</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{ user.userprofile.lastname }}">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Address (Optional)</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{user.userprofile.address}}">
+                                  <input type="text" class="form-control" disabled="true" value="">
                                 </div>
                               </div>
                             </div>
@@ -62,12 +56,12 @@
                                 <div class="form-group">
                                   <label>Notes</label>
                                   <div class="form-group">
-                                    <textarea class="form-control" rows="3" disabled="true">{{ user.userprofile.notes }}</textarea>
+                                    <textarea class="form-control" rows="3" disabled="true"></textarea>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <a href="" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;">Update Profile</a>
+                            <a href="{% url 'user_profile_edit' %}" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;">Update Profile</a>
                             <div class="clearfix"></div>
                           </form>
                         </div>

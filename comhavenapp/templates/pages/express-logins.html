@@ -4,17 +4,11 @@
 
 {% block body %}
 <section>
-
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto">&nbsp Express Logins</h1>
             <hr>
         </div>
-        <!--<a href="{% url 'new_login' %}">
-            <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add" style="float: right; color: white; background-color: #2b323a;"> Add an account</button>
-        </a>-->
-        <!-- BEGIN ACCOUNTS -->
-        <!-- Static Data -->
         <div class="row">
             {% for folders in login_haven_folder %}
                 <h2>{{ folders.login_haven_folder }}</h2>
@@ -37,7 +31,6 @@
                         <div class="card-body text-left">
                             <p><b>Email:</b> {{ login.login_username }}</p>
                             <p><b>URL: </b>{{ login.login_target_url }}</p>
-
                         </div><!--end .card-body -->
                     </div><!--end .card -->
                 </div><!--end .col -->

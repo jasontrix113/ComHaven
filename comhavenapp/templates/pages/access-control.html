@@ -10,32 +10,25 @@
             <h1 class="text-left mx-auto">&nbsp Access Control List</h1>
             <hr>
         </div>
-        <!--<a href="{% url 'new_login' %}">
-            <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add" style="float: right; color: white; background-color: #2b323a;"> Add an account</button>
-        </a>-->
-        <!-- BEGIN ACCOUNTS -->
-        <!-- Static Data -->
         <div class="row">
             {% for folders in haven_folder %}
                 <h2>{{ folders.login_haven_folder }}</h2>
             {% endfor %}
             <br>
             <br>
-            {% for login in new_login %}
+            {% for aclist in ac_list %}
             <div class="d-inline p-2 bg-primary text-white">
                 <!--first-card -->
                 <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-head style-primary">
-                            <header><h3>{{ login.login_name }}</h3></header>
-                            <div class="tools">
-                                <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
-                                <a href="{% url 'delete' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
-                            </div>
+                        <div class="card-head">
+                            <div class="divider"></div>
+                            <header><h3>Windows</h3></header>
+                            <hr>
                         </div>
                         <div class="card-body text-center">
-                            <p>Email: {{ login.login_username }}</p>
-                            <p>URL: {{ login.login_target_url }}</p>
+                            <p>Device: {{ aclist.device_model }}</p>
+                            <p>Path: {{ aclist.access_id_path }}</p>
                         </div><!--end .card-body -->
                     </div><!--end .card -->
                 </div><!--end .col -->

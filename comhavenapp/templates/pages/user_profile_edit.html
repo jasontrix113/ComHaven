@@ -17,62 +17,35 @@
                     <div class="col-md-12">
                       <div class="card">
                         <div class="card-head" style="background: #2b323a; color: white; height: 80px;">
-                          <h2 class="text-left" style="margin-left: 20px;"> User Information</h2>
+                          <h2 class="text-left" style="margin-left: 20px;"> Edit User Information</h2>
                         </div>
                         <div class="card-body">
-                          <form>
+                          <form method="post">
+                            {% csrf_token %}
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Username</label>
-                                  <input type="text" class="form-control" disabled="true" value="{{ user }}">
+                                  <input type="text" class="form-control" value="{{ user }}">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Email address</label>
-                                  <input type="email" class="form-control" disabled="true" value="{{ user.email }}">
+                                  <input type="email" class="form-control" value="{{ user.email }}">
                                 </div>
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <label class="bmd-label-floating">First Name</label>
-                                  <input type="text" class="form-control" value="{{ firstname }}">
+                                  <label class="bmd-label-floating">First Name*</label>
+                                  <input type="text" class="form-control">
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <label class="floating-label">Last Name</label>
-                                  <input type="text" class="form-control">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Address (Optional)</label>
-                                  <input type="text" class="form-control">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">City (Optional)</label>
-                                  <input type="text" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Country (Optional)</label>
-                                  <input type="text" class="form-control">
-                                </div>
-                              </div>
-                              <div class="col-md-4">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Postal Code (Optional)</label>
+                                  <label class="floating-label">Last Name*</label>
                                   <input type="text" class="form-control">
                                 </div>
                               </div>
@@ -87,7 +60,7 @@
                                 </div>
                               </div>
                             </div>
-                             <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle">Update Profile</a>
+                             <button type="submit" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;">Save Profile</button>
                             <div class="clearfix"></div>
                           </form>
                         </div>
@@ -96,10 +69,6 @@
                   </div>
                 </div>
             </div>
-            <p>Username: {{ user }}</p>
-            <p>First name: {{ user.firstname }}</p>
-            <p>Last name: {{ user.lastname }}</p>
-            <p>Email: {{ user.email }}</p>
             <p></p>
         </div><!--end .row -->
         <!-- END ACCOUNTS -->

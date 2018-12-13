@@ -17,6 +17,8 @@
         {% for f in haven_folder %}
                 <h2>{{ f.login_haven_folder }}</h2>
         {% endfor %}
+        <br>
+        <br>
         <div class="row" id="accordion">
             <div id="collapseOne" class="collapse.show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                     {% for login in new_login %}
@@ -34,7 +36,7 @@
                                     <hr>
                                 </div>
                                 <div class="card-body text-left">
-                                    <p><b>Email:</b> {{ login.login_username }}</p>
+                                    <p><b>Email or Username:</b> {{ login.login_username }}</p>
                                     <p><b>URL: </b>{{ login.login_target_url }}</p>
                                 </div><!--end .card-body -->
                             </div><!--end .card -->
