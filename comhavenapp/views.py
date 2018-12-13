@@ -97,6 +97,8 @@ def user_login(request):
                         return redirect('home')
                     else:
                         return redirect('/accounts/login', messages.success(request, 'Cannot find access ID', 'alert-danger'))
+                if request.user_agent.is_mobile == True:
+                    return redirect('home')
         else:
             return redirect('/accounts/login', messages.error(request, 'username or password is incorrect.', 'alert-danger'))
 
