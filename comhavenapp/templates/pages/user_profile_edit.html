@@ -4,7 +4,6 @@
 
 {% block body %}
 <section>
-
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto">&nbsp User Profile</h1>
@@ -20,47 +19,53 @@
                           <h2 class="text-left" style="margin-left: 20px;"> Edit User Information</h2>
                         </div>
                         <div class="card-body">
-                          <form method="post">
+                          <form class="form" role="form" method="post" action="">
                             {% csrf_token %}
-                            <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Username</label>
-                                  <input type="text" class="form-control" value="{{ user }}">
-                                </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Email address</label>
-                                  <input type="email" class="form-control" value="{{ user.email }}">
-                                </div>
-                              </div>
-                            </div>
+                            <!--<div class="row">-->
+                              <!--<div class="col-md-6">-->
+                                <!--<div class="form-group">-->
+                                  <!--<label class="bmd-label-floating">Username</label>-->
+                                  <!--{{ form.user | add_class:'form-control'}}-->
+                                <!--</div>-->
+                              <!--</div>-->
+                              <!--<div class="col-md-6">-->
+                                <!--<div class="form-group">-->
+                                  <!--<label class="bmd-label-floating">Email address</label>-->
+                                  <!--{{ form.email | add_class:'form-control'}}-->
+                                <!--</div>-->
+                              <!--</div>-->
+                            <!--</div>-->
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">First Name*</label>
-                                  <input type="text" class="form-control">
+                                  {{ form.firstname | add_class:'form-control'}}
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="floating-label">Last Name*</label>
-                                  <input type="text" class="form-control">
+                                  {{ form.lastname | add_class:'form-control'}}
                                 </div>
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-md-12">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label class="floating-label">Address</label>
+                                  {{ form.address | add_class:'form-control'}}
+                                </div>
+                              </div>
+                              <div class="col-md-6">
                                 <div class="form-group">
                                   <label>Notes</label>
                                   <div class="form-group">
-                                    <textarea class="form-control" rows="5"></textarea>
+                                    {{ form.notes | add_class:'form-control'}}
                                   </div>
                                 </div>
                               </div>
                             </div>
-                             <button type="submit" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;">Save Profile</button>
+                             <button type="submit" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;">Save Changes</button>
                             <div class="clearfix"></div>
                           </form>
                         </div>

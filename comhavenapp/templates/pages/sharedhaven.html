@@ -38,7 +38,7 @@
                             <header>{{ login.login_name }}</header>
                             <div class="divider"></div>
                             <div class="tools" style="margin-top: 20px;">
-                                <a href="{% url 'send_email' %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Share</a>
+                                <a href="{% url 'send_email' login.id %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Share</a>
                             </div>
                             <hr>
                         </div>

@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from comhavenapp.forms import RegistrationForm, UserProfileForm
+from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
@@ -19,6 +20,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 #Pinax-Points#
@@ -36,46 +38,179 @@ from passlib.hash import pbkdf2_sha256
 #Date Time
 from datetime import datetime
 
+
+
+
 @login_required
 def auto_login(request, login_id):
-    new_login = NewAccountLogin.objects.all()
+    new_login = NewAccountLogin.objects.filter(login_user=request.user)
     context_login = {'new_login': new_login}
-
-    #express login function for schoology site
-
     #get instance ID
     login = NewAccountLogin.objects.get(id=login_id)
-    # login_name1 = NewAccountLogin.objects.get(login_name='Schoology')
-    # login_name2 = NewAccountLogin.objects.get(login_name='LMS')
-    # login_name1 = NewAccountLogin.objects.get(login_name='Schoology')
-    # login_name2 = NewAccountLogin.objects.get(login_name='LMS')
+    temp_ac = TempAccounts.objects.get(id=login_id)
+    sites = ExpressLoginsSites.objects.get(id=login_id)
     form = NewAccountLoginForm(request.POST, instance=login)
-    # if login_name1 == 'Schoology':
-    #     try:
-            # if request.user_agent.browser == 'Google Chrome':
-            #     browser = webdriver.Chrome()
-            #     browser.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
-            #     browser.get('https://app.schoology.com/login')
-            #     username = browser.find_element_by_id('edit-mail')
-            #     username.send_keys("jsnjocsin@gmail.com")
-            #     password = browser.find_element_by_id('edit-pass')
-            #     password.send_keys("Jpskrilljap11398")
-            #
-            # if request.user_agent.browser == 'Firefox':
-    try:
-        browser = webdriver.Firefox()
-        browser.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 't')
-        browser.get('https:/schoology.com/login')
-        username = browser.find_element_by_id('edit-mail')
-        username.send_keys("jsnjocsin@gmail.com")
-        password = browser.find_element_by_id('edit-pass')
-        password.send_keys("Jpskrilljap11398")
-    except:
-        return redirect('/express-login', messages.error(request, 'Network Error. Check your Internet Connection', 'alert-danger'))
+    if login:
+        print(login.login_name)
+        print(login.login_target_url)
+        print(login.id)
+        if login.login_name == 'Schoology':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                parent = browser.current_window_handle
+                username = browser.find_element_by_id("edit-mail")
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id("edit-pass")
+                password.send_keys(temp_ac.temp_pword)
+                # url = browser.find_element_by_id('edit-submit')
+                # url.click(parent)
 
-        #signInButton = browser.find_element_by_id('edit-submit');
-        #signInButton.click()
 
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
+
+                #signInButton = browser.find_element_by_id('edit-submit');
+                #signInButton.click()
+        elif login.login_name == 'LMS':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                body = driver.find_element_by_tag_name("body")
+                body.send_keys(Keys.CONTROL + 't')
+                username = browser.find_element_by_id('username')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('password')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
+
+        elif login.login_name == 'Netflix':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id('id_userLoginId')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('id_password')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                    #signInButton = browser.find_element_by_id('edit-submit');
+                    #signInButton.click()
+                #signInButton = browser.find_element_by_id('edit-submit');
+                #signInButton.click()
+
+        elif login.login_name == 'Facebook':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id('email')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('pass')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                    #signInButton = browser.find_element_by_id('edit-submit');
+                    #signInButton.click()
+                #signInButton = browser.find_element_by_id('edit-submit');
+                #signInButton.click()
+
+        elif login.login_name == 'UIS':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id('UserName')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_name('Password')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+        elif login.login_name == 'Spotify':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id('login-username')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('login-password')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+        elif login.login_name == 'Twitter':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_name('session[username_or_email]')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_name('session[password]')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+
+        elif login.login_name == 'GitHub':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id('login_field')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('password')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+        elif login.login_name == 'Instagram':
+            try:
+                browser = webdriver.Firefox()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id('f33d3bc34c83252')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('fef35d0b7dedbc')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+        else:
+            return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+                                           'alert-danger'))
     return render(request, 'pages/express-logins.html', context_login)
 
 def user_login(request):
@@ -106,6 +241,18 @@ def user_login(request):
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
+        email_data = request.POST['email']
+        pass1 = request.POST['password1']
+        pass2 = request.POST['password2']
+        print(pass1)
+        print(pass2)
+        print(email_data)
+        if pass1 != pass2:
+            return redirect('/accounts/login', messages.error(request, 'Password did not match. Please try again', 'alert-danger'))
+        # duplicate_email = User.objects.filter(email=email_data)
+        # if duplicate_email.exists():
+        #     return redirect('/accounts/register', messages.error(request, 'Email has already taken', 'alert-danger'))
+
         if form.is_valid():
             if request.user_agent.is_pc == True:
                 filename = os.path.expandvars(r"C:")
@@ -147,7 +294,7 @@ def register(request):
                 form.save()
                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
         else:
-            return redirect('/accounts/register', messages.success(request, 'Registration Failed Form is Invalid.'))
+            return redirect('/accounts/register', messages.error(request, 'Registration Failed Form is Invalid.', 'alert-danger'))
     else:
         form = RegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -222,7 +369,6 @@ def new_login(request):
                 enc_password = pbkdf2_sha256.encrypt(login_password, rounds=100000, salt_size=32)
                 user = request.user
                 TempAccounts.objects.create(
-                    temp_user = request.user,
                     temp_uname = login_username,
                     temp_pword = login_password,
                 )
@@ -236,9 +382,9 @@ def new_login(request):
                     login_notes=login_notes,
                 )
             if form.is_valid():
-               return redirect('/', messages.success(request, 'Account was successfully added.', 'alert-success'))
+               return redirect('/accounts', messages.success(request, 'Account was successfully added.', 'alert-success'))
             else:
-                return redirect('/', messages.error(request, 'Account is not saved', 'alert-danger'))
+                return redirect('/accounts', messages.error(request, 'Account is not saved', 'alert-danger'))
 
     else:
         form = NewAccountLoginForm()
@@ -262,9 +408,17 @@ def new_haven_folder(request):
 @login_required
 def login_edit(request, login_id):
     login = NewAccountLogin.objects.get(id=login_id)
+    temp = TempAccounts.objects.get(id=login_id)
     if request.POST:
         form = NewAccountLoginForm(request.POST, instance=login)
+        init = form.save(commit=False)
+        init.login_password = temp.temp_pword
+        init.save()
+        print(temp.temp_pword)
         if form.is_valid():
+            init = form.save(commit=False)
+            init.login_password = temp.temp_pword
+            init.save()
             if form.save():
                 return redirect('/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
             else:
@@ -277,6 +431,8 @@ def login_edit(request, login_id):
 
 @login_required
 def login_destroy(request, login_id):
+    temp_ac = TempAccounts.objects.get(id=login_id)
+    temp_ac.delete()
     login = NewAccountLogin.objects.get(id=login_id)
     login.delete()
     return redirect('/', messages.success(request, 'Account was successfully deleted.', 'alert-success'))
@@ -294,51 +450,71 @@ def user_profile(request):
 
 @login_required
 def user_edit(request):
-    if request.POST:
-        form = UserProfileForm(request.POST)
+    if request.method == 'POST':
+        # instance = UserProfile.objects.get(id=login_id)
+        profile = request.user.userprofile
+        form = UserProfileForm(request.POST, instance=profile)
+        # username = request.POST['user']
+        # email = request.POST['email']
+        print(form)
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        address = request.POST['address']
+        notes = request.POST['notes']
+        # print(username)
+        # print(email)
+        print(firstname)
+        print(lastname)
+        print(address)
+        print(notes)
         if request.method == 'POST':
             if form.is_valid():
-                return redirect('user_profile_save')
+                # email = request.POST['email']
+                firstname = request.POST['firstname']
+                lastname = request.POST['lastname']
+                address = request.POST['address']
+                notes = request.POST['notes']
+                update = form.save(commit=False)
+                # update.user = username
+                # update.email = email
+                update.firstname = firstname
+                update.lastname = lastname
+                update.address = address
+                update.notes = notes
+                update.save()
+                if update.save():
+                    return redirect('/users/user_profile/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
+                else:
+                    return redirect('/users/user_profile/', messages.error(request, 'Data is not saved', 'alert-danger'))
+            else:
+                return redirect('/users/user_profile/', messages.error(request, 'Form is invalid', 'alert-danger'))
     else:
-        form = UserProfileForm(instance=request.user)
+        profile = request.user.userprofile
+        form = UserProfileForm(instance=profile)
         return render(request, 'pages/user_profile_edit.html', {'form': form})
 @login_required
-def user_save(request):
-    if request.POST:
-        form = UserProfileForm(request.POST)
-        if request.method == 'POST':
-            if form.is_valid():
-                firstname = request.POST['firstname'];
-                print(firstname)
-                lastname = request.POST['lastname'];
-                address = request.POST['address'];
-                notes = request.POST['notes'];
-                form.save(commit=False)
-                userp = UserProfile.objects.all();
-                print("hellod")
-                return redirect('user_profile')
-        else:
-            print('hello')
-            return none
+def user_delete(request):
+    current_user = request.user
+    print(current_user)
+    user_profile = UserProfile.objects.get(user=current_user)
+    user_profile.delete()
+    user = User.objects.get(username=current_user)
+    user.delete()
+    return redirect('/accounts/login', messages.success(request, 'Account was successfully deleted.', 'alert-success'))
 
 @login_required
-def send_email(request):
+def send_email(request, login_id):
+    temp = TempAccounts.objects.get(id=login_id)
     if request.method == 'GET':
         form = SharedHavenForm()
     else:
         form = SharedHavenForm(request.POST)
         if form.is_valid():
             subject = form.cleaned_data['subject']
-            print(subject)
             from_email = form.cleaned_data['from_email']
             message = form.cleaned_data['message']
             to_email = [from_email, 'to_email']
-            html_message = loader.render_to_string(
-                'pages/html_email.html', {
-                    'Username': 'jsnjocsin@gmail.com',
-                    'Password': 'samplepassword',
-                }
-            )
+            html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
             # try:
             send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
             return redirect('/sharedhaven', messages.success(request, 'Credential is shared', 'alert-success'))

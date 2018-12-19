@@ -1,15 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', default="")
-    email = models.CharField(max_length=100)
-    firstname = models.CharField(max_length=100)
-    lastname = models.CharField(max_length = 100)
-    address = models.CharField(max_length = 100)
-    notes = models.CharField(max_length=200)
+    email = models.CharField(max_length=100, default='')
+    firstname = models.CharField(max_length=100, default='')
+    lastname = models.CharField(max_length = 100, default='')
+    address = models.CharField(max_length = 100, default='')
+    notes = models.CharField(max_length=200, default='')
 
     USERNAME_FIELD = 'username'
     def __str__(self):
@@ -43,7 +45,7 @@ class NewAccountLogin (models.Model):
     login_notes = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.login_user
+        return self.login_user.username
 
 class PinaxPoints (models.Model):
     award_point_values = models.CharField(max_length=200)
@@ -66,15 +68,18 @@ class AccessListOfDevices(models.Model):
         return self.acl_user
 
 class TempAccounts(models.Model):
-    temp_user = models.ForeignKey(User, on_delete=models.CASCADE, to_field = "username",default='')
-    temp_uname = models.CharField(max_length=20)
+    temp_uname = models.CharField(max_length=30)
     temp_pword = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.temp_user
+        return self.temp_uname
 
 class ExpressLoginsSites(models.Model):
+    s_user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
+
     site_name = models.CharField(max_length=20)
-    site_url = models.CharField(max_length=40, default='')
+    site_url = models.CharField(max_length=100, default='')
+    site_uid = models.CharField(max_length=50, default='')
+    site_pid = models.CharField(max_length=50, default='')
     def __str__(self):
-        return self.site_name
+        return self.site_name;

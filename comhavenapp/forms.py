@@ -7,10 +7,15 @@ from .models import NewAccountLogin, UserProfile
 from zxcvbn_password import zxcvbn
 
 class UserProfileForm(UserCreationForm):
-
+   
+    firstname = forms.CharField(max_length='200', required=False)
+    lastname = forms.CharField(required=False)
+    address = forms.CharField(required=False)
+    notes = forms.CharField(required=False)
     class Meta:
         model = UserProfile
-        fields = ('user', 'email', 'firstname', 'lastname', 'address', 'notes')
+        fields = ('firstname', 'lastname', 'address', 'notes')
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
     class Meta:
@@ -27,12 +32,15 @@ class NewAccountLoginForm(ModelForm):
     login_target_url = forms.CharField(max_length='200', required=False)
     login_name = forms.CharField(max_length='200', required=False)
     login_username = forms.CharField(required=False)
-    login_password = forms.CharField(required=False)
+    login_password = forms.CharField(widget = forms.PasswordInput(), required=False)
     login_notes = forms.CharField(widget = forms.Textarea, required=False)
 
 
     class Meta:
         model = NewAccountLogin
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
         fields = ['login_target_url', 'login_name', 'login_username', 'login_password', 'login_notes']
 
 # class NewHavenFolderForm(ModelForm):
@@ -53,3 +61,30 @@ class SharedHavenForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
     # username = forms.CharField(required=True)
     # password = forms.CharField(widget=forms.PasswordInput)
+
+# class UpdateProfile(forms.ModelForm):
+#     username = forms.CharField(required=True)
+#     email = forms.EmailField(required=True)
+#     firstname = forms.CharField(required=False)
+#     lastname = forms.CharField(required=False)
+#
+#     class Meta:
+#         model = User
+#         fields = ('username', 'email', 'firstname', 'lastname')
+#
+#     def clean_email(self):
+#         username = self.cleaned_data.get('username')
+#         email = self.cleaned_data.get('email')
+#
+#         if email and User.objects.filter(email=email).exclude(username=username).count():
+#             raise forms.ValidationError('This email address is already in use. Please supply a different email address.')
+#         return email
+#
+#     def save(self, commit=True):
+#         user = super(RegistrationForm, self).save(commit=False)
+#         user.email = self.cleaned_data['email']
+#
+#         if commit:
+#             user.save()
+#
+#         return user

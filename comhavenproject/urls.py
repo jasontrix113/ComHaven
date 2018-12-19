@@ -31,10 +31,10 @@ urlpatterns = [
 
     url(r'^users/user_profile/', views.user_profile, name='user_profile'),
     url(r'^users/user_profile_edit/', views.user_edit, name='user_profile_edit'),
-    url(r'^users/user_profile_save/', views.user_save, name='user_profile_save'),
+    url(r'^users/user_profile_delete/', views.user_delete, name='user_delete'),
 
     url(r'^auto_login/(?P<login_id>\d+)', views.auto_login, name='auto_login'),
     # url('auto_login/', views.auto_login, name='auto_login'),
     #SharedHaven
-    url('/send_email/', views.send_email, name='send_email'),
+    url(r'^send_email/(?P<login_id>\d+)', views.send_email, name='send_email'),
 ]
