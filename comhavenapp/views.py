@@ -221,16 +221,16 @@ def user_login(request):
             # Is the account active? It could have been disabled.
             if user.is_active:
                 if request.user_agent.is_pc == True:
-                    path = os.getenv('LOCALAPPDATA')
-                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                    directory = os.path.dirname(filename)
-                    path_exist = directory
-                    form = AccessListOfDevices.objects.all()
-                    if os.path.exists(path_exist):
-                        login(request, user)
-                        return redirect('home')
-                    else:
-                        return redirect('/accounts/login', messages.success(request, 'Cannot find access ID', 'alert-danger'))
+                    # path = os.getenv('LOCALAPPDATA')
+                    # filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    # directory = os.path.dirname(filename)
+                    # path_exist = directory
+                    # form = AccessListOfDevices.objects.all()
+                    # if os.path.exists(path_exist):
+                    login(request, user)
+                    return redirect('home')
+                    # else:
+                    #     return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
