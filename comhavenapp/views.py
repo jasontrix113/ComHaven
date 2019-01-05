@@ -524,7 +524,7 @@ def send_email(request, login_id):
         if form.is_valid():
             subject = form.cleaned_data['subject']
             # from_email = form.cleaned_data['from_email']
-            from_email = 'comhaven.test.mail@gmail.com'
+            from_email = form.cleaned_data['to_email']
             message = form.cleaned_data['message']
             to_email = [from_email, 'to_email']
             html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
