@@ -1,58 +1,56 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
-{% block title %} Dashboard {% endblock %}
+{% block title %} Security Challenges {% endblock %}
 
 {% block body %}
 <section>
-
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto">&nbsp Security Challenges</h1>
-            <hr>
-        </div>
-        <!--<a href="{% url 'new_login' %}">
-            <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add" style="float: right; color: white; background-color: #2b323a;"> Add an account</button>
-        </a>-->
-        <!-- BEGIN ACCOUNTS -->
-        <!-- Static Data -->
-        <!--<div class="row">
-            <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th class="th-sm">Name
-                  </th>
-                  <th class="th-sm">Position
-                  </th>
-                  <th class="th-sm">Office
-                  </th>
-                  <th class="th-sm">Age
-                  </th>
-                  <th class="th-sm">Start date
-                  </th>
-                  <th class="th-sm">Salary
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                </tr>
-              </tbody>
-            </table>
+            <hr><!-- !line-break -->
+        </div><!-- end .row -->
+        <div class="row">
+            {% for stat in ss %}
+                {% if stat.status == 'Completed' %}
+                    <h4>{{ stat.status }}</h4>
+                    <br><!-- !break -->
+                    <div class="row">
+                        {% for sc in sc %}
+                            {% if sc.status == 'Completed' %}
+                                <div class="d-inline p-2 bg-primary text-white">
+                                    <!--first-card -->
+                                    <div class="col-lg-4">
+                                        <div class="card">
+                                            <div class="card-head">
+                                                <header>{{ sc.tasks }}</header>
+                                                <div class="divider"></div>
+                                                <!--<div class="tools">-->
+                                                    <!--<a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>-->
+                                                    <!--<button type="button" data-toggle="modal" class="btn btn-icon-toggle" data-target="#myModal"><i class="fa fa-trash"></i></button>-->
+                                                <!--</div>-->
+                                                <hr><!-- !line-break -->
+                                            </div><!-- end .card-head -->
+                                            <div class="card-body text-left">
+                                                <p><b>Date Completed</b> {{ sc.date_completed }}</p>
+                                            </div><!-- end .card-body -->
+                                        </div><!-- end .card -->
+                                    </div><!-- end .col -->
+                                </div><!-- end .d-inline-->
+                            {% endif %}<!-- endif -->
+                        {% endfor %}<!-- endfor -->
+                    </div><!-- end .row -->
+                {% endif %}<!-- endif -->
+            {% endfor %}<!-- endfor -->
+        </div><!-- end .row -->
 
-        </div>&lt;!&ndash;end .row &ndash;&gt;-->
-        <!-- END ACCOUNTS -->
+        <div class="row">
+            {% for stat in ss %}
+                {% if stat.status == 'Unfinished Tasks' %}
+                    <h4>{{ stat.status }}</h4>
+                    <br><!-- !break -->
+                {% endif %}<!-- endif-->
+            {% endfor %}<!-- endfor -->
+        </div><!-- end .row -->
     </div><!--end .section-body -->
-</section>
-<script>
-    $(document).ready(function () {
-    $('#dtBasicExample').DataTable();
-    $('.dataTables_length').addClass('bs-select');
-    });
-</script>
+</section><!-- end section -->
 {% endblock %}

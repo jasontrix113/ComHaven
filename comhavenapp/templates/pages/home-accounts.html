@@ -1,55 +1,82 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
 {% block title %} Accounts {% endblock %}
-
 {% block body %}
 <section>
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto">&nbsp Accounts</h1>
-            <hr>
-        </div>
-        <a href="{% url 'new_login' %}">
-            <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add" style="float: right; color: white; background-color: #2b323a;"> Add an account</button>
-        </a>
-        <br>
-        <br>
-        <!-- BEGIN ACCOUNTS -->
-        <!-- Static Data -->
-        {% for f in haven_folder %}
-                <h2>{{ f.login_haven_folder }}</h2>
-        {% endfor %}
-        <br>
-        <br>
+            <a href="{% url 'new_login' %}">
+                <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add"> Add an account</button>
+            </a>
+            <hr><!-- !line-break -->
+        </div><!-- end .row -->
+        <br><!-- !break -->
+        <br><!-- !break -->
         <div class="row" id="accordion">
             <div id="collapseOne" class="collapse.show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                    {% for login in new_login %}
-                    <div class="d-inline p-2 bg-primary text-white">
-                        <!--first-card -->
-                        <div class="col-lg-4">
-                            <div class="card">
-                                <div class="card-head">
-                                    <header>{{ login.login_name }}</header>
-                                    <div class="divider"></div>
-                                    <div class="tools">
-                                        <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
-                                        <a href="{% url 'delete' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="card-body text-left">
-                                    <p><b>Email or Username:</b> {{ login.login_username }}</p>
-                                    <p><b>URL: </b>{{ login.login_target_url }}</p>
-                                </div><!--end .card-body -->
-                            </div><!--end .card -->
-                        </div><!--end .col -->
-                    </div><!-- /inline-->
-                    {% endfor %}
-                </div>
-            <br>
-            <br>
+                {% for login in new_login %}
+                <div class="d-inline p-2 bg-primary text-white">
+                    <!--first-card -->
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-head">
+                                <header>{{ login.login_name }}</header>
+                                <div class="divider"></div>
+                                <div class="tools">
+                                    <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
+                                    <button type="button" data-toggle="modal" class="btn btn-icon-toggle" data-target="#d-modal"><i class="fa fa-trash"></i></button>
+                                </div><!-- end .tools -->
+                                <hr>
+                            </div><!-- end .card-head -->
+                            <div class="card-body text-left">
+                                <p><b>Email or Username:</b> {{ login.login_username }}</p>
+                                <p><b>URL: </b>{{ login.login_target_url }}</p>
+                            </div><!--end .card-body -->
+                        </div><!--end .card -->
+                    </div><!--end .col -->
+                </div><!-- /inline-->
+                {% empty %}<!-- if empty -->
+                <div class="col-sm-12 text-center mx-auto" id="empty" style="color: grey;">
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <span><i class="fa fa-file fa-10x"></i></span>
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <p class="small"> You don't have an account yet. <a href="{% url 'new_login' %}"> Add an account. </a></p>
+                </div><!-- end .col-sm-12 -->
+                {% endfor %}
+            </div><!-- end .collapse.show -->
+            <br><!-- !break -->
+            <br><!-- !break -->
         </div><!--end .row -->
+        {% for login in new_login %}
+        <!-- MODAL FOR ACCOUNT DELETION -->
+        <div class="modal" id="d-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                   <!--MODAL HEADER -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Account Deletion</h4>
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            Do you want to delete this account?
+                        </div><!-- end .modal-body -->
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <a href="{% url 'delete' login.id %}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div><!-- end .modal-footer -->
+                    </div><!-- end .modal-header -->
+                </div><!-- end .modal-content -->
+            </div><!-- end .modal-dialog -->
+        </div><!-- end .modal -->
+        {% endfor %}<!-- endfor -->
         <!-- END ACCOUNTS -->
     </div><!--end .section-body -->
-</section>
-{% endblock %}
+</section><!-- end section -->
+{% endblock %}<!-- endblock -->

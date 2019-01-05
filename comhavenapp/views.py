@@ -4,12 +4,12 @@ from django.views import generic
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from comhavenapp.forms import RegistrationForm, UserProfileForm
+from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm
 from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import NewAccountLogin, PinaxPoints, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites
+from .models import NewAccountLogin, PinaxPoints, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -38,8 +38,7 @@ from passlib.hash import pbkdf2_sha256
 #Date Time
 from datetime import datetime
 
-
-
+import itertools
 
 @login_required
 def auto_login(request, login_id):
@@ -56,7 +55,7 @@ def auto_login(request, login_id):
         print(login.id)
         if login.login_name == 'Schoology':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 parent = browser.current_window_handle
                 username = browser.find_element_by_id("edit-mail")
@@ -66,7 +65,6 @@ def auto_login(request, login_id):
                 # url = browser.find_element_by_id('edit-submit')
                 # url.click(parent)
 
-
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
 
@@ -74,7 +72,7 @@ def auto_login(request, login_id):
                 #signInButton.click()
         elif login.login_name == 'LMS':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 body = driver.find_element_by_tag_name("body")
                 body.send_keys(Keys.CONTROL + 't')
@@ -88,7 +86,7 @@ def auto_login(request, login_id):
 
         elif login.login_name == 'Netflix':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('id_userLoginId')
                 username.send_keys(login.login_username)
@@ -106,7 +104,8 @@ def auto_login(request, login_id):
 
         elif login.login_name == 'Facebook':
             try:
-                browser = webdriver.Firefox()
+                print("hello")
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('email')
                 username.send_keys(login.login_username)
@@ -124,7 +123,7 @@ def auto_login(request, login_id):
 
         elif login.login_name == 'UIS':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('UserName')
                 username.send_keys(login.login_username)
@@ -141,7 +140,7 @@ def auto_login(request, login_id):
                 # signInButton.click()
         elif login.login_name == 'Spotify':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('login-username')
                 username.send_keys(login.login_username)
@@ -158,7 +157,7 @@ def auto_login(request, login_id):
                 # signInButton.click()
         elif login.login_name == 'Twitter':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_name('session[username_or_email]')
                 username.send_keys(login.login_username)
@@ -176,7 +175,7 @@ def auto_login(request, login_id):
 
         elif login.login_name == 'GitHub':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('login_field')
                 username.send_keys(login.login_username)
@@ -193,7 +192,7 @@ def auto_login(request, login_id):
                 # signInButton.click()
         elif login.login_name == 'Instagram':
             try:
-                browser = webdriver.Firefox()
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('f33d3bc34c83252')
                 username.send_keys(login.login_username)
@@ -244,11 +243,14 @@ def register(request):
         email_data = request.POST['email']
         pass1 = request.POST['password1']
         pass2 = request.POST['password2']
-        print(pass1)
-        print(pass2)
+        # print(pass1)
+        # print(pass2)
         print(email_data)
+        duplicate_email = User.objects.filter(email=email_data)
+        if duplicate_email.exists():
+            return redirect('/accounts/register', messages.error(request, 'Email has already taken', 'alert-danger'))
         if pass1 != pass2:
-            return redirect('/accounts/login', messages.error(request, 'Password did not match. Please try again', 'alert-danger'))
+            return redirect('/accounts/register', messages.error(request, 'Password did not match. Please try again', 'alert-danger'))
         # duplicate_email = User.objects.filter(email=email_data)
         # if duplicate_email.exists():
         #     return redirect('/accounts/register', messages.error(request, 'Email has already taken', 'alert-danger'))
@@ -313,12 +315,6 @@ def accounts(request):
     return render(request, 'pages/home-accounts.html', context_login)
 
 @login_required
-def haven_folder(request):
-    haven_folder = HavenFolder.objects.all()
-    context_folder = {'login_haven_folder': login_haven_folder}
-    return render(request, 'pages/home-accounts.html',  context_folder)
-
-@login_required
 def expresslogins(request):
     new_login = NewAccountLogin.objects.filter(login_user=request.user)
     context_login = {'new_login': new_login}
@@ -332,7 +328,11 @@ def accesscontrol(request):
 
 @login_required
 def securitychallenges(request):
-    return render(request, 'pages/security-challenges.html')
+    ss = Status.objects.all()
+    sc = SecurityChallenges.objects.all()
+    context_sc = {'sc': sc}
+    context_ss = {'ss': ss}
+    return render(request, 'pages/security-challenges.html', context_ss, context_sc)
 
 @login_required
 def sharedhaven(request):
@@ -341,7 +341,27 @@ def sharedhaven(request):
     return render(request, 'pages/sharedhaven.html', context_login)
 @login_required
 def generatepassword(request):
-    return render(request, 'pages/generate-password.html')
+    if request.method == 'POST':
+        form = PasswordGeneratorForm(request.POST)
+        pass_length = request.POST['pass_length']
+        length = int(pass_length)
+        pass_phrase = request.POST['pass_phrase']
+        print(pass_phrase)
+        print(pass_length)
+
+        chars = string.ascii_letters + string.digits + string.ascii_uppercase + string.ascii_lowercase + string.punctuation
+
+        res = ''.join(random.choice(chars) for x in range(length))
+        print(res)
+        # res = [' '.join(perm) for perm in itertools.permutations(pass_phrase)]
+        # print(res)
+        # if form.is_valid():
+        #     return redirect('/generate_password', messages.success(request, 'Password generated.', 'alert-success'))
+        # else:
+        #     return redirect('/generate_password', messages.error(request, 'Failed.', 'alert-danger'))
+
+    form = PasswordGeneratorForm()
+    return render(request, 'pages/generate-password.html', {'form': form})
 
 ##############END_OF_PAGE_VIEWS##############
 
@@ -385,7 +405,6 @@ def new_login(request):
                return redirect('/accounts', messages.success(request, 'Account was successfully added.', 'alert-success'))
             else:
                 return redirect('/accounts', messages.error(request, 'Account is not saved', 'alert-danger'))
-
     else:
         form = NewAccountLoginForm()
         return render(request, 'pages/new_login.html', {'form':form})
@@ -439,21 +458,15 @@ def login_destroy(request, login_id):
 
 @login_required
 def user_profile(request):
-    if request.POST:
-        form = UserProfileForm(request.POST)
-        info = UserProfile.objects.all()
-        if form.is_valid():
-            return redirect('user_profile_edit')
-    else:
-        form = UserProfileForm()
-        return render(request, 'pages/user_profile.html', {'form':form})
+    userprofile = UserProfile.objects.all()
+    context_up = {'userprofile': userprofile}
+    return render(request, 'pages/user_profile.html', context_up)
 
 @login_required
 def user_edit(request):
     if request.method == 'POST':
         # instance = UserProfile.objects.get(id=login_id)
-        profile = request.user.userprofile
-        form = UserProfileForm(request.POST, instance=profile)
+        form = UserProfileForm()
         # username = request.POST['user']
         # email = request.POST['email']
         print(form)
@@ -461,12 +474,6 @@ def user_edit(request):
         lastname = request.POST['lastname']
         address = request.POST['address']
         notes = request.POST['notes']
-        # print(username)
-        # print(email)
-        print(firstname)
-        print(lastname)
-        print(address)
-        print(notes)
         if request.method == 'POST':
             if form.is_valid():
                 # email = request.POST['email']
@@ -492,6 +499,7 @@ def user_edit(request):
         profile = request.user.userprofile
         form = UserProfileForm(instance=profile)
         return render(request, 'pages/user_profile_edit.html', {'form': form})
+
 @login_required
 def user_delete(request):
     current_user = request.user
@@ -503,6 +511,10 @@ def user_delete(request):
     return redirect('/accounts/login', messages.success(request, 'Account was successfully deleted.', 'alert-success'))
 
 @login_required
+def user_stats(request):
+    return render(request, 'pages/user_stats.html')
+
+@login_required
 def send_email(request, login_id):
     temp = TempAccounts.objects.get(id=login_id)
     if request.method == 'GET':
@@ -511,7 +523,8 @@ def send_email(request, login_id):
         form = SharedHavenForm(request.POST)
         if form.is_valid():
             subject = form.cleaned_data['subject']
-            from_email = form.cleaned_data['from_email']
+            # from_email = form.cleaned_data['from_email']
+            from_email = 'comhaven.test.mail@gmail.com'
             message = form.cleaned_data['message']
             to_email = [from_email, 'to_email']
             html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
@@ -521,3 +534,10 @@ def send_email(request, login_id):
             # except BadHeaderError:
             # return HttpResponse('Invalid header found.')
     return render(request ,"pages/share_credentials.html", {'form': form})
+
+
+def pass_r_done(request):
+    return redirect('/accounts/password_reset', messages.success(request, 'Email sent successfully!', 'alert-success'))
+
+def pass_r_confirm(request):
+    return redirect('/accounts/password_reset/done', messages.success(request, 'Email sent successfully!', 'alert-success'))

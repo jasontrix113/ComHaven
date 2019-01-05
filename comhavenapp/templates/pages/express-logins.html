@@ -1,20 +1,19 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
 {% block title %} Express Logins {% endblock %}
-
 {% block body %}
 <section>
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto">&nbsp Express Logins</h1>
-            <hr>
-        </div>
+            <hr><!-- !line-break -->
+        </div><!-- end .row -->
         <div class="row">
             {% for folders in login_haven_folder %}
                 <h2>{{ folders.login_haven_folder }}</h2>
             {% endfor %}
-            <br>
-            <br>
+            <br><!-- !break -->
+            <br><!-- !break -->
             {% for login in new_login %}
             <div class="d-inline p-2 bg-primary text-white">
                 <!--first-card -->
@@ -25,19 +24,30 @@
                             <div class="divider"></div>
                             <div class="tools" style="margin-top: 20px;">
                                 <a href="{% url 'auto_login' login.id %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Launch</a>
-                            </div>
-                            <hr>
-                        </div>
+                            </div><!-- end .tools -->
+                            <hr><!-- !line-break -->
+                        </div><!-- end .card-head -->
                         <div class="card-body text-left">
                             <p><b>Email:</b> {{ login.login_username }}</p>
                             <p><b>URL: </b>{{ login.login_target_url }}</p>
-                        </div><!--end .card-body -->
-                    </div><!--end .card -->
-                </div><!--end .col -->
-            {% endfor %}
+                        </div><!-- end .card-body -->
+                    </div><!-- end .card -->
+                </div><!-- end .col -->
+            {% empty %}<!-- if empty -->
+                <div class="col-sm-12 text-center mx-auto" id="empty" style="color: grey;">
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <span><i class="fa fa-paper-plane fa-10x"></i></span>
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <p class="small"> You don't have an account yet. <a href="{% url 'new_login' %}"> Add an account. </a> </p>
+                </div><!-- end .col-sm-12 -->
+            {% endfor %}<!-- endfor -->
             </div><!--end d-inline -->
         </div><!--end .row -->
         <!-- END ACCOUNTS -->
     </div><!--end .section-body -->
-</section>
-{% endblock %}
+</section><!-- end section -->
+{% endblock %}<!-- endblock -->

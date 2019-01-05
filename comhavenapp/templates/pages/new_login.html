@@ -1,78 +1,66 @@
 {% extends 'partial/layout.html' %}
-
 {% load widget_tweaks %}
-
 {% block title %} Add New Account Logins {% endblock %}
-
 {% block body %}
-
 <section>
 	<div class="section-body">
 		<div class="row">
 			<!-- BEGIN  - FORM -->
 			<div class="col-sm-12 justify-content-center" style="padding-left: 60px; padding-right: 60px;">
 				<div class="card">
-					<div class="card-head">
+					<div class="card-head" style="color: white; background-color: #2b323a;">
 				  		<h2 class="text-left" style="margin-left: 20px;"> Add new account</h2>
-					</div>
+					</div><!-- end .card-head -->
 					<div class="card-body">
 						<form class="form" role="form" action="" method="post">
 							{% csrf_token %}
 							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-group floating-label">
-										{{ form.login_target_url | add_class:'form-control' }}
-										<label>Target Url</label>
-									</div>
-								</div>
 								<div class="col-sm-6">
 									<div class="form-group floating-label">
 										{{ form.login_name | add_class:'form-control' }}
-										<label>Name</label>
-									</div>
-								</div>
-								<!--<div class="col-sm-6">-->
-									<!--<div class="form-group floating-label">-->
-										<!--{{ form.login_haven_folder | add_class:'form-control' | attr:'rows:2'}}-->
-										<!--<label>Haven Folder</label>-->
-									<!--</div>-->
-								<!--</div>-->
+										<label>Site Name</label>
+									</div><!-- end .form-group -->
+								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-6">
-
+									<div class="form-group floating-label">
+										{{ form.login_target_url | add_class:'form-control' }}
+										<label>Target Url</label>
+									</div><!-- end .form-group -->
+								</div><!-- end .col-sm-6 -->
+								<div class="col-sm-6">
 									<div class="form-group floating-label">
 										{{ form.login_username | add_class:'form-control'}}
 										<label>Username</label>
-									</div>
-								</div>
+									</div><!-- end .form-group -->
+								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-6">
 									<div class="form-group floating-label">
 										{{ form.login_password | add_class:'form-control'}}
 										<label>Password</label>
-									</div>
-								</div>
+									</div><!-- end .form-group -->
+								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-12">
 									<div class="form-group floating-label">
-										{{ form.login_notes | add_class:'form-control' | attr:'rows:2'}}
+										{{ form.login_notes | add_class:'form-control' | attr:'rows:4'}}
 										<label>Notes</label>
-									</div>
-								</div>
+									</div><!-- end .form-group -->
+								</div><!-- end .col-sm-12 -->
 								<div class="col-md-12">
-									<hr>
+									<hr><!-- !line-break -->
 									<div class="card-actionbar-row">
 										<input type="submit" class="btn btn-default ink-reaction" value="Save" style="color: white; background-color: #2b323a;">
-										<a href="{% url 'home' %}">
-											<input type="submit" class="btn btn-secondary ink-reaction" value="Cancel">
+										<a href="{% url 'accounts' %}">
+											<input type="button" class="btn btn-secondary ink-reaction" value="Cancel">
 										</a>
-									</div>
-								</div>
-							</div>
-						</form>
+									</div><!-- end .card-actionbar-row-->
+								</div><!-- end .col-md-12 -->
+							</div><!-- end .row -->
+						</form><!-- end form -->
 					</div><!--end .card-body -->
 				</div><!--end .card -->
 			</div><!--end .col -->
 			<!-- END FORM - TIME ON SITE -->
 		</div><!--end .row -->
 	</div><!--end .section-body -->
-</section>
-
-{% endblock %}
+</section><!-- end section -->
+{% endblock %}<!-- endblock -->

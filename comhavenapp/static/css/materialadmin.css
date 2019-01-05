@@ -1394,8 +1394,7 @@ a.text-success:hover {
 @media (max-width: 768px) {
   #header {
     position: relative;
-    background: #2b323a;
-    color: white;
+    color: #2b323a;
   }
   .header-fixed #header {
     position: relative;
@@ -1472,7 +1471,7 @@ a.text-success:hover {
   }
 }
 #header.header-inverse {
-  background: #242a31;
+
   color: rgba(255, 255, 255, 0.6);
 }
 .header-inverse .header-nav .btn-icon-toggle:hover {
@@ -1480,11 +1479,7 @@ a.text-success:hover {
 }
 @media (max-width: 768px) {
   .header-inverse .headerbar-left {
-    background: #242a31;
     border-bottom-color: rgba(255, 255, 255, 0.15);
-  }
-  .header-inverse .headerbar-right {
-    background: #242a31;
   }
 }
 #menubar {

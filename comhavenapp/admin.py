@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NewAccountLogin, UserProfile, PinaxPoints, Tasks, TempAccounts, AccessListOfDevices, ExpressLoginsSites
+from .models import NewAccountLogin, UserProfile, PinaxPoints, Tasks, TempAccounts, AccessListOfDevices, ExpressLoginsSites, SecurityChallenges, Status
 
 
 admin.site.register(NewAccountLogin)
@@ -10,3 +10,5 @@ admin.site.register(Tasks)
 admin.site.register(TempAccounts)
 admin.site.register(AccessListOfDevices)
 admin.site.register(ExpressLoginsSites)
+admin.site.register(SecurityChallenges)
+admin.site.register(Status)

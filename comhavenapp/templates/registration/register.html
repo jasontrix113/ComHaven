@@ -3,42 +3,46 @@
 {% load widget_tweaks %}
 {% block title %} Create An Account {% endblock %}
 <html>
-	<head>
-
-	</head>
 	{% block content %}
 	<body class="menubar-hoverable header-fixed" style="background-color: white">
 		<div class="row col-sm-12" style="padding:0; margin:0;">
-			<!--<div class="img-backdrop"></div>-->
 			<div class="col-sm-6 text-center">
 				<img src="{% static 'img/comhaven_logo4.png' %}" id="app-logo">
-			</div>
+			</div><!-- end .col-sm-6 -->
 			<div class="col-sm-6">
 				<!-- BEGIN SIGN-UP SECTION -->
 				<section class="section-account">
 					<div class="card contain-sm style-transparent mt-0" style="max-width:450px; background: transparent; max-height: 200px;">
-						<br>
+						<br><!-- !break -->
 						<div class="card-body">
 							<div class="card">
 								<div class="card-body">
 									<h2 class="text-bold text-center text-primary">Create an account</h2>
-									<br>
+									<br><!-- !break -->
 									<form class="form floating-label" action="{% url 'register' %}" accept-charset="utf-8" method="post">
 										{% if form.errors %}
 											<div class="alert alert-danger">
 												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 												<strong></strong> Oops! It seems your inputs are incorrect. Please try again.
-											</div>
-										{% endif %}
+											</div><!-- emd .alert .alert-danger -->
+										{% endif %}<!-- endif -->
+										{% if messages %}
+											{% for message in messages %}
+												<p {% if message.tags %} class="alert {{ message.tags }} alert-dismissible text-center"{% endif %}>
+													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+													{{ message|safe }}
+												</p><!-- end .alert -->
+											{% endfor %}<!-- endfor -->
+										{% endif %}<!-- endif -->
 										{% csrf_token %}
 										<div class="form-group">
-										{{ form.username|add_class:"form-control" }}
-										<label>Username</label>
-										</div>
+											{{ form.username|add_class:"form-control" }}
+											<label>Username</label>
+										</div><!-- end .form-group -->
 										<div class="form-group">
 											{{ form.email|add_class:"form-control" }}
 											<label>Email Address</label>
-										</div>
+										</div><!-- end .form-group -->
 										<div class="form-group">
 											{{ form.password1|add_class:"form-control" }}
 											<label>Master Password</label>
@@ -46,31 +50,29 @@
 									  		{{ block.super }}
 									  			{{ form.media }}
 											{% endblock %}
-										</div>
-
+										</div><!-- end .form-group -->
 										<div class="form-group">
-										{{ form.password2|add_class:"form-control" }}
-										<label>Confirm Master Password</label>
-										</div>
-										<br>
+											{{ form.password2|add_class:"form-control" }}
+											<label>Confirm Master Password</label>
+										</div><!-- end .form-group -->
+										<br><!-- !break -->
 										<div class="row">
 											<div class="col-xs-12">
 												<button class="btn btn-primary btn-block" type="submit">Register</button>
 											</div><!--end .col -->
 											<div class="col-xs-12 text-left">
-												<br>
+												<br><!-- !break -->
 												<p>Already have an account? <a href="{% url 'login' %}" class="text-primary"> Login.</a> </p>
 											</div><!--end .col -->
 										</div><!--end .row -->
-									</form>
+									</form><!-- end form -->
 								</div><!--end .card-body-->
 							</div><!--end .card-->
 						</div><!--end .card-body -->
 					</div><!--end .card sm-main-->
 				</section><!--end .section-->
-				<!-- END SIGN-UP SECTION -->
 			</div><!--end .col-sm-->
 		</div><!--end .row-->
-	{% endblock %}
-	</body>
-</html>
+	{% endblock %}<!-- endblock -->
+	</body><!-- end body -->
+</html><!-- end html -->

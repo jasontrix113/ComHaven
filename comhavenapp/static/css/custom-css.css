@@ -4,9 +4,21 @@
     max-height: 400px;
     margin-top: 120px;
 }
+#empty-content
+{
+    margin-top: 160px;
+    color: grey;
+}
 #menubar-hoverable
 {
     background-color: white;
+}
+#label-stats{
+    margin:0;
+    padding: 0;
+}
+#label-stats .col-sm-3 .nav-item .nav-link .card{
+    max-height: 10px;
 }
 #welcome-row
 {
@@ -15,14 +27,19 @@
 }
 #btn-add-acc
 {
-    margin-top: 80px;
-    padding: 0 40px;
+    margin-top: 94px;
+    padding: 0 20px;
 }
 #btn-add
 {
     float: right;
     color: white;
     background-color: #2b323a;
+    margin-top: -40px;
+}
+.jumbotron
+{
+    margin-top: -40px;
 }
 .jumbotron h2
 {
@@ -32,9 +49,7 @@
 {
     font-size: 14px;
 }
-.card-head{
 
-}
 #menu-toggle
 {
     margin-left: 5px;

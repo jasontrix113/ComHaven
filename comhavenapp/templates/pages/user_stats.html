@@ -1,0 +1,115 @@
+{% extends 'partial/layout.html' %}
+{% load widget_tweaks %}
+{% load staticfiles %}
+{% block title %} Detailed User Status {% endblock %}
+
+{% block body %}
+<section>
+    <!-- MESSAGES SECTION -->
+    {% if messages %}
+        {% for message in messages %}
+            <p {% if message.tags %} class="alert {{ message.tags }} text-center"{% endif %}>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+    <div class="section-body" style="padding: 20px;">
+        <div class="row">
+            <h1 class="text-left mx-auto">&nbsp Detailed User Stats</h1>
+            <hr>
+        </div>
+        <!-- STATUS BUTTONS -->
+        <div class="row">
+            <nav class="navbar navbar-primary" id="nav-pills">
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    <div class="col-sm-12" id="label_stats">
+                        <div class="col-sm-3">
+                            <!-- TAB_PILLS DUPLICATE -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="pill-D-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
+                                    <div class="card text-center">
+                                        <div class="card-body small">
+                                           <h6><span class="fa fa-warning"></span> Duplicate ()</h6>
+                                        </div><!-- end .card-body -->
+                                    </div><!-- end .card .text-center -->
+                                </a><!-- end .nav-link -->
+                            </li><!-- end .nav-item -->
+                        </div><!-- end .col-sm-2 -->
+                        <div class="col-sm-3">
+                            <!-- TAB_PILLS COMPROMISED -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="pill-C-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
+                                    <div class="card text-center">
+                                        <div class="card-body small">
+                                            <h6><span class="fa fa-warning"></span> Compromised ()</h6>
+                                        </div><!-- end .card-body -->
+                                    </div><!-- end .card .text-center -->
+                                </a><!-- end .nav-link -->
+                            </li><!-- end .nav-item -->
+                        </div><!-- end .col-sm-2 -->
+                        <div class="col-sm-3">
+                            <!-- TAB_PILLS WEAK -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="pill-W-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
+                                    <div class="card text-center">
+                                        <div class="card-body small">
+                                            <h6><span class="fa fa-warning"></span> Weak ()</h6>
+                                        </div><!-- end .card-body -->
+                                    </div><!-- end .card .text-center -->
+                                </a><!-- end .nav-link-->
+                            </li><!-- end .nav-item -->
+                        </div><!-- end .col-sm-2 -->
+                        <div class="col-sm-3">
+                            <!-- TAB_PILLS OLD -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="pill-O-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
+                                    <div class="card text-center">
+                                        <div class="card-body small">
+                                            <h6><span class="fa fa-warning"></span> Old ()</h6>
+                                        </div><!-- end .card-body -->
+                                    </div><!-- end .card .text-center -->
+                                </a><!-- end .nav-link -->
+                            </li><!-- end .nav-item -->
+                        </div><!-- end .col-sm-2 -->
+                    </div><!-- end .col-sm-12 -->
+                </ul><!-- end ul -->
+
+
+                        <!-- TABLE -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="form" action="" method="post">
+                                            <table class="table table-stripped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Accounts</th>
+                                                        <th>Password Strength</th>
+                                                        <th>Last Change</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Google</td>
+                                                        <td>Sample</td>
+                                                        <td>Sample</td>
+                                                        <td>Sample</td>
+                                                    </tr>
+
+                                                </tbody><!-- end .table-body -->
+                                            </table><!-- end .table-->
+                                        </form><!-- end .form -->
+                                    </div><!-- end .card-body -->
+                                </div><!-- end .card -->
+                            </div><!-- end .col-sm-12 -->
+                        </div><!-- end .row -->
+
+            </nav><!-- end nav -->
+        </div><!--end .row -->
+    </div><!--end .section-body -->
+</section>
+{% endblock %}

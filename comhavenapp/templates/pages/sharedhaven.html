@@ -31,24 +31,35 @@
             <br>
             {% for login in new_login %}
             <div class="d-inline p-2 bg-primary text-white">
-                <!--first-card -->
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-head">
-                            <header>{{ login.login_name }}</header>
-                            <div class="divider"></div>
-                            <div class="tools" style="margin-top: 20px;">
-                                <a href="{% url 'send_email' login.id %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Share</a>
-                            </div>
-                            <hr>
+            <!--first-card -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-head">
+                        <header>{{ login.login_name }}</header>
+                        <div class="divider"></div>
+                        <div class="tools" style="margin-top: 20px;">
+                            <a href="{% url 'send_email' login.id %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;">Share</a>
                         </div>
-                        <div class="card-body text-left">
-                            <p><b>Email:</b> {{ login.login_username }}</p>
-                            <p><b>URL: </b>{{ login.login_target_url }}</p>
+                        <hr>
+                    </div>
+                    <div class="card-body text-left">
+                        <p><b>Email:</b> {{ login.login_username }}</p>
+                        <p><b>URL: </b>{{ login.login_target_url }}</p>
 
-                        </div><!--end .card-body -->
-                    </div><!--end .card -->
-                </div><!--end .col -->
+                    </div><!--end .card-body -->
+                </div><!--end .card -->
+            </div><!--end .col -->
+            {% empty %}
+            <div class="col-sm-12 text-center mx-auto" id="empty-content" style="color: grey;">
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <span><i class="fa fa-share-alt-square fa-10x"></i></span>
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <p class="small"> You don't have an account to share yet. <a href="{% url 'new_login' %}"> Add an account. </a> </p>
+            </div>
             {% endfor %}
             </div><!--end d-inline -->
         </div><!--end .row -->
