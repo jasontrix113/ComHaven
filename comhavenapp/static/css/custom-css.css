@@ -1,5 +1,6 @@
 body{
-    font-family: 'Roboto', san-serif;
+    font-family: 'Open Sans', san-serif;
+    font-weight: 600;
 }
 
 #app-logo
@@ -20,6 +21,8 @@ body{
 #header
 {
     font-family: 'Open Sans', san-serif;
+    font-weight: 600;
+    color: hsl(165, 4%, 34%);
 }
 #label-stats{
     margin:0;
