@@ -1,3 +1,7 @@
+body{
+    font-family: 'Roboto', san-serif;
+}
+
 #app-logo
 {
     max-width: 100%;
@@ -9,9 +13,9 @@
     margin-top: 160px;
     color: grey;
 }
-#menubar-hoverable
+#header
 {
-    background-color: white;
+    font-family: 'Open Sans', san-serif;
 }
 #label-stats{
     margin:0;
