@@ -13,6 +13,10 @@ body{
     margin-top: 160px;
     color: grey;
 }
+#menubar-hoverable
+{
+    background: white;
+}
 #header
 {
     font-family: 'Open Sans', san-serif;
