@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a44e852-003c-4f7d-8e8b-522ef931cabc" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/views.py" afterPath="$PROJECT_DIR$/comhavenapp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/forms.py" afterPath="$PROJECT_DIR$/comhavenapp/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/partial/layout.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/partial/layout.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenproject/settings.py" afterPath="$PROJECT_DIR$/comhavenproject/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -52,10 +55,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
+            <state relative-caret-position="0">
               <caret line="529" column="39" lean-forward="false" selection-start-line="529" selection-start-column="39" selection-end-line="529" selection-end-column="39" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
@@ -64,21 +67,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/comhavenproject/settings.py">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/comhavenapp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-88">
-              <caret line="148" column="51" lean-forward="true" selection-start-line="148" selection-start-column="51" selection-end-line="148" selection-end-column="51" />
-              <folding />
+            <state relative-caret-position="422">
+              <caret line="105" column="51" lean-forward="false" selection-start-line="105" selection-start-column="51" selection-end-line="105" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="share_credentials.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/share_credentials.html">
+      <file leaf-file-name="layout.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/comhavenapp/templates/partial/layout.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="36" column="44" lean-forward="true" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+            <state relative-caret-position="102">
+              <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -159,9 +164,7 @@
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/html_email.html" />
         <option value="$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css" />
         <option value="$PROJECT_DIR$/comhavenapp/static/css/bootstrap.css" />
-        <option value="$PROJECT_DIR$/comhavenproject/settings.py" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/registration/login.html" />
-        <option value="$PROJECT_DIR$/comhavenapp/templates/partial/layout.html" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/partial/base.html" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/user_stats.html" />
         <option value="$PROJECT_DIR$/comhavenapp/admin.py" />
@@ -186,9 +189,11 @@
         <option value="$PROJECT_DIR$/comhavenapp/static/css/custom-css.css" />
         <option value="$PROJECT_DIR$/comhavenapp/models.py" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/generate-password.html" />
-        <option value="$PROJECT_DIR$/comhavenapp/forms.py" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/share_credentials.html" />
         <option value="$PROJECT_DIR$/comhavenapp/views.py" />
+        <option value="$PROJECT_DIR$/comhavenapp/forms.py" />
+        <option value="$PROJECT_DIR$/comhavenproject/settings.py" />
+        <option value="$PROJECT_DIR$/comhavenapp/templates/partial/layout.html" />
       </list>
     </option>
   </component>
@@ -258,26 +263,7 @@
               <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
               <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="partial" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="registration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenproject" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
@@ -390,7 +376,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="0" width="1368" height="775" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26992482" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -399,7 +384,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2112676" sideWeight="0.49366143" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2112676" sideWeight="0.49366143" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="false" weight="0.32980332" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -440,7 +425,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/comhavenapp/templates/access-control.html" />
     <entry file="file://$PROJECT_DIR$/comhavenapp/templates/base.html" />
     <entry file="file://$PROJECT_DIR$/comhavenapp/templates/edit.html" />
     <entry file="file://$PROJECT_DIR$/comhavenapp/templates/express-logins.html" />
@@ -674,13 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comhavenapp/templates/partial/layout.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-595">
-          <caret line="4" column="10" lean-forward="false" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/new_login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
@@ -692,30 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="66" lean-forward="true" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="66" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/comhavenapp/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1717">
-          <caret line="105" column="51" lean-forward="true" selection-start-line="105" selection-start-column="51" selection-end-line="105" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/comhavenapp/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1003">
-          <caret line="66" column="53" lean-forward="false" selection-start-line="66" selection-start-column="53" selection-end-line="66" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -723,33 +676,64 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="394">
           <caret line="49" column="122" lean-forward="false" selection-start-line="49" selection-start-column="122" selection-end-line="49" selection-end-column="122" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenapp/migrations/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="529" column="39" lean-forward="false" selection-start-line="529" selection-start-column="39" selection-end-line="529" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenapp/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/comhavenproject/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-88">
-          <caret line="148" column="51" lean-forward="true" selection-start-line="148" selection-start-column="51" selection-end-line="148" selection-end-column="51" />
+        <state relative-caret-position="193">
+          <caret line="121" column="0" lean-forward="false" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/share_credentials.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="36" column="44" lean-forward="true" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+        <state relative-caret-position="422">
+          <caret line="36" column="44" lean-forward="false" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
+    <entry file="file://$PROJECT_DIR$/comhavenapp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="529" column="39" lean-forward="false" selection-start-line="529" selection-start-column="39" selection-end-line="529" selection-end-column="39" />
+        <state relative-caret-position="422">
+          <caret line="105" column="51" lean-forward="false" selection-start-line="105" selection-start-column="51" selection-end-line="105" selection-end-column="51" />
           <folding>
-            <element signature="e#0#54#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenapp/templates/partial/layout.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>

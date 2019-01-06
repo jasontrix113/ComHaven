@@ -7,7 +7,7 @@
 	{% block content %}
 	<body class="menubar-pin menubar-hoverable header-fixed">
 		<!-- BEGIN HEADER-->
-		<header id="header" style="background: #2b323a; color: white;">
+		<header id="header">
 			<div class="headerbar">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="headerbar-left">
@@ -17,16 +17,14 @@
 								<a href="{% url 'home' %}">
 									<img src="{% static 'img/comhaven_logo3.png' %}"><span class="text-lg text-bold">COMHAVEN</span>
 								</a>
-							</div>
-						</li>
+							</div><!-- end .brand-holder -->
+						</li><!-- end .header-nav--brand -->
 						<li>
 							<a class="btn btn-icon-toggle menubar-toggle" id="menu-toggle" data-toggle="menubar" href="javascript:void(0);"><i class="fa fa-bars"></i>
 							</a>
-						</li>
-
-
-					</ul>
-				</div>
+						</li><!-- end -->
+					</ul><!-- end .header-nav-->
+				</div><!-- end .header-left -->
 				<div class="headerbar-right">
 					<ul class="header-nav header-nav-profile">
 						<li class="dropdown">

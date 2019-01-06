@@ -44,9 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'zxcvbn_password',
     'pinax.points',
-    'django_zxcvbn_password_validator',
     'django_user_agents',
 ]
 
@@ -110,16 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-    {
-        'NAME': 'zxcvbn_password.ZXCVBNValidator',
-        'OPTIONS': {
-            'min_score': 3,
-            'user_attributes': ('username', 'email', 'first_name', 'last_name')
-        }
-    },
-    {
-		'NAME': 'django_zxcvbn_password_validator.ZxcvbnPasswordValidator',
-	},
 ]
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -130,6 +118,8 @@ PASSWORD_HASHERS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
+
+PASSWORD_MIN_LENGTH = 12 # Defaults to 12
 
 LANGUAGE_CODE = 'en-us'
 
