@@ -107,6 +107,7 @@ def auto_login(request, login_id):
                 print("hello")
                 browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
+                print(login.login_target_url)
                 username = browser.find_element_by_id('email')
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id('pass')
@@ -114,7 +115,7 @@ def auto_login(request, login_id):
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
-                                               'alert-danger'))
+                                          'alert-danger'))
 
                     #signInButton = browser.find_element_by_id('edit-submit');
                     #signInButton.click()
