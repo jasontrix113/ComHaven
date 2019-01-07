@@ -51,7 +51,7 @@ class SharedHavenForm(forms.Form):
     # username = forms.CharField(required=True)
     # password = forms.CharField(widget=forms.PasswordInput)
 
-class PasswordGeneratorForm(forms.Form):
+class PasswordGeneratorForm(ModelForm):
     length_choices = [(i,i) for i in range(12,255)]
     pass_length = forms.ChoiceField(choices=length_choices)
     pass_anagram = forms.ChoiceField(label="Choose an anagram",
@@ -63,10 +63,11 @@ class PasswordGeneratorForm(forms.Form):
     pass_lo_case = forms.BooleanField(required=False)
     pass_no_case = forms.BooleanField(required=False)
     pass_ch_case = forms.BooleanField(required=False)
-    pass_result = forms.CharField(max_length=200, required=False)
+    pass_result = forms.CharField(required=False)
 
-    model = PasswordGenerator
-    fields = ['pass_length', 'pass_anagram', 'pass_phrase', 'pass_up_case', 'pass_result']
+    class Meta:
+        model = PasswordGenerator
+        fields = ['pass_length', 'pass_anagram', 'pass_phrase', 'pass_up_case', 'pass_result']
 
 
 

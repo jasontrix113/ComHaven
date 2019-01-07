@@ -341,27 +341,36 @@ def sharedhaven(request):
     return render(request, 'pages/sharedhaven.html', context_login)
 @login_required
 def generatepassword(request):
-    if request.method == 'POST':
+    if request.POST:
+        ps_result = PasswordGenerator.objects.all()
+        context_ps = {'ps_result': ps_result}
         form = PasswordGeneratorForm(request.POST)
         pass_length = request.POST['pass_length']
         length = int(pass_length)
         pass_phrase = request.POST['pass_phrase']
-        print(pass_phrase)
-        print(pass_length)
 
         chars = string.ascii_letters + string.digits + string.ascii_uppercase + string.ascii_lowercase + string.punctuation
 
         res = ''.join(random.choice(chars) for x in range(length))
         print(res)
-        # res = [' '.join(perm) for perm in itertools.permutations(pass_phrase)]
-        # print(res)
-        # if form.is_valid():
-        #     return redirect('/generate_password', messages.success(request, 'Password generated.', 'alert-success'))
-        # else:
-        #     return redirect('/generate_password', messages.error(request, 'Failed.', 'alert-danger'))
+        print(pass_phrase)
+        print(pass_length)
+        if request.method == 'POST':
+            if form.is_valid():
+                result = form.save(commit=False)
+                result.pass_result = res
+                print(result.pass_result)
+                result.save()
+
+    # res = [' '.join(perm) for perm in itertools.permutations(pass_phrase)]
+    # print(res)
+    # if form.is_valid():
+    #     return redirect('/generate_password', messages.success(request, 'Password generated.', 'alert-success'))
+    # else:
+    #     return redirect('/generate_password', messages.error(request, 'Failed.', 'alert-danger'))
 
     form = PasswordGeneratorForm()
-    return render(request, 'pages/generate-password.html', {'form': form})
+    return render(request, 'pages/generate-password.html', {'form': form}, context_ps)
 
 ##############END_OF_PAGE_VIEWS##############
 

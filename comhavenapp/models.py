@@ -101,11 +101,12 @@ class TempAccounts(models.Model):
         return self.temp_uname
 
 class PasswordGenerator(models.Model):
-    user  = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+    # user  = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
     pass_length = models.IntegerField(default=0)
     pass_anagram = models.CharField(max_length=200)
     pass_phrase = models.CharField(max_length=200)
+    pass_result = models.CharField(max_length=200, default='res')
 
     def __str__(self):
-        return self.user.username
+        return self.pass_result
 
