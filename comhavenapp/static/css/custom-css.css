@@ -12,6 +12,8 @@ body{
 {
     font-family: 'Open Sans', san-serif;
     font-weight: 200;
+}
+#card{
     max-height: 250px;
     height:100%;
 }
