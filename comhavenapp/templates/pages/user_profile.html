@@ -25,12 +25,6 @@
                               <p class="text-danger" style="margin-left: 10px;">*Complete your profile.</p>
                               <div class="col-md-6">
                                 <div class="form-group">
-                                  <label class="bmd-label-floating">Username</label>
-                                    <h4>{{ user.userprofile.user }}</h4>
-                                </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
                                   <label class="bmd-label-floating">Email address</label>
                                     <h4> {{ user.userprofile.email }}</h4>
                                 </div>
@@ -40,23 +34,15 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">First Name</label>
-                                  <h4> {{ user.userprofile.firstname }} </h4>
+                                  <h4> {{ user.userprofile.first_name }} </h4>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="floating-label">Last Name</label>
-                                    <h4>{{ user.userprofile.lastname }}</h4>
+                                    <h4>{{ user.userprofile.last_name }}</h4>
                                 </div><!-- end .form-group -->
                               </div><!-- end .col-md-6 -->
-                            </div><!-- end .row -->
-                            <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="floating-label">Address</label>
-                                    <h4>{{ user.userprofile.address }}</h4>
-                                </div><!-- end .form-group -->
-                              </div><!-- end .col.md-6 -->
                             </div><!-- end .row -->
                               <hr>
                               <a href="{% url 'user_profile_edit' %}" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;">Update Profile</a>

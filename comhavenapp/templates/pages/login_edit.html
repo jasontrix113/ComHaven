@@ -34,10 +34,19 @@
 									</div><!-- end .form-group -->
 								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-6">
-									<div class="form-group floating-label">
-										{{ form.login_password | add_class:'form-control'}}
-										<label>Password</label>
-									</div><!-- end .form-group -->
+									<div class="col-sm-10">
+										<div class="form-group floating-label">
+											<input type="password" class="form-control" id="id_login_password" name="login_password" value="{{ pp.temp_pword }}">
+											<!--{{ form.login_password | add_class:'form-control'}}-->
+											<label>Password</label>
+										</div><!-- end .form-group -->
+									</div>
+									<div class="col-sm-1">
+										<a href="{% url 'generate-password' %}"><i class="fa fa-key" style="margin-top:30px;"></i></a>
+									</div><!-- end .col-sm-1 -->
+									<div class="col-sm-1">
+										<i class="fa fa-eye-slash" id="show_eye" onclick="show()" style="margin-top:30px;"></i>
+									</div><!-- end .col-sm-1 -->
 								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-12">
 									<div class="form-group floating-label">
@@ -63,4 +72,17 @@
 		</div><!--end .row -->
 	</div><!--end .section-body -->
 </section><!-- end section -->
+<script>
+	function show()
+		{
+		if( $("#id_login_password").attr("type") == "password" ){
+			$("#id_login_password").attr("type", "text");
+			$("#show_eye").attr("class", "fa fa-eye-slash");
+		}else{
+			$("#id_login_password").attr("type", "password");
+			$("#show_eye").attr("class", "fa fa-eye");
+		}
+			return false;
+		}
+</script>
 {% endblock %}<!-- endfor -->

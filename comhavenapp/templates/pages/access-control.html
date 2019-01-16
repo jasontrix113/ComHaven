@@ -3,6 +3,7 @@
 {% block title %} Access Control {% endblock %}
 {% block body %}
 <section>
+    <div class="loader"></div>
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto">&nbsp Access Control List</h1>
@@ -18,7 +19,7 @@
                     <div class="card">
                         <div class="card-head">
                             <div class="divider"></div>
-                            <header><h3>Windows</h3></header>
+                            <header><h3>{{ aclist.device_platform }}</h3></header>
                             <hr><!-- !line-break -->
                         </div><!-- end .card-head -->
                         <div class="card-body text-center">
@@ -27,6 +28,17 @@
                         </div><!--end .card-body -->
                     </div><!--end .card -->
                 </div><!--end .col -->
+            {% empty %}
+                <div class="col-sm-12 text-center mx-auto" style="color: grey;">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span><i class="fa fa fa-lock fa-10x"></i></span>
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <p class="small"> There are no devices registered. </p>
+                </div>
             {% endfor %}<!-- endfor -->
             </div><!--end d-inline -->
         </div><!--end .row -->

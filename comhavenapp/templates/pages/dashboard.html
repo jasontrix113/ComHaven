@@ -32,9 +32,18 @@
                             <div class="card-head">
                                 <header>{{ login.login_name }}</header>
                                 <div class="divider"></div>
-                                <div class="tools">
-                                    <a href="{% url 'edit' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-wrench"></i></a>
-                                    <a href="{% url 'delete' login.id %}" class="btn btn-icon-toggle"><i class="fa fa-trash"></i></a>
+                                <div class="tools" style="margin-top:20px;">
+                                    <div class="dropdown">
+                                      <button type="button" class="btn btn-icon-toggle dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" aria-expanded="false" aria-haspopup="true">
+                                          <i class="fas fa-ellipsis-h"></i>
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="min-width: 100px;">
+                                            <a href="{% url 'edit' login.id %}" class="btn btn-toggle"><i class="fa fa-wrench"></i> Edit </a><br>
+                                            <button type="button" data-toggle="modal" class="btn btn-toggle" data-target="#d-modal" style="background: none;">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </button>
+                                      </div>
+                                    </div>
                                 </div><!-- end .tools -->
                                 <hr><!-- !line-break -->
                             </div><!-- end .card-head -->
@@ -50,6 +59,30 @@
             <br><!-- !break -->
             <br><!-- !break -->
         </div><!--end .row -->
+        {% for login in new_login %}
+        <!-- MODAL FOR ACCOUNT DELETION -->
+        <div class="modal" id="d-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                   <!--MODAL HEADER -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Account Deletion</h4>
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            Do you want to delete this account?
+                        </div><!-- end .modal-body -->
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <a href="{% url 'delete' login.id %}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div><!-- end .modal-footer -->
+                    </div><!-- end .modal-header -->
+                </div><!-- end .modal-content -->
+            </div><!-- end .modal-dialog -->
+        </div><!-- end .modal -->
+        {% endfor %}<!-- endfor -->
         <!-- END ACCOUNTS -->
     </div><!--end .section-body -->
 </section><!-- end section -->

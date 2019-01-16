@@ -4,12 +4,12 @@ from django.views import generic
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm
+from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm, EditProfileForm
 from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import NewAccountLogin, PinaxPoints, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator
+from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -23,9 +23,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-#Pinax-Points#
-from pinax.points.models import points_awarded
-
 #send Email
 from django.core.mail import send_mail
 from django.template import loader
@@ -38,7 +35,14 @@ from passlib.hash import pbkdf2_sha256
 #Date Time
 from datetime import datetime
 
+#Generate passwords
 import itertools
+from collections import defaultdict
+from django.template import RequestContext
+import csv
+
+import platform
+from zxcvbn import zxcvbn
 
 @login_required
 def auto_login(request, login_id):
@@ -208,6 +212,24 @@ def auto_login(request, login_id):
                 # signInButton.click()
                 # signInButton = browser.find_element_by_id('edit-submit');
                 # signInButton.click()
+        elif login.login_name == 'Trello':
+            try:
+                browser = webdriver.Chrome()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id('user')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('password')
+                password.send_keys(temp_ac.temp_pword)
+
+            except:
+                return redirect('/express-login',
+                                messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
+                # signInButton = browser.find_element_by_id('edit-submit');
+                # signInButton.click()
         else:
             return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                            'alert-danger'))
@@ -235,28 +257,27 @@ def user_login(request):
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
+                else:
+                    login(request, user)
+                    return redirect('home')
         else:
             return redirect('/accounts/login', messages.error(request, 'username or password is incorrect.', 'alert-danger'))
 
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        email_data = request.POST['email']
-        pass1 = request.POST['password1']
-        pass2 = request.POST['password2']
-        # print(pass1)
-        # print(pass2)
-        print(email_data)
-        duplicate_email = User.objects.filter(email=email_data)
-        if duplicate_email.exists():
-            return redirect('/accounts/register', messages.error(request, 'Email has already taken', 'alert-danger'))
-        if pass1 != pass2:
-            return redirect('/accounts/register', messages.error(request, 'Password did not match. Please try again', 'alert-danger'))
+
+        # if len(pass1) < 12:
+        #     return redirect('/accounts/register',
+        #                     messages.error(request, 'Password must be in 12 characters', 'alert-danger'))
+
         # duplicate_email = User.objects.filter(email=email_data)
         # if duplicate_email.exists():
         #     return redirect('/accounts/register', messages.error(request, 'Email has already taken', 'alert-danger'))
-
         if form.is_valid():
+            password = form.cleaned_data['password1']
+            results = zxcvbn(password)
+            print(results['score'])
             if request.user_agent.is_pc == True:
                 filename = os.path.expandvars(r"C:")
                 if os.path.exists(filename):
@@ -265,11 +286,10 @@ def register(request):
                     directory = os.path.dirname(filename)
                     path_exist = directory
                     if os.path.exists(path_exist):
-                        try:
-                            form.save()
-                            return redirect('/accounts/login', messages.success(request, 'Account created successfully.','alert-success'))
-                        except:
-                            print("file exist")
+                        print("file exist")
+                        form.save()
+                        return redirect('/accounts/login',
+                                messages.success(request, 'Account created successfully.', 'alert-success'))
                     else:
                         os.mkdir(directory)
                         with open(filename, "w") as f:
@@ -279,16 +299,24 @@ def register(request):
                             if request.method == 'POST':
                                 user = request.POST['username']
                                 device_model = request.user_agent.device
+                                device_platform = platform.system()
                                 print(device_model)
                                 # f.save()
-                                form.save()
+                                create = form.save(commit=False)
+                                create.password = form.cleaned_data['password1']
+                                create.save()
                                 print("Success")
                                 AccessListOfDevices.objects.create(
                                     acl_user = user,
                                     device_model=device_model,
-                                    access_id_path=directory
+                                    access_id_path=directory,
+                                    device_platform = device_platform
                                 )
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
+                else:
+                    form.save()
+                    return redirect('/accounts/login',
+                                    messages.success(request, 'Account created successfully.', 'alert-success'))
             elif request.user_agent.is_mobile == True:
                  form.save()
                  return redirect('/accounts/login',messages.success(request, 'Account created successfully.', 'alert-success'))
@@ -329,49 +357,97 @@ def accesscontrol(request):
 
 @login_required
 def securitychallenges(request):
-    ss = Status.objects.all()
+    user = request.user
     sc = SecurityChallenges.objects.all()
-    context_sc = {'sc': sc}
-    context_ss = {'ss': ss}
-    return render(request, 'pages/security-challenges.html', context_ss, context_sc)
+    us = User_Stats.objects.all()
+    context_us_sc = {'sc':sc, 'us':us}
+
+    return render(request, 'pages/security-challenges.html', context_us_sc)
 
 @login_required
 def sharedhaven(request):
     new_login = NewAccountLogin.objects.filter(login_user=request.user)
     context_login = {'new_login': new_login}
     return render(request, 'pages/sharedhaven.html', context_login)
+
 @login_required
 def generatepassword(request):
+    try:
+        del request.session['result']
+    except:
+        print('session not found.')
     if request.POST:
-        ps_result = PasswordGenerator.objects.all()
-        context_ps = {'ps_result': ps_result}
         form = PasswordGeneratorForm(request.POST)
-        pass_length = request.POST['pass_length']
-        length = int(pass_length)
-        pass_phrase = request.POST['pass_phrase']
-
-        chars = string.ascii_letters + string.digits + string.ascii_uppercase + string.ascii_lowercase + string.punctuation
-
-        res = ''.join(random.choice(chars) for x in range(length))
-        print(res)
-        print(pass_phrase)
-        print(pass_length)
-        if request.method == 'POST':
+        if request.method == "POST":
             if form.is_valid():
-                result = form.save(commit=False)
-                result.pass_result = res
-                print(result.pass_result)
-                result.save()
+                pass_length = request.POST['pass_length']
+                length = int(pass_length)
+                pass_phrase = request.POST['pass_phrase']
 
-    # res = [' '.join(perm) for perm in itertools.permutations(pass_phrase)]
-    # print(res)
-    # if form.is_valid():
-    #     return redirect('/generate_password', messages.success(request, 'Password generated.', 'alert-success'))
-    # else:
-    #     return redirect('/generate_password', messages.error(request, 'Failed.', 'alert-danger'))
+                try:
+                    pass_up_lo = request.POST['pass_up_lo_case']
+                    print(pass_up_lo)
+                except:
+                    print('except')
+                    pass_up_lo = False
+                try:
+                    pass_no = request.POST['pass_no_case']
+                    print(pass_no)
+                except:
+                    print('except2')
+                    pass_no = False
+                    print(pass_no)
+                try:
+                    pass_ch = request.POST['pass_ch_case']
+                    print(pass_ch)
+                except:
+                    print('except3')
+                    pass_ch = False
+
+                # leetspeak converter
+                getchar = lambda c: chars[c] if c in chars else c
+                chars = {"a":"4","e":"3","l":"1","o":"0","s":"5","t":"7"}
+                leet = ''.join(getchar(c) for c in pass_phrase)
+                print('Leet Equivalent: '+ leet)
+                chars1 = ''
+
+                # pseudo-random string
+                if pass_no == False and  pass_no == False and pass_ch == False:
+                    chars1 = chars1 + string.ascii_letters
+                    print('ok')
+                if pass_up_lo == 'on':
+                    chars1 = chars1 + string.ascii_uppercase + string.ascii_lowercase
+                    print('uppercase and lowercase')
+                if pass_no == 'on':
+                    chars1 = chars1 + string.digits
+                    print('numbers')
+                if pass_ch == 'on':
+                    chars1 = chars1 + string.punctuation
+                    print('characters')
+
+                res1 = ''.join(random.choice(chars1+leet) for x in range(length))
+                res = ''.join(random.choice(chars1) for x in range(length))
+                f_rest = ''.join(random.choice(res1+res) for x in range(length))
+
+                # create session and store password result in session
+                request.session['result'] = res1
+        else:
+            del request.session['result']
+        # pr = PasswordGenerator.objects.all().update(pass_result=res1)
+        # pr_res = PasswordGenerator.objects.all()
+        # pr.pass_result = res1
+        # res_pr = pr.save()
+
+
+        # pr1 = pr.pass_result
+        # context_pr =  {'pass_result': res1}
+        # print(pr)
+        # pass_res = request.POST['pass_result']
+        # form.pass_result = res1
+        # print(form.pass_result+'hello')
 
     form = PasswordGeneratorForm()
-    return render(request, 'pages/generate-password.html', {'form': form}, context_ps)
+    return render(request, 'pages/generate-password.html', {'form': form } )
 
 ##############END_OF_PAGE_VIEWS##############
 
@@ -388,15 +464,9 @@ def new_login(request):
                 login_username = request.POST['login_username']
                 login_password = request.POST['login_password']
                 login_notes = request.POST['login_notes']
-                # login_haven_folder = request.POST['login_haven_folder']
-                # login_username.set_cookie('login_name', datetime.datetime.now())
-                # login_password.set_cookie('login_username', datetime.datetime.now())
-                # sp = request.session['login_password'] = login_password
-                # su = request.session['login_username'] = login_username
-                # login_haven_folder = request.POST['login_haven_folder']
 
                 #Password Encryption with Salt#
-                enc_password = pbkdf2_sha256.encrypt(login_password, rounds=100000, salt_size=32)
+                enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
                 user = request.user
                 TempAccounts.objects.create(
                     temp_uname = login_username,
@@ -404,7 +474,6 @@ def new_login(request):
                 )
                 NewAccountLogin.objects.create(
                     login_user = user,
-                    # login_haven_folder = login_haven_folder,
                     login_target_url=login_target_url,
                     login_name=login_name,
                     login_username=login_username,
@@ -438,6 +507,7 @@ def new_haven_folder(request):
 def login_edit(request, login_id):
     login = NewAccountLogin.objects.get(id=login_id)
     temp = TempAccounts.objects.get(id=login_id)
+    print(temp.temp_pword)
     if request.POST:
         form = NewAccountLoginForm(request.POST, instance=login)
         init = form.save(commit=False)
@@ -456,7 +526,7 @@ def login_edit(request, login_id):
             return redirect('/', messages.error(request, 'Form is not valid', 'alert-danger'))
     else:
         form = NewAccountLoginForm(instance=login)
-        return render(request, 'pages/login_edit.html', {'form':form})
+        return render(request, 'pages/login_edit.html', {'form':form}, {'temp':temp})
 
 @login_required
 def login_destroy(request, login_id):
@@ -468,7 +538,7 @@ def login_destroy(request, login_id):
 
 @login_required
 def user_profile(request):
-    userprofile = UserProfile.objects.all()
+    userprofile = User.objects.all()
     context_up = {'userprofile': userprofile}
     return render(request, 'pages/user_profile.html', context_up)
 
@@ -476,27 +546,19 @@ def user_profile(request):
 def user_edit(request):
     if request.method == 'POST':
         # instance = UserProfile.objects.get(id=login_id)
-        form = UserProfileForm()
-        # username = request.POST['user']
-        # email = request.POST['email']
+        form = EditProfileForm(request.POST, instance=request.user.userprofile)
         print(form)
-        firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
-        address = request.POST['address']
-        notes = request.POST['notes']
         if request.method == 'POST':
             if form.is_valid():
-                # email = request.POST['email']
+                email = request.POST['email']
                 firstname = request.POST['firstname']
                 lastname = request.POST['lastname']
-                address = request.POST['address']
                 notes = request.POST['notes']
                 update = form.save(commit=False)
                 # update.user = username
                 # update.email = email
                 update.firstname = firstname
                 update.lastname = lastname
-                update.address = address
                 update.notes = notes
                 update.save()
                 if update.save():
@@ -507,7 +569,7 @@ def user_edit(request):
                 return redirect('/users/user_profile/', messages.error(request, 'Form is invalid', 'alert-danger'))
     else:
         profile = request.user.userprofile
-        form = UserProfileForm(instance=profile)
+        form = EditProfileForm(instance=profile)
         return render(request, 'pages/user_profile_edit.html', {'form': form})
 
 @login_required

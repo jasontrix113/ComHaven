@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pinax.points',
     'django_user_agents',
+    'django_gamification',
+    'django_password_strength',
+    'zxcvbn_password',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +111,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'zxcvbn_password.ZXCVBNValidator',
+        'OPTIONS': {
+            'min_score': 3,
+            # 'user_attributes': ('username', 'email', 'first_name', 'last_name')
+        }
+    },
 ]
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -167,3 +177,5 @@ USER_AGENTS_CACHE = 'default'
 #MAX_AGE = getattr(settings, 'AUTOMATIC_LOGIN_MAX_AGE', 60 * 60 * 24 * 90)
 #SALT_FIELDS = getattr(settings, 'AUTOMATIC_LOGIN_SALT_FIELDS', ('password',))
 AUTH_PROFILE_MODULE = 'comhavenapp.profile'
+
+PASSWORD_MINIMUM_ENTROPY = 35

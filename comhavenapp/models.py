@@ -4,14 +4,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import date
 
-
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', default="")
     email = models.CharField(max_length=100, default='')
     firstname = models.CharField(max_length=100, default='')
     lastname = models.CharField(max_length = 100, default='')
-    address = models.CharField(max_length = 100, default='')
     notes = models.CharField(max_length=200, default='')
 
     USERNAME_FIELD = 'username'
@@ -24,17 +22,6 @@ def create_profile(sender, **kwargs):
 
 post_save.connect(create_profile, sender=User)
 
-# class NewHavenFolder (models.Model):
-#     new_haven_folder = models.CharField(max_length=200, unique=True)
-#
-#     def __str__(self):
-#         return self.new_haven_folder
-#
-# class HavenFolder (models.Model):
-#     login_haven_folder = models.CharField(max_length=200, unique=True,)
-#
-#     def __str__(self):
-#         return self.login_haven_folder
 class ExpressLoginsSites(models.Model):
     s_user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
     site_name = models.CharField(max_length=50)
@@ -44,69 +31,75 @@ class ExpressLoginsSites(models.Model):
     def __str__(self):
         return self.site_name;
 
-
 class NewAccountLogin (models.Model):
     login_user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default="user")
     login_target_url = models.CharField(max_length=200)
     login_name = models.CharField(max_length=200)
-    # site_url = models.ForeignKey(ExpressLoginsSites, on_delete=models.CASCADE, to_field='site_url', default='https:/')
-    # login_haven_folder = models.ForeignKey(HavenFolder, on_delete=models.CASCADE, to_field="login_haven_folder", default="folder")
     login_username = models.CharField(max_length=200)
-    login_password = models.CharField(max_length=200)
+    login_password = models.CharField(max_length=200, blank=False)
     login_notes = models.CharField(max_length=200)
+    # date_inserted = models.DateTimeField(auto_now=False,null=True)
 
     def __str__(self):
         return self.login_user.username
 
+class Points(models.Model):
+    points = models.IntegerField(unique=True)
+    def __str__(self):
+        return str(self.points)
+
 class Tasks(models.Model):
-    tasks = models.CharField(max_length=200)
+    tasks = models.CharField(max_length=200, unique=True, default='')
     def __str__(self):
-        return self.tasks
+        return str(self.tasks)
 
-class PinaxPoints (models.Model):
-    pinax_user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default="user")
-    pinax_task = models.ForeignKey(Tasks, on_delete=models.CASCADE, default='')
-    point_values = models.IntegerField(default='0')
-
-    def __str__(self):
-        return self.pinax_user.username
 class Status(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
     status = models.CharField(max_length=50)
     def __str__(self):
-        return self.user.username
+        return self.status
 
 class SecurityChallenges(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
-    tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, default='')
+    tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, default='', to_field='tasks')
+    points = models.ForeignKey(Points, on_delete=models.CASCADE, default='', to_field='points')
     date_completed = models.DateTimeField(auto_now_add=False)
     date_initiated = models.DateTimeField(auto_now_add=False)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, default='')
-    award_point_values = models.ForeignKey(PinaxPoints, on_delete=models.CASCADE, default='')
-
     def __str__(self):
-        return self.user.username
+        return str(self.status)
+
 class AccessListOfDevices(models.Model):
     acl_user = models.CharField(max_length=30)
     device_model = models.CharField(max_length=30, default='')
     access_id_path = models.CharField(max_length=30, default='')
+    device_platform = models.CharField(max_length=30, default='')
     def __str__(self):
         return self.acl_user
 
 class TempAccounts(models.Model):
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
     temp_uname = models.CharField(max_length=30)
     temp_pword = models.CharField(max_length=200)
-
     def __str__(self):
         return self.temp_uname
 
 class PasswordGenerator(models.Model):
-    # user  = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
-    pass_length = models.IntegerField(default=0)
-    pass_anagram = models.CharField(max_length=200)
-    pass_phrase = models.CharField(max_length=200)
+    user  = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+    identifier = models.IntegerField()
     pass_result = models.CharField(max_length=200, default='res')
-
     def __str__(self):
         return self.pass_result
 
+class User_Stats(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+    # points_awarded = models.IntegerField()
+    overall_points = models.CharField(max_length=200, default='')
+    def __str__(self):
+        return self.user.username
+
+class Rewards(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+    reward = models.CharField(max_length=200, default='')
+    points_required = models.IntegerField()
+    def __str__(self):
+        return self.user.username

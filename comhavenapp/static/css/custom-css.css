@@ -2,6 +2,12 @@ body{
     font-family: 'Roboto', san-serif;
     font-weight: 600;
 }
+#launch-btn{
+    display: none;
+}
+#card:hover + #launch-btn{
+    display: block;
+}
 .card
 {
     font-family: 'Open Sans', san-serif;
@@ -15,6 +21,17 @@ body{
 {
 
 }
+.progress-bar .bg-warning {
+    background-color: yellow;
+}
+
+.progress-bar .bg-danger {
+    background-color: red;
+}
+
+.progress-bar .bg-success {
+    background-color: green;
+}
 #app-logo
 {
     max-width: 100%;
@@ -23,7 +40,7 @@ body{
 }
 #empty-content
 {
-    margin-top: 160px;
+    margin-top: 10px;
     color: grey;
 }
 #menubar-hoverable

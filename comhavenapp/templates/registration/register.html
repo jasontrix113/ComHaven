@@ -1,5 +1,5 @@
 {% extends 'partial/base.html' %}
-{% load staticfiles %}
+{% load static %}
 {% load widget_tweaks %}
 {% block title %} Create An Account {% endblock %}
 <html>
@@ -44,12 +44,13 @@
 											<label>Email Address</label>
 										</div><!-- end .form-group -->
 										<div class="form-group">
+											<!--<input type="password" class="form-control" name="password1" id="id_password1" data-toggle="password">-->
 											{{ form.password1|add_class:"form-control" }}
 											<label>Master Password</label>
-											{% block js %}
-									  		{{ block.super }}
-									  			{{ form.media }}
-											{% endblock %}
+											<!--{% block js %}-->
+											  <!--{{ block.super }}-->
+											  <!--{{ form.media }}-->
+											<!--{% endblock %}-->
 										</div><!-- end .form-group -->
 										<div class="form-group">
 											{{ form.password2|add_class:"form-control" }}
