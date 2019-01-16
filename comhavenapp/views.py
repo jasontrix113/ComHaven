@@ -275,9 +275,6 @@ def register(request):
         # if duplicate_email.exists():
         #     return redirect('/accounts/register', messages.error(request, 'Email has already taken', 'alert-danger'))
         if form.is_valid():
-            password = form.cleaned_data['password1']
-            results = zxcvbn(password)
-            print(results['score'])
             if request.user_agent.is_pc == True:
                 filename = os.path.expandvars(r"C:")
                 if os.path.exists(filename):
@@ -431,6 +428,15 @@ def generatepassword(request):
 
                 # create session and store password result in session
                 request.session['result'] = res1
+
+                results = zxcvbn(res1)
+                score = results['score']
+                print(results)
+                results['calc_time']
+                cracktime = results['crack_times_display']
+
+
+
         else:
             del request.session['result']
         # pr = PasswordGenerator.objects.all().update(pass_result=res1)
@@ -447,7 +453,10 @@ def generatepassword(request):
         # print(form.pass_result+'hello')
 
     form = PasswordGeneratorForm()
-    return render(request, 'pages/generate-password.html', {'form': form } )
+    try:
+        return render(request, 'pages/generate-password.html', {'form': form, 'score':score, 'cracktime':cracktime})
+    except:
+        return render(request, 'pages/generate-password.html', {'form': form})
 
 ##############END_OF_PAGE_VIEWS##############
 

@@ -1,5 +1,5 @@
 {% extends 'partial/base.html' %}
-{% load static %}
+{% load staticfiles %}
 {% load widget_tweaks %}
 {% block title %} Create An Account {% endblock %}
 <html>
@@ -48,10 +48,6 @@
 											{{ form.password1|add_class:"form-control" }}
 											<div id="complexity" class="default">Password must be 12 characters</div>
 											<label>Master Password</label>
-											<!--<div class="block">-->
-												<!--<div id="results" class="default">Breakdown of points</div>-->
-												<!--<div id="details"></div>-->
-											<!--</div>-->
 										</div><!-- end .form-group -->
 										<div class="form-group">
 											{{ form.password2|add_class:"form-control" }}
