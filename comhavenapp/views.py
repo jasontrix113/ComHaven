@@ -257,9 +257,6 @@ def user_login(request):
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
-                else:
-                    login(request, user)
-                    return redirect('home')
         else:
             return redirect('/accounts/login', messages.error(request, 'username or password is incorrect.', 'alert-danger'))
 
@@ -313,10 +310,6 @@ def register(request):
                                     device_platform = device_platform
                                 )
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
-                else:
-                    form.save()
-                    return redirect('/accounts/login',
-                                    messages.success(request, 'Account created successfully.', 'alert-success'))
             elif request.user_agent.is_mobile == True:
                  form.save()
                  return redirect('/accounts/login',messages.success(request, 'Account created successfully.', 'alert-success'))
