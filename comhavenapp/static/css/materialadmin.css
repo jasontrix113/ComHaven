@@ -5975,7 +5975,7 @@ section.style-info .btn-flat:hover,
   .card {
     margin-bottom: 16px;
     max-width: 100%;
-    width: 500px;
+    width: auto;
     margin: 0;
     margin-bottom: 10px;
   }
