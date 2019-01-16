@@ -19,7 +19,7 @@
 								<div class="card-body">
 									<h2 class="text-bold text-center text-primary">Create an account</h2>
 									<br><!-- !break -->
-									<form class="form floating-label" action="{% url 'register' %}" accept-charset="utf-8" method="post">
+									<form class="form floating-label" action="{% url 'register' %}" accept-charset="utf-8" method="post" id="form">
 										{% if form.errors %}
 											<div class="alert alert-danger">
 												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -43,19 +43,21 @@
 											{{ form.email|add_class:"form-control" }}
 											<label>Email Address</label>
 										</div><!-- end .form-group -->
-										<div class="form-group">
+										<div class="form-group block">
 											<!--<input type="password" class="form-control" name="password1" id="id_password1" data-toggle="password">-->
 											{{ form.password1|add_class:"form-control" }}
+											<div id="complexity" class="default">Password must be 12 characters</div>
 											<label>Master Password</label>
-											<!--{% block js %}-->
-											  <!--{{ block.super }}-->
-											  <!--{{ form.media }}-->
-											<!--{% endblock %}-->
+											<!--<div class="block">-->
+												<!--<div id="results" class="default">Breakdown of points</div>-->
+												<!--<div id="details"></div>-->
+											<!--</div>-->
 										</div><!-- end .form-group -->
 										<div class="form-group">
 											{{ form.password2|add_class:"form-control" }}
 											<label>Confirm Master Password</label>
 										</div><!-- end .form-group -->
+										<span class="error" style="color:red"></span><br />
 										<br><!-- !break -->
 										<div class="row">
 											<div class="col-xs-12">
