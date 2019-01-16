@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4a44e852-003c-4f7d-8e8b-522ef931cabc" name="Default Changelist" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css" afterPath="$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -106,8 +105,8 @@
       <file leaf-file-name="materialadmin.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="5977" column="22" lean-forward="false" selection-start-line="5977" selection-start-column="22" selection-end-line="5977" selection-end-column="22" />
+            <state relative-caret-position="68">
+              <caret line="5973" column="27" lean-forward="false" selection-start-line="5973" selection-start-column="27" selection-end-line="5973" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -862,8 +861,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="5977" column="22" lean-forward="false" selection-start-line="5977" selection-start-column="22" selection-end-line="5977" selection-end-column="22" />
+        <state relative-caret-position="68">
+          <caret line="5973" column="27" lean-forward="false" selection-start-line="5973" selection-start-column="27" selection-end-line="5973" selection-end-column="27" />
           <folding />
         </state>
       </provider>

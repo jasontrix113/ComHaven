@@ -5972,11 +5972,6 @@ section.style-info .btn-flat:hover,
   z-index: 1;
 }
 @media (max-width: 768px) {
-    #btn-add{
-        position:relative;
-        float: right;
-        display: none;
-    }
   .card {
     margin-bottom: 16px;
     max-width: 100%;
