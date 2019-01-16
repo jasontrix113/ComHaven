@@ -106,8 +106,8 @@
       <file leaf-file-name="materialadmin.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="5980" column="3" lean-forward="true" selection-start-line="5980" selection-start-column="3" selection-end-line="5980" selection-end-column="3" />
+            <state relative-caret-position="136">
+              <caret line="5977" column="22" lean-forward="false" selection-start-line="5977" selection-start-column="22" selection-end-line="5977" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -862,8 +862,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="5980" column="3" lean-forward="true" selection-start-line="5980" selection-start-column="3" selection-end-line="5980" selection-end-column="3" />
+        <state relative-caret-position="136">
+          <caret line="5977" column="22" lean-forward="false" selection-start-line="5977" selection-start-column="22" selection-end-line="5977" selection-end-column="22" />
           <folding />
         </state>
       </provider>
