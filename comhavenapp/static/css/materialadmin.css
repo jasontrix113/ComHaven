@@ -5977,11 +5977,10 @@ section.style-info .btn-flat:hover,
     max-width: 100%;
     width: 500px;
     margin: 0;
-
+    margin-bottom: 10px;
   }
   .card-head header {
     padding: 11px 16px;
-    background-color: red;
   }
   .card-head.card-head-xs header {
     padding: 8px 16px;
