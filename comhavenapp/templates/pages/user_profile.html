@@ -22,25 +22,30 @@
                         <div class="card-body">
                           <form>
                             <div class="row">
-                              <p class="text-danger" style="margin-left: 10px;">*Complete your profile.</p>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">Email address</label>
                                     <h4> {{ user.userprofile.email }}</h4>
-                                </div>
-                              </div>
-                            </div>
+                                </div><!-- end .form-group -->
+                              </div><!-- end .col-md-6 -->
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label class="floating-label">Notes</label>
+                                    <h4>{{ user.userprofile.notes }}</h4>
+                                </div><!-- end .form-group -->
+                              </div><!-- end .col-md-6 -->
+                            </div><!-- end .row-->
                             <div class="row">
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="bmd-label-floating">First Name</label>
-                                  <h4> {{ user.userprofile.first_name }} </h4>
+                                  <h4> {{ user.userprofile.firstname }} </h4>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-group">
                                   <label class="floating-label">Last Name</label>
-                                    <h4>{{ user.userprofile.last_name }}</h4>
+                                    <h4>{{ user.userprofile.lastname }}</h4>
                                 </div><!-- end .form-group -->
                               </div><!-- end .col-md-6 -->
                             </div><!-- end .row -->

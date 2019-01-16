@@ -4,7 +4,7 @@ from django.views import generic
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm, EditProfileForm
+from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm
 from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
@@ -555,22 +555,12 @@ def user_profile(request):
 def user_edit(request):
     if request.method == 'POST':
         # instance = UserProfile.objects.get(id=login_id)
-        form = EditProfileForm(request.POST, instance=request.user.userprofile)
+        form = UserProfileForm(request.POST, instance=request.user.userprofile)
         print(form)
         if request.method == 'POST':
             if form.is_valid():
-                email = request.POST['email']
-                firstname = request.POST['firstname']
-                lastname = request.POST['lastname']
-                notes = request.POST['notes']
-                update = form.save(commit=False)
-                # update.user = username
-                # update.email = email
-                update.firstname = firstname
-                update.lastname = lastname
-                update.notes = notes
-                update.save()
-                if update.save():
+                form.save()
+                if form.save():
                     return redirect('/users/user_profile/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
                 else:
                     return redirect('/users/user_profile/', messages.error(request, 'Data is not saved', 'alert-danger'))
@@ -578,7 +568,7 @@ def user_edit(request):
                 return redirect('/users/user_profile/', messages.error(request, 'Form is invalid', 'alert-danger'))
     else:
         profile = request.user.userprofile
-        form = EditProfileForm(instance=profile)
+        form = UserProfileForm(instance=profile)
         return render(request, 'pages/user_profile_edit.html', {'form': form})
 
 @login_required

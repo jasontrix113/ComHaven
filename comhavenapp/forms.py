@@ -37,20 +37,15 @@ def clean():
         # raise forms.ValidationError if needed
 
     return self.cleaned_data
-class EditProfileForm(UserChangeForm):
-    notes = forms.CharField(max_length=200, required=True)
-    class Meta:
-        model = UserProfile
-        fields =('email', 'firstname', 'lastname', 'notes', 'password')
 
-class UserProfileForm(UserCreationForm):
-    email = forms.EmailField(max_length='200', required=False)
-    firstname = forms.CharField(max_length='200', required=False)
+class UserProfileForm(ModelForm):
+    email = forms.EmailField(max_length=200, required=False)
+    firstname = forms.CharField(max_length=200, required=False)
     lastname = forms.CharField(required=False)
     notes = forms.CharField(required=False)
     class Meta:
         model = UserProfile
-        fields = ('user', 'email', 'firstname', 'lastname', 'notes')
+        fields = ('email', 'firstname', 'lastname', 'notes')
 
 class NewAccountLoginForm(ModelForm):
     url_choices = (
