@@ -75,41 +75,41 @@
                         </div><!-- end .col-sm-2 -->
                     </div><!-- end .col-sm-12 -->
                 </ul><!-- end ul -->
-
-
-                        <!-- TABLE -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <form class="form" action="" method="post">
-                                            <table class="table table-stripped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Accounts</th>
-                                                        <th>Password Strength</th>
-                                                        <th>Last Change</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Google</td>
-                                                        <td>Sample</td>
-                                                        <td>Sample</td>
-                                                        <td>Sample</td>
-                                                    </tr>
-
-                                                </tbody><!-- end .table-body -->
-                                            </table><!-- end .table-->
-                                        </form><!-- end .form -->
-                                    </div><!-- end .card-body -->
-                                </div><!-- end .card -->
-                            </div><!-- end .col-sm-12 -->
-                        </div><!-- end .row -->
-
+                {% for dup_account in dups_account %}
+                <!-- TABLE -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" action="" method="post">
+                                    <table class="table table-stripped table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>Accounts</th>
+                                                <th>Password</th>
+                                                <th>Last Change</th>
+                                                <th>Action</th>
+                                            </tr><!-- end table-row -->
+                                        </thead><!-- end table-head-->
+                                        {% for dup_pword in dups_id %}
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ dup_account.login_name }}</td>
+                                                <td></td>
+                                                <td>Sample</td>
+                                                <td>Sample</td>
+                                            </tr><!-- end table-row -->
+                                        </tbody><!-- end .table-body -->
+                                        {% endfor %}
+                                    </table><!-- end .table-->
+                                </form><!-- end .form -->
+                            </div><!-- end .card-body -->
+                        </div><!-- end .card -->
+                    </div><!-- end .col-sm-12 -->
+                </div><!-- end .row -->
+                {% endfor %}
             </nav><!-- end nav -->
         </div><!--end .row -->
     </div><!--end .section-body -->
-</section>
+</section><!-- end section -->
 {% endblock %}

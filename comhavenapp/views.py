@@ -43,7 +43,7 @@ import csv
 
 import platform
 from zxcvbn import zxcvbn
-
+from django.db.models import Count
 @login_required
 def auto_login(request, login_id):
     new_login = NewAccountLogin.objects.filter(login_user=request.user)
@@ -101,8 +101,6 @@ def auto_login(request, login_id):
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                    #signInButton = browser.find_element_by_id('edit-submit');
-                    #signInButton.click()
                 #signInButton = browser.find_element_by_id('edit-submit');
                 #signInButton.click()
 
@@ -121,8 +119,6 @@ def auto_login(request, login_id):
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                           'alert-danger'))
 
-                    #signInButton = browser.find_element_by_id('edit-submit');
-                    #signInButton.click()
                 #signInButton = browser.find_element_by_id('edit-submit');
                 #signInButton.click()
 
@@ -141,8 +137,6 @@ def auto_login(request, login_id):
 
                 # signInButton = browser.find_element_by_id('edit-submit');
                 # signInButton.click()
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
         elif login.login_name == 'Spotify':
             try:
                 browser = webdriver.Chrome()
@@ -158,8 +152,6 @@ def auto_login(request, login_id):
 
                 # signInButton = browser.find_element_by_id('edit-submit');
                 # signInButton.click()
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
         elif login.login_name == 'Twitter':
             try:
                 browser = webdriver.Chrome()
@@ -173,8 +165,6 @@ def auto_login(request, login_id):
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
                 # signInButton = browser.find_element_by_id('edit-submit');
                 # signInButton.click()
 
@@ -193,8 +183,6 @@ def auto_login(request, login_id):
 
                 # signInButton = browser.find_element_by_id('edit-submit');
                 # signInButton.click()
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
         elif login.login_name == 'Instagram':
             try:
                 browser = webdriver.Chrome()
@@ -208,8 +196,6 @@ def auto_login(request, login_id):
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
                 # signInButton = browser.find_element_by_id('edit-submit');
                 # signInButton.click()
         elif login.login_name == 'Trello':
@@ -226,8 +212,6 @@ def auto_login(request, login_id):
                                 messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
                 # signInButton = browser.find_element_by_id('edit-submit');
                 # signInButton.click()
         else:
@@ -266,14 +250,6 @@ def user_login(request):
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-
-        # if len(pass1) < 12:
-        #     return redirect('/accounts/register',
-        #                     messages.error(request, 'Password must be in 12 characters', 'alert-danger'))
-
-        # duplicate_email = User.objects.filter(email=email_data)
-        # if duplicate_email.exists():
-        #     return redirect('/accounts/register', messages.error(request, 'Email has already taken', 'alert-danger'))
         if form.is_valid():
             if request.user_agent.is_pc == True:
                 filename = os.path.expandvars(r"C:")
@@ -295,7 +271,7 @@ def register(request):
                             f.write(json.dumps(CPUINFO))
                             if request.method == 'POST':
                                 user = request.POST['username']
-                                device_model = request.user_agent.device
+                                device_model = user_agent.device
                                 device_platform = platform.system()
                                 print(device_model)
                                 # f.save()
@@ -354,10 +330,21 @@ def accesscontrol(request):
 
 @login_required
 def securitychallenges(request):
+    #get user instance
     user = request.user
+    #get Security challenge model instance
     sc = SecurityChallenges.objects.all()
+    #get User Stats instance
     us = User_Stats.objects.all()
+
+    #create context for instances
     context_us_sc = {'sc':sc, 'us':us}
+
+    # pass_results = zxcvbn(temp, user_inputs=[temp])
+    # print(pass_results)
+    # score = results['score']
+    # print(results)
+    # cracktime = results['crack_times_display']
 
     return render(request, 'pages/security-challenges.html', context_us_sc)
 
@@ -432,7 +419,6 @@ def generatepassword(request):
                 results = zxcvbn(res1)
                 score = results['score']
                 print(results)
-                results['calc_time']
                 cracktime = results['crack_times_display']
 
 
@@ -478,6 +464,7 @@ def new_login(request):
                 enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
                 user = request.user
                 TempAccounts.objects.create(
+                    user = user,
                     temp_uname = login_username,
                     temp_pword = login_password,
                 )
@@ -515,27 +502,22 @@ def new_haven_folder(request):
 @login_required
 def login_edit(request, login_id):
     login = NewAccountLogin.objects.get(id=login_id)
-    temp = TempAccounts.objects.get(id=login_id)
-    print(temp.temp_pword)
-    if request.POST:
-        form = NewAccountLoginForm(request.POST, instance=login)
-        init = form.save(commit=False)
-        init.login_password = temp.temp_pword
-        init.save()
-        print(temp.temp_pword)
+    temp = TempAccounts.objects.filter(id=login_id)
+    temp_pword = TempAccounts.objects.values_list('temp_pword').filter(id=login_id)
+    form = NewAccountLoginForm(request.POST)
+    print(form)
+    print(temp_pword)
+    if request.method == 'POST':
         if form.is_valid():
-            init = form.save(commit=False)
-            init.login_password = temp.temp_pword
-            init.save()
             if form.save():
                 return redirect('/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
             else:
                 return redirect('/', messages.error(request, 'Data is not saved', 'alert-danger'))
         else:
             return redirect('/', messages.error(request, 'Form is not valid', 'alert-danger'))
-    else:
-        form = NewAccountLoginForm(instance=login)
-        return render(request, 'pages/login_edit.html', {'form':form}, {'temp':temp})
+
+    form = NewAccountLoginForm(instance=login)
+    return render(request, 'pages/login_edit.html', {'form':form, 'temp':temp})
 
 @login_required
 def login_destroy(request, login_id):
@@ -583,7 +565,36 @@ def user_delete(request):
 
 @login_required
 def user_stats(request):
-    return render(request, 'pages/user_stats.html')
+
+    # CHECKING FOR WEAK PASSWORDS
+    # get TempAccounts Model instance
+    temp = TempAccounts.objects.values_list('temp_pword', flat=True)
+    print(temp)
+    context_dups = {'temp': temp}
+    # get passwords with duplication
+    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1)
+    print(dups)
+    # display the id's of duplicate passwords
+    dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups])
+    dups_id = [item.id for item in dups_record]
+    print(dups_id)
+
+    # Challenge
+    temp_id = TempAccounts.objects.values_list('id', flat=True)
+    print(temp_id)
+    login_id = NewAccountLogin.objects.values_list('id', flat=True)
+    print(login_id)
+    for x in dups_id:
+        print('hello')
+        dups_account = NewAccountLogin.objects.filter(id=x)
+        dups_id = TempAccounts.objects.filter(id=x)
+        print(dups_id)
+        # dups_password.temp_pword = dups_password.temp_pword[-4:].rjust(len(dups_password.temp_pword), "*")
+        print(dups_account)
+        context_dups = {'dups_account': dups_account, 'dups_id':dups_id}
+
+
+    return render(request, 'pages/user_stats.html', context_dups)
 
 @login_required
 def send_email(request, login_id):
@@ -605,7 +616,6 @@ def send_email(request, login_id):
             # except BadHeaderError:
             # return HttpResponse('Invalid header found.')
     return render(request ,"pages/share_credentials.html", {'form': form})
-
 
 def pass_r_done(request):
     return redirect('/accounts/password_reset', messages.success(request, 'Email sent successfully!', 'alert-success'))

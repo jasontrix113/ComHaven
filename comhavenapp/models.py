@@ -77,11 +77,11 @@ class AccessListOfDevices(models.Model):
         return self.acl_user
 
 class TempAccounts(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
     temp_uname = models.CharField(max_length=30)
     temp_pword = models.CharField(max_length=200)
     def __str__(self):
-        return self.temp_uname
+        return str(self.user)
 
 class PasswordGenerator(models.Model):
     user  = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
