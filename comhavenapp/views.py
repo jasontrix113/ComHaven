@@ -317,6 +317,7 @@ def register(request):
 def index(request):
     new_login = NewAccountLogin.objects.filter(login_user=request.user)
     context_login = {'new_login': new_login}
+    user = request.user
     return render(request, 'pages/dashboard.html', context_login)
 
 @login_required
@@ -343,8 +344,6 @@ def securitychallenges(request):
     user = request.user
     #get Security challenge model instance
     sc = SecurityChallenges.objects.filter(user=request.user)
-
-
     dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(
         dup_pword_count__gt=1)
     print(dups)

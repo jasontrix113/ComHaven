@@ -96,7 +96,7 @@ class User_Stats(models.Model):
     # points_awarded = models.IntegerField()
     overall_points = models.CharField(max_length=200, default='')
     def __str__(self):
-        return self.user.username
+        return str(self.user)
 
 class Rewards(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
