@@ -9,9 +9,6 @@
             <hr><!-- !line-break -->
         </div><!-- end .row -->
         <div class="row">
-            {% for folders in login_haven_folder %}
-                <h2>{{ folders.login_haven_folder }}</h2>
-            {% endfor %}
             <br><!-- !break -->
             <br><!-- !break -->
             {% for login in new_login %}
@@ -23,11 +20,11 @@
                             <header>Launch {{ login.login_name }}</header>
                             <div class="divider"></div>
                             <div class="tools" style="margin-top: 15px;">
-                                <a href="{% url 'auto_login' login.id %}" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-paper-plane"> </i> </a>
+                                <a href="{% url 'auto_login' login.id %}" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-paper-plane"></i> </a>
                             </div><!-- end .tools -->
                             <hr><!-- !line-break -->
                         </div><!-- end .card-head -->
-                        <div class="card-body text-left" id="card">
+                        <div class="card-body text-left">
                             <p><b>Email:</b> {{ login.login_username }}</p>
                             <p><b>URL: </b>{{ login.login_target_url }}</p>
                         </div><!-- end .card-body -->

@@ -21,9 +21,11 @@
             <hr>
         </div>
         <!-- STATUS BUTTONS -->
+
         <div class="row">
             <nav class="navbar navbar-primary" id="nav-pills">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    {% for count in dups %}
                     <div class="col-sm-12" id="label_stats">
                         <div class="col-sm-3">
                             <!-- TAB_PILLS DUPLICATE -->
@@ -31,7 +33,7 @@
                                 <a class="nav-link" id="pill-D-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                           <h6><span class="fa fa-warning"></span> Duplicate ()</h6>
+                                           <h6><span class="fa fa-warning"></span> Duplicate ({{count.dup_pword_count}})</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link -->
@@ -43,7 +45,7 @@
                                 <a class="nav-link" id="pill-C-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                            <h6><span class="fa fa-warning"></span> Compromised ()</h6>
+                                            <h6><span class="fa fa-warning"></span> Compromised (0)</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link -->
@@ -55,7 +57,7 @@
                                 <a class="nav-link" id="pill-W-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                            <h6><span class="fa fa-warning"></span> Weak ()</h6>
+                                            <h6><span class="fa fa-warning"></span> Weak (0)</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link-->
@@ -67,15 +69,16 @@
                                 <a class="nav-link" id="pill-O-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                            <h6><span class="fa fa-warning"></span> Old ()</h6>
+                                            <h6><span class="fa fa-warning"></span> Old (0)</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link -->
                             </li><!-- end .nav-item -->
                         </div><!-- end .col-sm-2 -->
                     </div><!-- end .col-sm-12 -->
+                    {% endfor %}
                 </ul><!-- end ul -->
-                {% for dup_account in dups_account %}
+
                 <!-- TABLE -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -87,27 +90,29 @@
                                             <tr>
                                                 <th>Accounts</th>
                                                 <th>Password</th>
-                                                <th>Last Change</th>
+                                                <th>Last Changes</th>
                                                 <th>Action</th>
                                             </tr><!-- end table-row -->
                                         </thead><!-- end table-head-->
-                                        {% for dup_pword in dups_id %}
+
                                         <tbody>
+                                            {% for account in duplicate_account %}
                                             <tr>
-                                                <td>{{ dup_account.login_name }}</td>
+                                                <td>{{ account.login_name }}</td>
                                                 <td></td>
-                                                <td>Sample</td>
-                                                <td>Sample</td>
+                                                <td>{{ account.date_inserted }}</td>
+                                                <td>
+                                                    <a href="{% url 'edit' account.id %}" class="btn btn-danger ink-reaction"> Change</a>
+                                                </td>
                                             </tr><!-- end table-row -->
+                                            {% endfor %}
                                         </tbody><!-- end .table-body -->
-                                        {% endfor %}
                                     </table><!-- end .table-->
                                 </form><!-- end .form -->
                             </div><!-- end .card-body -->
                         </div><!-- end .card -->
                     </div><!-- end .col-sm-12 -->
                 </div><!-- end .row -->
-                {% endfor %}
             </nav><!-- end nav -->
         </div><!--end .row -->
     </div><!--end .section-body -->

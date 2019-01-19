@@ -9,7 +9,7 @@ from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats
+from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -54,9 +54,9 @@ def auto_login(request, login_id):
     sites = ExpressLoginsSites.objects.get(id=login_id)
     form = NewAccountLoginForm(request.POST, instance=login)
     if login:
-        print(login.login_name)
-        print(login.login_target_url)
-        print(login.id)
+        # print(login.login_name)
+        # print(login.login_target_url)
+        # print(login.id)
         if login.login_name == 'Schoology':
             try:
                 browser = webdriver.Chrome()
@@ -261,6 +261,11 @@ def register(request):
                     if os.path.exists(path_exist):
                         print("file exist")
                         form.save()
+                        user = request.POST['username']
+                        User_Stats.objects.create(
+                            user=user,
+                            overall_points=0,
+                        )
                         return redirect('/accounts/login',
                                 messages.success(request, 'Account created successfully.', 'alert-success'))
                     else:
@@ -284,6 +289,10 @@ def register(request):
                                     device_model=device_model,
                                     access_id_path=directory,
                                     device_platform = device_platform
+                                )
+                                User_Stats.objects.create(
+                                    user=user,
+                                    overall_points=0,
                                 )
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
                 else:
@@ -333,9 +342,52 @@ def securitychallenges(request):
     #get user instance
     user = request.user
     #get Security challenge model instance
-    sc = SecurityChallenges.objects.all()
+    sc = SecurityChallenges.objects.filter(user=request.user)
+
+
+    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(
+        dup_pword_count__gt=1)
+    print(dups)
+    # display the id's of duplicate passwords
+    dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups])
+    dups_id = [item.id for item in dups_record]
+    print(dups_id)
+    try:
+        if not dups and NewAccountLogin.objects.get(updated=True): #if count in duplication = 0 and updated = True
+            update_score = User_Stats.objects.get(user=request.user)
+            update_score.overall_points = int(update_score.overall_points) + 4
+            update_score.save()
+
+    except:
+        print('atleast i try')
+
+    user = request.user
+    tasks = Tasks.objects.get(tasks='Duplicate Passwords')
+    status = Status.objects.get(status='Unfinished')
+    status2 = Status.objects.get(status='Completed')
+    points = Points.objects.get(points=4)
+    print(tasks)
+    try:
+        if dups_id and not SecurityChallenges.objects.exists():
+            SecurityChallenges.objects.create(
+                user=user,
+                tasks=tasks,
+                points=points,
+                date_completed='',
+                date_initiated='',
+                status=status
+            )
+        elif not dups and NewAccountLogin.objects.get(updated=True):
+            update = SecurityChallenges.objects.get(status=status)
+            update.status = status2
+            update.save()
+            update_status = NewAccountLogin.objects.get(updated=True)
+            update_status.updated = False
+            update_status.save()
+    except:
+        print('i try')
     #get User Stats instance
-    us = User_Stats.objects.all()
+    us = User_Stats.objects.filter(user=request.user)
 
     #create context for instances
     context_us_sc = {'sc':sc, 'us':us}
@@ -367,7 +419,6 @@ def generatepassword(request):
                 pass_length = request.POST['pass_length']
                 length = int(pass_length)
                 pass_phrase = request.POST['pass_phrase']
-
                 try:
                     pass_up_lo = request.POST['pass_up_lo_case']
                     print(pass_up_lo)
@@ -420,9 +471,6 @@ def generatepassword(request):
                 score = results['score']
                 print(results)
                 cracktime = results['crack_times_display']
-
-
-
         else:
             del request.session['result']
         # pr = PasswordGenerator.objects.all().update(pass_result=res1)
@@ -485,34 +533,32 @@ def new_login(request):
         return render(request, 'pages/new_login.html', {'form':form})
 
 @login_required
-def new_haven_folder(request):
-    if request.POST:
-        form = NewHavenFolderForm(request.POST)
-        if form.is_valid():
-            if form.save():
-                return redirect('/', messages.success(request, 'Folder was successfully added.', 'alert-success'))
-            else:
-                return redirect('/', messages.error(request, 'Folder is not saved', 'alert-danger'))
-        else:
-            return redirect('/', messages.error(request, 'Folder is invalid', 'alert-danger'))
-    else:
-        form = NewHavenFolderForm()
-        return render(request, 'pages/new_login.html', {'form':form})
-
-@login_required
 def login_edit(request, login_id):
     login = NewAccountLogin.objects.get(id=login_id)
     temp = TempAccounts.objects.filter(id=login_id)
     temp_pword = TempAccounts.objects.values_list('temp_pword').filter(id=login_id)
     form = NewAccountLoginForm(request.POST)
     print(form)
-    print(temp_pword)
     if request.method == 'POST':
         if form.is_valid():
-            if form.save():
-                return redirect('/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
-            else:
-                return redirect('/', messages.error(request, 'Data is not saved', 'alert-danger'))
+            temp_login_name = request.POST['login_name']
+            temp_login_username = request.POST['login_username']
+            temp_login_url = request.POST['login_target_url']
+            temp_pass = request.POST['login_password3']
+            temp_notes = request.POST['login_notes']
+            updated = True
+            init = NewAccountLogin.objects.get(id=login_id)
+            init.login_password = temp_pass
+            init.login_name = temp_login_name
+            init.login_target_url = temp_login_url
+            init.login_username = temp_login_username
+            init.login_notes = temp_notes
+            init.updated = updated
+            init.save()
+            temp_init = TempAccounts.objects.get(id=login_id)
+            temp_init.temp_pword = temp_pass
+            temp_init.save()
+            return redirect('/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
         else:
             return redirect('/', messages.error(request, 'Form is not valid', 'alert-danger'))
 
@@ -529,8 +575,10 @@ def login_destroy(request, login_id):
 
 @login_required
 def user_profile(request):
-    userprofile = User.objects.all()
-    context_up = {'userprofile': userprofile}
+    userprofile = User.objects.filter(username=request.user)
+    overall_points = User_Stats.objects.filter(user=request.user)
+
+    context_up = {'userprofile': userprofile, 'overall_points':overall_points}
     return render(request, 'pages/user_profile.html', context_up)
 
 @login_required
@@ -566,7 +614,7 @@ def user_delete(request):
 @login_required
 def user_stats(request):
 
-    # CHECKING FOR WEAK PASSWORDS
+    # CHECKING FOR DUPLICATE PASSWORDS
     # get TempAccounts Model instance
     temp = TempAccounts.objects.values_list('temp_pword', flat=True)
     print(temp)
@@ -579,21 +627,23 @@ def user_stats(request):
     dups_id = [item.id for item in dups_record]
     print(dups_id)
 
-    # Challenge
     temp_id = TempAccounts.objects.values_list('id', flat=True)
     print(temp_id)
     login_id = NewAccountLogin.objects.values_list('id', flat=True)
     print(login_id)
-    for x in dups_id:
-        print('hello')
-        dups_account = NewAccountLogin.objects.filter(id=x)
-        dups_id = TempAccounts.objects.filter(id=x)
-        print(dups_id)
-        # dups_password.temp_pword = dups_password.temp_pword[-4:].rjust(len(dups_password.temp_pword), "*")
-        print(dups_account)
-        context_dups = {'dups_account': dups_account, 'dups_id':dups_id}
+
+    duplicate_account = NewAccountLogin.objects.filter(id__in = dups_id).all()
+    # duplicate_id = NewAccountLogin.objects.filter(id__in=dups_id).values_list('id', flat=True)
+    # duplicate_password = NewAccountLogin.objects.filter(id__in = dups_id).values_list('login_password', flat=True)
+    #get instance of fields
 
 
+
+    # CHECKING FOR COMPROMISED PASSWORDS
+
+
+
+    context_dups = {'duplicate_account': duplicate_account, 'dups':dups}
     return render(request, 'pages/user_stats.html', context_dups)
 
 @login_required

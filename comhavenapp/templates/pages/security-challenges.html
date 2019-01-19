@@ -16,49 +16,49 @@
             <!--<h4>{{ stat.status }}</h4>-->
             <br><!-- !break -->
             <br><!-- !break -->
-            {% for sc in sc %}
             <div class="row">
+                {% for sc in sc %}
                 <div class="d-inline p-2 bg-primary text-white">
                     <!--first-card -->
                     <div class="col-lg-4">
                         <div class="card" id="card">
                             <div class="card-head">
                                 <header>
-                                    <h6><i class="fa fa-check-circle"></i> {{ sc.tasks }}</h6>
+                                     <h5>Solve {{ sc.tasks }} </h5>
+                                    {% if sc.status == "Completed" %}
+                                        <h6><i class="fa fa-check"></i> Solved {{ sc.tasks }}</h6>
+                                    {% elif sc.status == "Unfinished" %}
+                                        <h6><i class="fa fa-warning"></i> Solve {{ sc.tasks }}</h6>
+                                    {% endif %}
                                 </header>
+                                <div class="tools" style="margin-top:10px;">
+                                    <h6><b>{{ sc.points }} pts. </b></h6>
+                                </div><!-- end .tools -->
                                 <div class="divider"></div>
                                 <hr><!-- !line-break -->
                             </div><!-- end .card-head -->
                             <div class="card-body text-left">
-                                <p><b>Date Completed</b> {{ sc.date_completed }}</p>
+                                <p><b>Status: </b> {{ sc.status }}</p>
+                                <p><b>Date Initiated: </b> {{ sc.date_completed }}</p>
                             </div><!-- end .card-body -->
                         </div><!-- end .card -->
                     </div><!-- end .col -->
+                    {% empty %}
+                    <div class="col-sm-12 text-center mx-auto" style="color: grey;">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <span><i class="fa fa fa-shield-alt fa-10x"></i></span>
+                        <br><!-- !break -->
+                        <br><!-- !break -->
+                        <p class="small"> There are no challenges yet. </p>
+                    </div>
+                    {% endfor %}<!-- endfor -->
                 </div><!-- end .d-inline-->
             </div><!-- end .row -->
-            {% empty %}
-            <div class="col-sm-12 text-center mx-auto" style="color: grey;">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <span><i class="fa fa fa-shield-alt fa-10x"></i></span>
-                <br><!-- !break -->
-                <br><!-- !break -->
-                <p class="small"> There are no challenges yet. </p>
-            </div>
-            {% endfor %}<!-- endfor -->
         </div><!-- end .row -->
-
-        <!--<div class="row">-->
-            <!--{% for stat in ss %}-->
-                <!--{% if stat.status == 'Unfinished Tasks' %}-->
-                    <!--<h4>{{ stat.status }}</h4>-->
-                    <!--<br>&lt;!&ndash; !break &ndash;&gt;-->
-                <!--{% endif %}&lt;!&ndash; endif&ndash;&gt;-->
-            <!--{% endfor %}&lt;!&ndash; endfor &ndash;&gt;-->
-        <!--</div>&lt;!&ndash; end .row &ndash;&gt;-->
     </div><!--end .section-body -->
 </section><!-- end section -->
 {% endblock %}

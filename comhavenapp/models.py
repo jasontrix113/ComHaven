@@ -38,8 +38,8 @@ class NewAccountLogin (models.Model):
     login_username = models.CharField(max_length=200)
     login_password = models.CharField(max_length=200, blank=False)
     login_notes = models.CharField(max_length=200)
-    # date_inserted = models.DateTimeField(auto_now=False,null=True)
-
+    date_inserted = models.DateTimeField(auto_now=True)
+    updated = models.BooleanField(default=False)
     def __str__(self):
         return self.login_user.username
 
@@ -57,16 +57,17 @@ class Status(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
     status = models.CharField(max_length=50)
     def __str__(self):
-        return self.status
+        return str(self.status)
 
 class SecurityChallenges(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='', to_field='username')
     tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, default='', to_field='tasks')
     points = models.ForeignKey(Points, on_delete=models.CASCADE, default='', to_field='points')
-    date_completed = models.DateTimeField(auto_now_add=False)
-    date_initiated = models.DateTimeField(auto_now_add=False)
+    date_completed = models.DateTimeField(auto_now_add=True)
+    date_initiated = models.DateTimeField(auto_now_add=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, default='')
     def __str__(self):
-        return str(self.status)
+        return str(self.user)
 
 class AccessListOfDevices(models.Model):
     acl_user = models.CharField(max_length=30)
@@ -91,7 +92,7 @@ class PasswordGenerator(models.Model):
         return self.pass_result
 
 class User_Stats(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+    user = models.CharField(max_length=30)
     # points_awarded = models.IntegerField()
     overall_points = models.CharField(max_length=200, default='')
     def __str__(self):
@@ -103,3 +104,11 @@ class Rewards(models.Model):
     points_required = models.IntegerField()
     def __str__(self):
         return self.user.username
+
+class PerformedTasks(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+    accounts = models.CharField(max_length=200, default='')
+    status = models.CharField(max_length=20, default='')
+
+    def __str__(self):
+        return str(self.user)

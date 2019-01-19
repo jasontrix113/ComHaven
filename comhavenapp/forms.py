@@ -49,6 +49,7 @@ class UserProfileForm(ModelForm):
 
 class NewAccountLoginForm(ModelForm):
     url_choices = (
+        ('N/A', 'None'),
         ('https://www.facebook.com/', 'https://www.facebook.com/'),
         ('https://github.com/login', 'https://github.com/login'),
         ('https://www.instagram.com/accounts/login/', 'https://www.instagram.com/accounts/login/'),
@@ -60,11 +61,23 @@ class NewAccountLoginForm(ModelForm):
         ('http://uis.uno-r.edu.ph/Student/Account/Login', 'http://uis.uno-r.edu.ph/Student/Account/Login'),
         ('https://trello.com/login', 'https://trello.com/login'),
     )
+    login_name_choices = (
+        ('Facebook','Facebook'),
+        ('GitHub', 'GitHub'),
+        ('Instagram', 'Instagram'),
+        ('LMS', 'LMS'),
+        ('Netflix', 'Netflix'),
+        ('Schoology', 'Schoology'),
+        ('Spotify', 'Spotify'),
+        ('Twitter', 'Twitter'),
+        ('UIS', 'UIS'),
+        ('Trello', 'Trello'),
+    )
     # user_id = forms.CharField(max_length='200', required=False)
     login_target_url = forms.ChoiceField(choices=url_choices)
-    login_name = forms.CharField(max_length='200', required=True)
+    login_name = forms.ChoiceField(choices=login_name_choices)
     login_username = forms.CharField(required=True)
-    login_password = forms.CharField(widget = forms.PasswordInput(), required=True)
+    login_password = forms.CharField(widget = forms.PasswordInput(), required=False)
     login_notes = forms.CharField(widget = forms.Textarea, required=False)
 
     class Meta:
