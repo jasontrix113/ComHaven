@@ -44,7 +44,6 @@ import csv
 import platform
 from zxcvbn import zxcvbn
 from django.db.models import Count
-from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 @login_required
 def auto_login(request, login_id):
@@ -61,10 +60,7 @@ def auto_login(request, login_id):
         # print(login.id)
         if login.login_name == 'Schoology':
             try:
-                chrome_bin = os.environ.get('GOOGLE_CHROME_SHIM', None)
-                opts = ChromeOptions()
-                opts.binary_location = chrome_bin
-                browser = webdriver.Chrome(executable_path="chromedriver", chrome_options=opts)
+                browser = webdriver.Chrome(executable_path="chromedriver")
                 browser.get(login.login_target_url)
                 parent = browser.current_window_handle
                 username = browser.find_element_by_id("edit-mail")
