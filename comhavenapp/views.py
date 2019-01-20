@@ -9,7 +9,7 @@ from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks
+from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks, WeakPasswords
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -187,9 +187,9 @@ def auto_login(request, login_id):
             try:
                 browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
-                username = browser.find_element_by_id('f33d3bc34c83252')
+                username = browser.find_element_by_name('username')
                 username.send_keys(login.login_username)
-                password = browser.find_element_by_id('fef35d0b7dedbc')
+                password = browser.find_element_by_name('password')
                 password.send_keys(temp_ac.temp_pword)
 
             except:
@@ -411,11 +411,42 @@ def securitychallenges(request):
 
     # get instance of accounts
     acc_init = NewAccountLogin.objects.values_list('id', flat=True)
-    temp_init = TempAccounts.objects.get(temp_pword="Jpskrilljap11398")
+    temp_init = TempAccounts.objects.all()
     print(temp_init)
 
-    pass_results = zxcvbn(temp_init)
-    print(pass_results)
+    for t in temp_init:
+        pass_results = zxcvbn(t.temp_pword)
+        res = pass_results['score']
+        if res == 0 or res == 1:
+            try:
+                if not WeakPasswords.objects.exists():
+                    user = request.user
+                    WeakPasswords.objects.create(
+                        user=user,
+                        login_account= t.temp_uname,
+                        login_password= t.temp_pword,
+                        login_score='0 or 1',
+                        login_strength='Weak'
+                    )
+                elif WeakPasswords.objects.exists():
+                    WeakPasswords.objects.create(
+                        user=user,
+                        login_account=t.temp_uname,
+                        login_password=t.temp_pword,
+                        login_score='0 or 1',
+                        login_strength='Weak'
+                    )
+                    x= 'Weak Password'
+            except:
+                print(t.id)
+                x = 'Weak Password'
+        if res == 2:
+            x = 'Medium Password'
+        if res == 3:
+            x = 'Medium Password'
+        if res == 4:
+            x = 'Strong Password'
+
     # score = results['score']
     # print(results)
     # cracktime = results['crack_times_display']
@@ -558,29 +589,42 @@ def new_login(request):
 def login_edit(request, login_id):
     login = NewAccountLogin.objects.get(id=login_id)
     temp = TempAccounts.objects.filter(id=login_id)
-    temp_pword = TempAccounts.objects.values_list('temp_pword').filter(id=login_id)
+    temp_pword = TempAccounts.objects.values_list('temp_pword').get(id=login_id)
     form = NewAccountLoginForm(request.POST)
     print(form)
     if request.method == 'POST':
         if form.is_valid():
             #get POST data
-            temp_login_name = request.POST['login_name']
-            temp_login_username = request.POST['login_username']
-            temp_login_url = request.POST['login_target_url']
+            # temp_login_name = request.POST['login_name']
+            # temp_login_username = request.POST['login_username']
+            # temp_login_url = request.POST['login_target_url']
+            # temp_pass = request.POST['login_password3']
+            # temp_notes = request.POST['login_notes']
+            # updated = True
+            # init = NewAccountLogin.objects.get(id=login_id)
+            # init.login_password = temp_pass
+            # init.login_name = temp_login_name
+            # init.login_target_url = temp_login_url
+            # init.login_username = temp_login_username
+            # init.login_notes = temp_notes
+            # init.updated = updated
+            # init.save()
+            # temp_init = TempAccounts.objects.get(id=login_id)
+            # temp_init.temp_pword = temp_pass
+            # temp_init.save()
+            # update account in the database
             temp_pass = request.POST['login_password3']
-            temp_notes = request.POST['login_notes']
-            updated = True
+            enc_password = pbkdf2_sha256.encrypt(temp_pass, rounds=10000, salt=bytes(32))
+            user = request.user
             init = NewAccountLogin.objects.get(id=login_id)
-            init.login_password = temp_pass
-            init.login_name = temp_login_name
-            init.login_target_url = temp_login_url
-            init.login_username = temp_login_username
-            init.login_notes = temp_notes
-            init.updated = updated
+            init.login_user = user
+            init.login_password = enc_password
             init.save()
-            temp_init = TempAccounts.objects.get(id=login_id)
-            temp_init.temp_pword = temp_pass
-            temp_init.save()
+            # update the secret model
+            init2 = TempAccounts.objects.get(id=login_id)
+            init2.user = user
+            init2.temp_pword = temp_pass
+            init2.save()
             return redirect('/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
         else:
             return redirect('/', messages.error(request, 'Form is not valid', 'alert-danger'))

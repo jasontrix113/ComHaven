@@ -57,9 +57,10 @@ class NewAccountLoginForm(ModelForm):
         ('https://www.netflix.com/ph/login', 'https://www.netflix.com/ph/login'),
         ('https://app.schoology.com/login', 'https://app.schoology.com/login'),
         ('https://accounts.spotify.com/en/login/', 'https://accounts.spotify.com/en/login/'),
+        ('https://trello.com/login', 'https://trello.com/login'),
         ('https://twitter.com/login', 'https://twitter.com/login'),
         ('http://uis.uno-r.edu.ph/Student/Account/Login', 'http://uis.uno-r.edu.ph/Student/Account/Login'),
-        ('https://trello.com/login', 'https://trello.com/login'),
+
     )
     login_name_choices = (
         ('Facebook','Facebook'),
