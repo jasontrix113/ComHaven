@@ -298,6 +298,9 @@ def register(request):
                 else:
                     form.save()
                     user = request.user
+                    directory = 'path'
+                    device_model = request.user_agent.device
+                    device_platform = platform.system()
                     AccessListOfDevices.objects.create(
                         acl_user=user,
                         device_model=device_model,
@@ -309,6 +312,9 @@ def register(request):
             elif request.user_agent.is_mobile == True:
                  form.save()
                  user = request.user
+                 directory = 'path'
+                 device_model = request.user_agent.device
+                 device_platform = platform.system()
                  AccessListOfDevices.objects.create(
                      acl_user=user,
                      device_model=device_model,
