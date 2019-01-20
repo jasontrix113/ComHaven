@@ -1,4 +1,4 @@
-chromedriver-installer==0.0.6
+
 defusedxml==0.5.0
 diff-match-patch==20181111
 dj-database-url==0.5.0
