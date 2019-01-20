@@ -356,10 +356,8 @@ def securitychallenges(request):
             update_score = User_Stats.objects.get(user=request.user)
             update_score.overall_points = int(update_score.overall_points) + 4
             update_score.save()
-
     except:
         print('atleast i try')
-
     user = request.user
     tasks = Tasks.objects.get(tasks='Duplicate Passwords')
     status = Status.objects.get(status='Unfinished')
