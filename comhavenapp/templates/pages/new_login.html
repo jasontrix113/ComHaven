@@ -23,7 +23,20 @@
 								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-6">
 									<div class="form-group floating-label">
-										{{ form.login_name | add_class:'form-control' }}
+										<!--{{ form.login_name | add_class:'form-control' }}-->
+										<input type="text" list="accounts" name="login_name" class="form-control" id="id_login_name">
+										<datalist id="accounts">
+											<option value="Facebook">
+											<option value="GitHub">
+											<option value="Instagram">
+											<option value="LMS">
+											<option value="Netflix">
+											<option value="Schoology">
+											<option value="Spotify">
+											<option value="Trello">
+											<option value="Twitter">
+											<option value="UIS">
+										</datalist><!-- end datalist -->
 										<label>Site Name</label>
 									</div><!-- end .form-group -->
 								</div><!-- end .col-sm-6 -->

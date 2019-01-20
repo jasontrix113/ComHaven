@@ -276,7 +276,7 @@ def register(request):
                             f.write(json.dumps(CPUINFO))
                             if request.method == 'POST':
                                 user = request.POST['username']
-                                device_model = user_agent.device
+                                device_model = request.user_agent.device
                                 device_platform = platform.system()
                                 print(device_model)
                                 # f.save()
@@ -297,10 +297,22 @@ def register(request):
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
                 else:
                     form.save()
+                    AccessListOfDevices.objects.create(
+                        acl_user=user,
+                        device_model=device_model,
+                        access_id_path=directory,
+                        device_platform=device_platform
+                    )
                     return redirect('/accounts/login',
                                     messages.success(request, 'Account created successfully.', 'alert-success'))
             elif request.user_agent.is_mobile == True:
                  form.save()
+                 AccessListOfDevices.objects.create(
+                     acl_user=user,
+                     device_model=device_model,
+                     access_id_path=directory,
+                     device_platform=device_platform
+                 )
                  return redirect('/accounts/login',messages.success(request, 'Account created successfully.', 'alert-success'))
 
             else:
@@ -538,6 +550,7 @@ def login_edit(request, login_id):
     print(form)
     if request.method == 'POST':
         if form.is_valid():
+            #get POST data
             temp_login_name = request.POST['login_name']
             temp_login_username = request.POST['login_username']
             temp_login_url = request.POST['login_target_url']
@@ -625,11 +638,13 @@ def user_stats(request):
     print(dups_id)
 
     temp_id = TempAccounts.objects.values_list('id', flat=True)
-    print(temp_id)
     login_id = NewAccountLogin.objects.values_list('id', flat=True)
-    print(login_id)
+
+
 
     duplicate_account = NewAccountLogin.objects.filter(id__in = dups_id).all()
+
+
     # duplicate_id = NewAccountLogin.objects.filter(id__in=dups_id).values_list('id', flat=True)
     # duplicate_password = NewAccountLogin.objects.filter(id__in = dups_id).values_list('login_password', flat=True)
     #get instance of fields
