@@ -409,8 +409,13 @@ def securitychallenges(request):
     #create context for instances
     context_us_sc = {'sc':sc, 'us':us}
 
-    # pass_results = zxcvbn(temp, user_inputs=[temp])
-    # print(pass_results)
+    # get instance of accounts
+    acc_init = NewAccountLogin.objects.values_list('id', flat=True)
+    temp_init = TempAccounts.objects.get(temp_pword="Jpskrilljap11398")
+    print(temp_init)
+
+    pass_results = zxcvbn(temp_init)
+    print(pass_results)
     # score = results['score']
     # print(results)
     # cracktime = results['crack_times_display']
