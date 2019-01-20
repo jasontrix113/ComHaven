@@ -297,6 +297,7 @@ def register(request):
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
                 else:
                     form.save()
+                    user = request.user
                     AccessListOfDevices.objects.create(
                         acl_user=user,
                         device_model=device_model,
@@ -307,6 +308,7 @@ def register(request):
                                     messages.success(request, 'Account created successfully.', 'alert-success'))
             elif request.user_agent.is_mobile == True:
                  form.save()
+                 user = request.user
                  AccessListOfDevices.objects.create(
                      acl_user=user,
                      device_model=device_model,
