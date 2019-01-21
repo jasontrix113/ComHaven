@@ -730,12 +730,12 @@ def send_email(request, login_id):
             message = form.cleaned_data['message']
             to_email = [from_email, 'to_email']
             html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
-            # try:
-            send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
-            return redirect('/sharedhaven', messages.success(request, 'Credential is shared', 'alert-success'))
-            # except BadHeaderError:
-            # return HttpResponse('Invalid header found.')
-    return render(request ,"pages/share_credentials.html", {'form': form})
+            try:
+                send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
+                return redirect('/sharedhaven', messages.success(request, 'Credential is shared', 'alert-success'))
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+    return render(request ,"pages/share_credentials.html", {'form': form, 'temp':temp})
 
 def pass_r_done(request):
     return redirect('/accounts/password_reset', messages.success(request, 'Email sent successfully!', 'alert-success'))
