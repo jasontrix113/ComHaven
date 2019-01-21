@@ -135,7 +135,7 @@ PASSWORD_MIN_LENGTH = 12 # Defaults to 12
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'GMT'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
