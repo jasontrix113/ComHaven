@@ -1,1 +1,1 @@
-web: gunicorn comhavenproject.wsgi
+web: gunicorn comhavenproject.wsgi --log-file=-
