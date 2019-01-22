@@ -29,3 +29,4 @@ xlrd==1.2.0
 xlwt==1.3.0
 zxcvbn==4.4.27
 zxcvbn-python==4.4.24
+unicorn-19.9.0

@@ -60,7 +60,7 @@ def auto_login(request, login_id):
         # print(login.id)
         if login.login_name == 'Schoology':
             try:
-                browser = webdriver.Chrome()
+                browser = webdriver.Chrome(BASE_DIR+'chromedriver.exe')
                 browser.get(login.login_target_url)
                 parent = browser.current_window_handle
                 username = browser.find_element_by_id("edit-mail")
