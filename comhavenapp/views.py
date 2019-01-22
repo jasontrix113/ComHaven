@@ -592,7 +592,6 @@ def login_edit(request, login_id):
     temp = TempAccounts.objects.filter(id=login_id)
     temp_pword = TempAccounts.objects.values_list('temp_pword').get(id=login_id)
     form = NewAccountLoginForm(request.POST)
-    print(form)
     if request.method == 'POST':
         if form.is_valid():
             #get POST data
@@ -615,9 +614,11 @@ def login_edit(request, login_id):
             # temp_init.save()
             # update account in the database
             temp_pass = request.POST['login_password3']
+            login_name = request.POST['login_name']
             enc_password = pbkdf2_sha256.encrypt(temp_pass, rounds=10000, salt=bytes(32))
             user = request.user
             init = NewAccountLogin.objects.get(id=login_id)
+            init.login_user = login_name
             init.login_user = user
             init.login_password = enc_password
             init.save()

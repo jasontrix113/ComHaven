@@ -17,14 +17,15 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group floating-label">
-										{{ form.login_name | add_class:'form-control' }}
-										<label>Site Name</label>
+										{{ form.login_target_url | add_class:'form-control' }}
+										<label>Target Url</label>
 									</div><!-- end .form-group -->
 								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-6">
 									<div class="form-group floating-label">
-										{{ form.login_target_url | add_class:'form-control' }}
-										<label>Target Url</label>
+										<input type="text" class="form-control" name="login_name" id="id_login_name">
+										<!--{{ form.login_name | add_class:'form-control' }}-->
+										<label>Site Name</label>
 									</div><!-- end .form-group -->
 								</div><!-- end .col-sm-6 -->
 								<div class="col-sm-6">

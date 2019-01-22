@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4a44e852-003c-4f7d-8e8b-522ef931cabc" name="Default Changelist" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/login_edit.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/login_edit.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/views.py" afterPath="$PROJECT_DIR$/comhavenapp/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
@@ -57,11 +58,21 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="731" column="62" lean-forward="true" selection-start-line="731" selection-start-column="62" selection-end-line="731" selection-end-column="62" />
+            <state relative-caret-position="139">
+              <caret line="593" column="44" lean-forward="false" selection-start-line="593" selection-start-column="44" selection-end-line="593" selection-end-column="44" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login_edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/login_edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="23" column="52" lean-forward="false" selection-start-line="23" selection-start-column="52" selection-end-line="23" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -206,7 +217,6 @@
         <option value="$PROJECT_DIR$/venv/Scripts/activate" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/registration/register.html" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/generate-password.html" />
-        <option value="$PROJECT_DIR$/comhavenapp/templates/pages/login_edit.html" />
         <option value="$PROJECT_DIR$/comhavenproject/urls.py" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/user_stats.html" />
         <option value="$PROJECT_DIR$/comhavenapp/templates/pages/security-challenges.html" />
@@ -220,6 +230,7 @@
         <option value="$PROJECT_DIR$/comhavenapp/models.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/comhavenproject/settings.py" />
+        <option value="$PROJECT_DIR$/comhavenapp/templates/pages/login_edit.html" />
         <option value="$PROJECT_DIR$/comhavenapp/views.py" />
       </list>
     </option>
@@ -687,13 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/login_edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="51" column="98" lean-forward="true" selection-start-line="51" selection-start-column="98" selection-end-line="51" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/home-accounts.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -798,10 +802,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/comhavenapp/templates/pages/login_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="23" column="52" lean-forward="false" selection-start-line="23" selection-start-column="52" selection-end-line="23" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="731" column="62" lean-forward="true" selection-start-line="731" selection-start-column="62" selection-end-line="731" selection-end-column="62" />
+        <state relative-caret-position="139">
+          <caret line="593" column="44" lean-forward="false" selection-start-line="593" selection-start-column="44" selection-end-line="593" selection-end-column="44" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
           </folding>
