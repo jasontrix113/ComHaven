@@ -322,9 +322,27 @@ def register(request):
                      access_id_path=directory,
                      device_platform=device_platform
                  )
+                 User_Stats.objects.create(
+                     user=user,
+                     overall_points=0,
+                 )
                  return redirect('/accounts/login',messages.success(request, 'Account created successfully.', 'alert-success'))
 
             else:
+                user = request.user
+                directory = 'path'
+                device_model = request.user_agent.device
+                device_platform = platform.system()
+                AccessListOfDevices.objects.create(
+                    acl_user=user,
+                    device_model=device_model,
+                    access_id_path=directory,
+                    device_platform=device_platform
+                )
+                User_Stats.objects.create(
+                    user=user,
+                    overall_points=0,
+                )
                 form.save()
                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
         else:
