@@ -298,21 +298,25 @@ def register(request):
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
                 else:
                     form.save()
-                    user = request.user
+                    user = request.POST['username']
                     directory = 'path'
                     device_model = request.user_agent.device
                     device_platform = platform.system()
                     AccessListOfDevices.objects.create(
-                        acl_user=user,
+                        acl_user=user1,
                         device_model=device_model,
                         access_id_path=directory,
                         device_platform=device_platform
+                    )
+                    User_Stats.objects.create(
+                        user=user,
+                        overall_points=0,
                     )
                     return redirect('/accounts/login',
                                     messages.success(request, 'Account created successfully.', 'alert-success'))
             elif request.user_agent.is_mobile == True:
                  form.save()
-                 user = request.user
+                 user = request.POST['username']
                  directory = 'path'
                  device_model = request.user_agent.device
                  device_platform = platform.system()
@@ -329,7 +333,7 @@ def register(request):
                  return redirect('/accounts/login',messages.success(request, 'Account created successfully.', 'alert-success'))
 
             else:
-                user = request.user
+                user = request.POST['username']
                 directory = 'path'
                 device_model = request.user_agent.device
                 device_platform = platform.system()

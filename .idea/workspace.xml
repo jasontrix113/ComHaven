@@ -55,8 +55,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="344" column="17" lean-forward="false" selection-start-line="344" selection-start-column="17" selection-end-line="344" selection-end-column="17" />
+            <state relative-caret-position="306">
+              <caret line="335" column="47" lean-forward="false" selection-start-line="335" selection-start-column="47" selection-end-line="335" selection-end-column="47" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
@@ -823,8 +823,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="344" column="17" lean-forward="false" selection-start-line="344" selection-start-column="17" selection-end-line="344" selection-end-column="17" />
+        <state relative-caret-position="306">
+          <caret line="335" column="47" lean-forward="false" selection-start-line="335" selection-start-column="47" selection-end-line="335" selection-end-column="47" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
           </folding>
