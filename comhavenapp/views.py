@@ -9,7 +9,7 @@ from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks, WeakPasswords
+from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks, WeakPasswords, Rewards
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -54,13 +54,13 @@ def auto_login(request, login_id):
     temp_ac = TempAccounts.objects.get(id=login_id)
     sites = ExpressLoginsSites.objects.get(id=login_id)
     form = NewAccountLoginForm(request.POST, instance=login)
+
     if login:
         # print(login.login_name)
         # print(login.login_target_url)
         # print(login.id)
         if login.login_name == 'Schoology':
             try:
-
                 browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id("edit-mail")
@@ -235,10 +235,12 @@ def user_login(request):
                     # path_exist = directory
                     # form = AccessListOfDevices.objects.all()
                     # if os.path.exists(path_exist):
-                    login(request, user)
-                    return redirect('home')
+                    #     login(request, user)
+                    #     return redirect('home')
                     # else:
                     #     return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
+                    login(request,user)
+                    return redirect('home')
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
@@ -281,9 +283,7 @@ def register(request):
                                 device_platform = platform.system()
                                 print(device_model)
                                 # f.save()
-                                create = form.save(commit=False)
-                                create.password = form.cleaned_data['password1']
-                                create.save()
+                                form.save()
                                 print("Success")
                                 AccessListOfDevices.objects.create(
                                     acl_user = user,
@@ -570,27 +570,30 @@ def new_login(request):
                 login_username = request.POST['login_username']
                 login_password = request.POST['login_password']
                 login_notes = request.POST['login_notes']
-
-                #Password Encryption with Salt#
-                enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
-                user = request.user
-                TempAccounts.objects.create(
-                    user = user,
-                    temp_uname = login_username,
-                    temp_pword = login_password,
-                )
-                NewAccountLogin.objects.create(
-                    login_user = user,
-                    login_target_url=login_target_url,
-                    login_name=login_name,
-                    login_username=login_username,
-                    login_password=enc_password,
-                    login_notes=login_notes,
-                )
-            if form.is_valid():
-               return redirect('/accounts', messages.success(request, 'Account was successfully added.', 'alert-success'))
-            else:
-                return redirect('/accounts', messages.error(request, 'Account is not saved', 'alert-danger'))
+                count = NewAccountLogin.objects.count()
+                if count <= 9:
+                    #Password Encryption with Salt#
+                    enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
+                    user = request.user
+                    TempAccounts.objects.create(
+                        user = user,
+                        temp_uname = login_username,
+                        temp_pword = login_password,
+                    )
+                    NewAccountLogin.objects.create(
+                        login_user = user,
+                        login_target_url=login_target_url,
+                        login_name=login_name,
+                        login_username=login_username,
+                        login_password=enc_password,
+                        login_notes=login_notes,
+                    )
+                    if form.is_valid():
+                       return redirect('/accounts', messages.success(request, 'Account was successfully added.', 'alert-success'))
+                    else:
+                        return redirect('/accounts', messages.error(request, 'Account is not saved', 'alert-danger'))
+                else:
+                    return redirect('/accounts', messages.error(request, 'You have reach the maximum number of accounts for free user! Consider Redeeming a Reward.', 'alert-danger'))
     else:
         form = NewAccountLoginForm()
         return render(request, 'pages/new_login.html', {'form':form})
@@ -656,8 +659,8 @@ def login_destroy(request, login_id):
 def user_profile(request):
     userprofile = User.objects.filter(username=request.user)
     overall_points = User_Stats.objects.filter(user=request.user)
-
-    context_up = {'userprofile': userprofile, 'overall_points':overall_points}
+    rewards = Rewards.objects.all()
+    context_up = {'userprofile': userprofile, 'overall_points':overall_points, 'rewards':rewards}
     return render(request, 'pages/user_profile.html', context_up)
 
 @login_required

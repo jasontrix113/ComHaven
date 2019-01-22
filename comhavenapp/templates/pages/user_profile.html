@@ -64,7 +64,7 @@
                               <a href="{% url 'user_profile_edit' %}" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;" data-toggle="tooltip" title="Update Profile" data-placement="top"><i class="fa fa-user-edit"></i> Update Profile</a>
                               <button type="button" data-toggle="modal" class="btn btn-icon btn-danger ink-reaction" data-target="#d-modal" data-toggle="tooltip" title="Delete Account" data-placement="top"><i class="fa fa-user-minus"></i> Delete </button>
                               <a href="{% url 'user_stats' %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;" data-toggle="tooltip" title="User Stats" data-placement="top"><i class="fa fa-user-shield"></i> User Stats</a>
-                              <a href="" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;"data-toggle="tooltip" title="Redeem Rewards" data-placement="top"><i class="fa fa-gift"></i> Redeem </a>
+                              <a href="" class="btn btn-icon btn-default ink-reaction" data-toggle="modal" data-target="#r-modal" style="color: white; background-color: #2b323a;"data-toggle="tooltip" title="Redeem Rewards" data-placement="top"><i class="fa fa-gift"></i> Redeem </a>
                             <div class="clearfix"></div>
                           </form><!-- end form -->
                         </div><!-- end .card-body -->
@@ -83,7 +83,7 @@
                         <h4 class="modal-title">Account Deletion</h4>
                         <!-- MODAL BODY -->
                         <div class="modal-body">
-                            Do you want to delete this account?
+                            Are you sure you want to delete?
                         </div><!-- end .modal-body -->
                         <!-- MODAL FOOTER -->
                         <div class="modal-footer">
@@ -97,6 +97,53 @@
             </div><!-- end .modal-dialog -->
         </div><!-- end .modal -->
         <!-- END ACCOUNTS -->
+
+        <!-- MODAL FOR REDEEMING REWARDS -->
+        <div class="modal" id="r-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                   <!--MODAL HEADER -->
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4>Redeem a Reward</h4>
+                            </div>
+                            <div class="col-sm-4">
+                                {% for pp in overall_points %}
+                                    <h4>Overall Points: {{ pp.overall_points }}</h4>
+                                {% endfor %}
+                            </div><!-- end .col-sm-6 -->
+                        </div><!-- end .row -->
+                        <hr>
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            <table class="table">
+                              <thead class="thead-dark">
+                                <tr>
+                                  <th scope="col">Reward</th>
+                                  <th scope="col">Points Required</th>
+                                  <th scope="col">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for rewards in rewards %}
+                                <tr>
+                                  <td>{{ rewards.reward }}</td>
+                                  <td>{{ rewards.points_required }} pts.</td>
+                                  <td><button type="button" class="btn btn-secondary" style="background-color: #2b323a; color: white;" data-dismiss="modal"><i class="fa fa-gift"></i> </button></td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                            </table>
+                        </div><!-- end .modal-body -->
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div><!-- end .modal-footer -->
+                    </div><!-- end .modal-header -->
+                </div><!-- end .modal-content -->
+            </div><!-- end .modal-dialog -->
+        </div><!-- end .modal -->
     </div><!--end .section-body -->
 </section><!-- end section -->
 {% endblock %}

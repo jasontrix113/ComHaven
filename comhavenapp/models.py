@@ -23,7 +23,6 @@ def save_user_profile(sender, instance, **kwargs):
     instance.userprofile.save()
 
 class ExpressLoginsSites(models.Model):
-    s_user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
     site_name = models.CharField(max_length=50)
     site_url = models.CharField(max_length=100, default='')
     def __str__(self):
