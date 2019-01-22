@@ -525,6 +525,15 @@ def generatepassword(request):
                 score = results['score']
                 print(results)
                 cracktime = results['crack_times_display']
+                guesses = results['guesses']
+
+                if score == 1 or score == 2:
+                    strength = "Weak"
+                elif score == 2 or score == 3:
+                    strength = "Medium"
+                elif score == 3 or score == 4:
+                    strength = "Strong"
+
         else:
             del request.session['result']
         # pr = PasswordGenerator.objects.all().update(pass_result=res1)
@@ -542,7 +551,7 @@ def generatepassword(request):
 
     form = PasswordGeneratorForm()
     try:
-        return render(request, 'pages/generate-password.html', {'form': form, 'score':score, 'cracktime':cracktime})
+        return render(request, 'pages/generate-password.html', {'form': form, 'score':score, 'cracktime':cracktime, 'strength':strength, 'guesses':guesses})
     except:
         return render(request, 'pages/generate-password.html', {'form': form})
 
