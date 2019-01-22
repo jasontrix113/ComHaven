@@ -303,7 +303,7 @@ def register(request):
                     device_model = request.user_agent.device
                     device_platform = platform.system()
                     AccessListOfDevices.objects.create(
-                        acl_user=user1,
+                        acl_user=user,
                         device_model=device_model,
                         access_id_path=directory,
                         device_platform=device_platform
