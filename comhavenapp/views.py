@@ -60,9 +60,9 @@ def auto_login(request, login_id):
         # print(login.id)
         if login.login_name == 'Schoology':
             try:
-                browser = webdriver.Chrome(BASE_DIR+'chromedriver.exe')
+
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
-                parent = browser.current_window_handle
                 username = browser.find_element_by_id("edit-mail")
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id("edit-pass")
@@ -622,14 +622,15 @@ def login_edit(request, login_id):
             # temp_init.temp_pword = temp_pass
             # temp_init.save()
             # update account in the database
+
+            update=True
             temp_pass = request.POST['login_password3']
-            login_name = request.POST['login_name']
             enc_password = pbkdf2_sha256.encrypt(temp_pass, rounds=10000, salt=bytes(32))
             user = request.user
             init = NewAccountLogin.objects.get(id=login_id)
-            init.login_user = login_name
             init.login_user = user
             init.login_password = enc_password
+            init.updated=update
             init.save()
             # update the secret model
             init2 = TempAccounts.objects.get(id=login_id)
@@ -711,8 +712,7 @@ def user_stats(request):
 
 
     duplicate_account = NewAccountLogin.objects.filter(id__in = dups_id).all()
-
-
+    duplicate_password = TempAccounts.objects.filter(id__in = dups_id).all()
     # duplicate_id = NewAccountLogin.objects.filter(id__in=dups_id).values_list('id', flat=True)
     # duplicate_password = NewAccountLogin.objects.filter(id__in = dups_id).values_list('login_password', flat=True)
     #get instance of fields
@@ -723,7 +723,7 @@ def user_stats(request):
 
 
 
-    context_dups = {'duplicate_account': duplicate_account, 'dups':dups}
+    context_dups = {'duplicate_account': duplicate_account, 'dups':dups, 'duplicate_password':duplicate_password}
     return render(request, 'pages/user_stats.html', context_dups)
 
 @login_required

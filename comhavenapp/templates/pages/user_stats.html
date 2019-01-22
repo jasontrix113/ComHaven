@@ -90,7 +90,6 @@
                                         <thead>
                                             <tr>
                                                 <th>Accounts</th>
-                                                <th>Your Password</th>
                                                 <th>Last Changes</th>
                                                 <th>Action</th>
                                             </tr><!-- end table-row -->
@@ -98,7 +97,6 @@
                                         <tbody>
                                             <tr>
                                                 <td>{{ account.login_name }}</td>
-                                                <td></td>
                                                 <td>{{ account.date_inserted }}</td>
                                                 <td>
                                                     <a href="{% url 'edit' account.id %}" class="btn btn-danger ink-reaction"> Change</a>
