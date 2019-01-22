@@ -104,9 +104,9 @@ class PasswordGeneratorForm(ModelForm):
                                widget=forms.Select(),
                                required=False)
     pass_phrase = forms.CharField(max_length=200, required=True)
-    pass_up_lo_case = forms.BooleanField(initial= False, required=False)
-    pass_no_case = forms.BooleanField(initial=False, required=False)
-    pass_ch_case = forms.BooleanField(initial=False, required=False)
+    pass_up_lo_case = forms.BooleanField(initial= True, required=False)
+    pass_no_case = forms.BooleanField(initial=True, required=False)
+    pass_ch_case = forms.BooleanField(initial=True, required=False)
     pass_result = forms.CharField(required=False)
     class Meta:
         model = PasswordGenerator

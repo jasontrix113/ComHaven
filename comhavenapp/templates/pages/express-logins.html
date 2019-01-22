@@ -1,5 +1,6 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
+{% load staticfiles %}
 {% block title %} Express Logins {% endblock %}
 {% block body %}
 <section>
@@ -19,19 +20,20 @@
                         <div class="card-head">
                             <header>Launch {{ login.login_name }}</header>
                             <div class="divider"></div>
-                            <div class="tools" style="margin-top: 15px;">
-                                <a href="{% url 'auto_login' login.id %}" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-paper-plane"></i> </a>
+                            <div class="tools" style="margin-top:15px;">
+                                <a href="{% url 'auto_login' login.id %}" class="btn btn-icon-toggle ink-reaction">
+                                    <i class="fa fa-paper-plane"></i></a>
                             </div><!-- end .tools -->
                             <hr><!-- !line-break -->
                         </div><!-- end .card-head -->
                         <div class="card-body text-left">
-                            <p><b>Email:</b> {{ login.login_username }}</p>
-                            <p><b>URL: </b>{{ login.login_target_url }}</p>
+                            <p> <b>Email:</b> {{ login.login_username }}</p>
+                            <p> <b>URL:</b> {{ login.login_target_url }}</p>
                         </div><!-- end .card-body -->
                     </div><!-- end .card -->
                 </div><!-- end .col -->
             {% empty %}<!-- if empty -->
-                <div class="col-sm-12 text-center mx-auto" id="empty" style="color: grey;">
+                <div class="col-sm-12 text-center mx-auto" id="empty" style="color: #0aa89e82;">
                     <br><!-- !break -->
                     <br><!-- !break -->
                     <br><!-- !break -->

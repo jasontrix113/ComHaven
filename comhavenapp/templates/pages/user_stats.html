@@ -78,25 +78,24 @@
                     </div><!-- end .col-sm-12 -->
                     {% endfor %}
                 </ul><!-- end ul -->
-
+                {% for account in duplicate_account %}
                 <!-- TABLE -->
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body">
                                 <form class="form" action="" method="post">
+
                                     <table class="table table-stripped table-responsive">
                                         <thead>
                                             <tr>
                                                 <th>Accounts</th>
-                                                <th>Password</th>
+                                                <th>Your Password</th>
                                                 <th>Last Changes</th>
                                                 <th>Action</th>
                                             </tr><!-- end table-row -->
                                         </thead><!-- end table-head-->
-
                                         <tbody>
-                                            {% for account in duplicate_account %}
                                             <tr>
                                                 <td>{{ account.login_name }}</td>
                                                 <td></td>
@@ -105,7 +104,6 @@
                                                     <a href="{% url 'edit' account.id %}" class="btn btn-danger ink-reaction"> Change</a>
                                                 </td>
                                             </tr><!-- end table-row -->
-                                            {% endfor %}
                                         </tbody><!-- end .table-body -->
                                     </table><!-- end .table-->
                                 </form><!-- end .form -->
@@ -113,6 +111,18 @@
                         </div><!-- end .card -->
                     </div><!-- end .col-sm-12 -->
                 </div><!-- end .row -->
+                {% empty %}
+                <div class="col-sm-12 text-center mx-auto" id="empty" style="color: grey;">
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <span><i class="fa fa-user-shield fa-10x"></i></span>
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <p class="small"> You don't have any issue with your passwords.</p>
+                </div><!-- end .col-sm-12 -->
+                {% endfor %}
             </nav><!-- end nav -->
         </div><!--end .row -->
     </div><!--end .section-body -->

@@ -6,12 +6,17 @@
 <section>
     <div class="section-body" style="padding: 20px;">
         <div class="row">
-            <h1 class="text-left mx-auto">&nbsp Security Challenges</h1>
+            <div class="col-sm-10">
+                <h1 class="text-left mx-auto">&nbsp Security Challenges</h1>
+            </div><!-- end .col-sm-10 -->
+            <div class="col-sm-2">
+                {% for pp in us %}
+                    <h3 class="text-right">POINTS: {{ pp.overall_points }}</h3>
+                {% endfor %}
+            </div><!-- end .col-sm-2 -->
             <hr><!-- !line-break -->
         </div><!-- end .row -->
-        {% for pp in us %}
-            <h4 class="text-right">POINTS: {{ pp.overall_points }}</h4>
-        {% endfor %}
+        <hr>
         <div class="row">
             <!--<h4>{{ stat.status }}</h4>-->
             <br><!-- !break -->
@@ -44,8 +49,7 @@
                         </div><!-- end .card -->
                     </div><!-- end .col -->
                     {% empty %}
-                    <div class="col-sm-12 text-center mx-auto" style="color: grey;">
-                        <br>
+                    <div class="col-sm-12 text-center mx-auto" style="color: #0aa89e82;">
                         <br>
                         <br>
                         <br>
