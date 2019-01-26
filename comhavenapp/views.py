@@ -230,6 +230,7 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user:
             # Is the account active? It could have been disabled.
+            print(user)
             if user.is_active:
                 if request.user_agent.is_pc == True:
                     # path = os.getenv('LOCALAPPDATA')
