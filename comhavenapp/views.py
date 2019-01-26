@@ -89,12 +89,8 @@ def auto_login(request, login_id):
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
 
         elif login.login_name == 'Netflix':
-            # try:
-                chrome_exec_shim = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")
-                opts = webdriver.ChromeOptions()
-                opts.binary_location = chrome_exec_shim
-                opts.add_argument('--disable-gpu')
-                browser = webdriver.Chrome(executable_path='chromedriver.exe', chrome_options=opts )
+            try:
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('id_userLoginId')
                 username.send_keys(login.login_username)
@@ -103,11 +99,8 @@ def auto_login(request, login_id):
                 signInButton = browser.find_element_by_class_name('login-button')
                 signInButton.click()
 
-            # except:
-            #     return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
-            #                                    'alert-danger'))
-
-
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection','alert-danger'))
 
         elif login.login_name == 'Facebook':
             try:
