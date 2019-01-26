@@ -94,7 +94,7 @@ def auto_login(request, login_id):
             #     chrome_options.binary_location = GOOGLE_CHROME_BIN
             #     chrome_options.add_argument('--disable-gpu')
             #     chrome_options.add_argument('--no-sandbox')
-                browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH)
+                browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('id_userLoginId')
                 username.send_keys(login.login_username)
