@@ -90,7 +90,7 @@ def auto_login(request, login_id):
 
         elif login.login_name == 'Netflix':
             # try:
-                browser = webdriver.Chrome(executable_path='chromedriver')
+                browser = webdriver.Chrome(executable_path='chromedriver.exe')
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('id_userLoginId')
                 username.send_keys(login.login_username)
