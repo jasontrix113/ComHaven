@@ -103,9 +103,9 @@ def auto_login(request, login_id):
                 signInButton = browser.find_element_by_class_name('login-button')
                 signInButton.click()
 
-            except:
-                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
-                                               'alert-danger'))
+            # except:
+            #     return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
+            #                                    'alert-danger'))
 
 
 
