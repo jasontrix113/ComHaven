@@ -89,7 +89,7 @@ def auto_login(request, login_id):
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
 
         elif login.login_name == 'Netflix':
-            try:
+            # try:
                 chrome_options = Options()
                 chrome_options.binary_location = GOOGLE_CHROME_BIN
                 chrome_options.add_argument('--disable-gpu')
