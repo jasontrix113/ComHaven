@@ -25,7 +25,7 @@
         <div class="row">
             <nav class="navbar navbar-primary" id="nav-pills">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                    {% for count in dups %}
+                    {% for count_dups in dups %}
                     <div class="col-sm-12" id="label_stats">
                         <div class="col-sm-3">
                             <!-- TAB_PILLS DUPLICATE -->
@@ -33,7 +33,7 @@
                                 <a class="nav-link" id="pill-D-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                           <h6><span class="fa fa-warning"></span> Duplicate ({{count.dup_pword_count}})</h6>
+                                           <h6><span class="fa fa-warning"></span> Duplicate ({{count_dups.dup_pword_count}})</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link -->
@@ -45,7 +45,7 @@
                                 <a class="nav-link" id="pill-C-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                            <h6><span class="fa fa-warning"></span> Compromised (0)</h6>
+                                            <h6><span class="fa fa-warning"></span> Compromised ({{ count_cp }})</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link -->
@@ -57,7 +57,7 @@
                                 <a class="nav-link" id="pill-W-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                            <h6><span class="fa fa-warning"></span> Weak (0)</h6>
+                                            <h6><span class="fa fa-warning"></span>Weak ({{ count_wp }})</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link-->
@@ -69,7 +69,7 @@
                                 <a class="nav-link" id="pill-O-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <div class="card text-center">
                                         <div class="card-body small">
-                                            <h6><span class="fa fa-warning"></span> Old (0)</h6>
+                                            <h6><span class="fa fa-warning"></span> Old ({{ count_op }})</h6>
                                         </div><!-- end .card-body -->
                                     </div><!-- end .card .text-center -->
                                 </a><!-- end .nav-link -->
@@ -78,49 +78,80 @@
                     </div><!-- end .col-sm-12 -->
                     {% endfor %}
                 </ul><!-- end ul -->
-                {% for account in duplicate_account %}
-                <!-- TABLE -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <form class="form" action="" method="post">
-                                    <table class="table table-stripped table-responsive">
-                                        <thead>
-                                            <tr>
-                                                <th>Accounts</th>
-                                                <th>Last Changes</th>
-                                                <th>Action</th>
-                                            </tr><!-- end table-row -->
-                                        </thead><!-- end table-head-->
-                                        <tbody>
-                                            <tr>
-                                                <td>{{ account.login_name }}</td>
-                                                <td>{{ account.date_inserted }}</td>
-                                                <td>
-                                                    <a href="{% url 'edit' account.id %}" class="btn btn-danger ink-reaction"> Change</a>
-                                                </td>
-                                            </tr><!-- end table-row -->
-                                        </tbody><!-- end .table-body -->
-                                    </table><!-- end .table-->
-                                </form><!-- end .form -->
-                            </div><!-- end .card-body -->
-                        </div><!-- end .card -->
-                    </div><!-- end .col-sm-12 -->
-                </div><!-- end .row -->
-                {% empty %}
-                <div class="col-sm-12 text-center mx-auto" id="empty" style="color: grey;">
-                    <br><!-- !break -->
-                    <br><!-- !break -->
-                    <br><!-- !break -->
-                    <br><!-- !break -->
-                    <span><i class="fa fa-user-shield fa-10x"></i></span>
-                    <br><!-- !break -->
-                    <br><!-- !break -->
-                    <p class="small"> You don't have any issue with your passwords.</p>
-                </div><!-- end .col-sm-12 -->
-                {% endfor %}
             </nav><!-- end nav -->
+            {% for account in duplicate_account %}
+            <!-- TABLE -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="form" action="" method="post">
+                                <table class="table table-stripped table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Accounts</th>
+                                            <th>Last Changes</th>
+                                            <th>Action</th>
+                                        </tr><!-- end table-row -->
+                                    </thead><!-- end table-head-->
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ account.login_name }}</td>
+                                            <td>{{ account.date_inserted }}</td>
+                                            <td>
+                                                <a href="{% url 'edit' account.id %}" class="btn btn-danger ink-reaction"> Change</a>
+                                            </td>
+                                        </tr><!-- end table-row -->
+                                    </tbody><!-- end .table-body -->
+                                </table><!-- end .table-->
+                            </form><!-- end .form -->
+                        </div><!-- end .card-body -->
+                    </div><!-- end .card -->
+                </div><!-- end .col-sm-12 -->
+            </div><!-- end .row -->
+            {% endfor %}
+            {% for weak_pass in wp %}
+            <!-- TABLE -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="form" action="" method="post">
+                                <table class="table table-stripped table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Accounts</th>
+                                            <th>Last Changes</th>
+                                            <th>Action</th>
+                                        </tr><!-- end table-row -->
+                                    </thead><!-- end table-head-->
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ weak_pass.login_account }}</td>
+                                            <td>{{ weak_pass.login_strength }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-danger ink-reaction"> Change</a>
+                                            </td>
+                                        </tr><!-- end table-row -->
+                                    </tbody><!-- end .table-body -->
+                                </table><!-- end .table-->
+                            </form><!-- end .form -->
+                        </div><!-- end .card-body -->
+                    </div><!-- end .card -->
+                </div><!-- end .col-sm-12 -->
+            </div><!-- end .row -->
+            {% empty %}
+            <div class="col-sm-12 text-center mx-auto" id="empty2" style="color: grey;">
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <span><i class="fa fa-user-shield fa-10x"></i></span>
+                <br><!-- !break -->
+                <br><!-- !break -->
+                <p class="small"> You don't have any issue with your passwords.</p>
+            </div><!-- end .col-sm-12 -->
+            {% endfor %}
         </div><!--end .row -->
     </div><!--end .section-body -->
 </section><!-- end section -->

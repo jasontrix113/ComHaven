@@ -9,7 +9,7 @@ from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks, WeakPasswords, Rewards
+from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks, WeakPasswords, Rewards, CompromisedPasswords, OldPasswords, DuplicatePasswords
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -67,24 +67,23 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id("edit-pass")
                 password.send_keys(temp_ac.temp_pword)
-                # url = browser.find_element_by_id('edit-submit')
-                # url.click(parent)
+                signInButton = browser.find_element_by_id('edit-submit');
+                signInButton.click()
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
 
-                #signInButton = browser.find_element_by_id('edit-submit');
-                #signInButton.click()
+
         elif login.login_name == 'LMS':
             try:
                 browser = webdriver.Chrome()
                 browser.get(login.login_target_url)
-                body = driver.find_element_by_tag_name("body")
-                body.send_keys(Keys.CONTROL + 't')
-                username = browser.find_element_by_id('username')
+                username = browser.find_element_by_name('username')
                 username.send_keys(login.login_username)
-                password = browser.find_element_by_id('password')
+                password = browser.find_element_by_name('password')
                 password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('loginbtn');
+                signInButton.click()
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
@@ -97,13 +96,14 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id('id_password')
                 password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_class_name('login-button')
+                signInButton.click()
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                #signInButton = browser.find_element_by_id('edit-submit');
-                #signInButton.click()
+
 
         elif login.login_name == 'Facebook':
             try:
@@ -115,13 +115,14 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id('pass')
                 password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('loginbutton');
+                signInButton.click()
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                           'alert-danger'))
 
-                #signInButton = browser.find_element_by_id('edit-submit');
-                #signInButton.click()
+
 
         elif login.login_name == 'UIS':
             try:
@@ -131,13 +132,14 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_name('Password')
                 password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('');
+                signInButton.click()
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
+
         elif login.login_name == 'Spotify':
             try:
                 browser = webdriver.Chrome()
@@ -146,13 +148,13 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id('login-password')
                 password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('');
+                signInButton.click()
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
         elif login.login_name == 'Twitter':
             try:
                 browser = webdriver.Chrome()
@@ -161,13 +163,13 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_name('session[password]')
                 password.send_keys(temp_ac.temp_pword)
-
+                signInButton = browser.find_element_by_id('');
+                signInButton.click()
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
+
 
         elif login.login_name == 'GitHub':
             try:
@@ -177,13 +179,13 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id('password')
                 password.send_keys(temp_ac.temp_pword)
-
+                signInButton = browser.find_element_by_name('commit');
+                signInButton.click()
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
+
         elif login.login_name == 'Instagram':
             try:
                 browser = webdriver.Chrome()
@@ -192,13 +194,14 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_name('password')
                 password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('');
+                signInButton.click()
 
             except:
                 return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
+
         elif login.login_name == 'Trello':
             try:
                 browser = webdriver.Chrome()
@@ -207,14 +210,14 @@ def auto_login(request, login_id):
                 username.send_keys(login.login_username)
                 password = browser.find_element_by_id('password')
                 password.send_keys(temp_ac.temp_pword)
-
+                signInButton = browser.find_element_by_id('');
+                signInButton.click()
             except:
                 return redirect('/express-login',
                                 messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
 
-                # signInButton = browser.find_element_by_id('edit-submit');
-                # signInButton.click()
+
         else:
             return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
                                            'alert-danger'))
@@ -229,18 +232,18 @@ def user_login(request):
             # Is the account active? It could have been disabled.
             if user.is_active:
                 if request.user_agent.is_pc == True:
-                    # path = os.getenv('LOCALAPPDATA')
-                    # filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                    # directory = os.path.dirname(filename)
-                    # path_exist = directory
-                    # form = AccessListOfDevices.objects.all()
-                    # if os.path.exists(path_exist):
-                    #     login(request, user)
-                    #     return redirect('home')
-                    # else:
-                    #     return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
-                    login(request,user)
-                    return redirect('home')
+                    path = os.getenv('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    form = AccessListOfDevices.objects.all()
+                    if os.path.exists(path_exist):
+                        login(request, user)
+                        return redirect('home')
+                    else:
+                        return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
+                    # login(request,user)
+                    # return redirect('home')
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
@@ -387,13 +390,25 @@ def securitychallenges(request):
     user = request.user
     #get Security challenge model instance
     sc = SecurityChallenges.objects.filter(user=request.user)
-    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(
-        dup_pword_count__gt=1)
+    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1)
     print(dups)
+    cnt_dups = dups.count()
     # display the id's of duplicate passwords
     dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups])
     dups_id = [item.id for item in dups_record]
-    print(dups_id)
+
+    record = TempAccounts.objects.filter(id__in=dups_id)
+    cnt = DuplicatePasswords.objects.filter(user=request.user).count()
+
+    if cnt == 0:
+        for r in record:
+            user = request.user
+            DuplicatePasswords.objects.create(
+                user = user,
+                login_account = r.temp_uname,
+                login_password = r.temp_uname,
+            )
+
     try:
         if not dups and NewAccountLogin.objects.get(updated=True): #if count in duplication = 0 and updated = True
             update_score = User_Stats.objects.get(user=request.user)
@@ -406,9 +421,19 @@ def securitychallenges(request):
     status = Status.objects.get(status='Unfinished')
     status2 = Status.objects.get(status='Completed')
     points = Points.objects.get(points=4)
-    print(tasks)
+
+    count_sc = SecurityChallenges.objects.filter(user=request.user).count()
     try:
-        if dups_id and not SecurityChallenges.objects.exists():
+        if dups_id and count_sc == 0:
+            SecurityChallenges.objects.create(
+                user=user,
+                tasks=tasks,
+                points=points,
+                date_completed='',
+                date_initiated='',
+                status=status
+            )
+        elif dups_id == record and not count_sc == 0:
             SecurityChallenges.objects.create(
                 user=user,
                 tasks=tasks,
@@ -429,20 +454,22 @@ def securitychallenges(request):
     #get User Stats instance
     us = User_Stats.objects.filter(user=request.user)
 
-    #create context for instances
-    context_us_sc = {'sc':sc, 'us':us}
+
 
     # get instance of accounts
     acc_init = NewAccountLogin.objects.values_list('id', flat=True)
-    temp_init = TempAccounts.objects.all()
+    temp_init = TempAccounts.objects.filter(user=request.user)
     print(temp_init)
 
     for t in temp_init:
         pass_results = zxcvbn(t.temp_pword)
         res = pass_results['score']
+        count_wp = WeakPasswords.objects.filter(user=request.user).count()
+        print(count_wp)
+        print(res)
         if res == 0 or res == 1:
             try:
-                if not WeakPasswords.objects.exists():
+                if count_wp == 0:
                     user = request.user
                     WeakPasswords.objects.create(
                         user=user,
@@ -451,28 +478,28 @@ def securitychallenges(request):
                         login_score='0 or 1',
                         login_strength='Weak'
                     )
-                elif WeakPasswords.objects.exists():
+                elif not count_wp == 0:
+                    user = request.user
                     WeakPasswords.objects.create(
-                        user=user,
-                        login_account=t.temp_uname,
-                        login_password=t.temp_pword,
-                        login_score='0 or 1',
-                        login_strength='Weak'
+                        user = user,
+                        login_account = t.temp_name,
+                        login_password = t.temp_pword,
+                        login_score = '0 or 1',
+                        login_strength= 'Weak'
                     )
-                    x= 'Weak Password'
             except:
                 print(t.id)
                 x = 'Weak Password'
-        if res == 2:
-            x = 'Medium Password'
-        if res == 3:
-            x = 'Medium Password'
-        if res == 4:
-            x = 'Strong Password'
 
-    # score = results['score']
-    # print(results)
-    # cracktime = results['crack_times_display']
+
+    # get instance for old passwords
+    old_pass_date = NewAccountLogin.objects.filter(login_user=request.user).values_list('date_inserted', flat=True)
+    print('old-pass-date')
+    print(old_pass_date)
+
+
+    # create context for instances
+    context_us_sc = {'sc': sc, 'us': us}
 
     return render(request, 'pages/security-challenges.html', context_us_sc)
 
@@ -548,16 +575,23 @@ def generatepassword(request):
                 print(results)
                 cracktime = results['crack_times_display']
                 guesses = results['guesses']
-
-                if score == 1 or score == 2:
+                feedback = results['feedback']
+                if score == 0:
+                    strength = "Very Weak"
+                elif score == 1:
                     strength = "Weak"
-                elif score == 2 or score == 3:
+                elif score == 2:
                     strength = "Medium"
-                elif score == 3 or score == 4:
+                elif score == 3:
                     strength = "Strong"
+                elif score == 4:
+                    strength = "Very Strong"
+
 
         else:
             del request.session['result']
+
+
         # pr = PasswordGenerator.objects.all().update(pass_result=res1)
         # pr_res = PasswordGenerator.objects.all()
         # pr.pass_result = res1
@@ -573,7 +607,7 @@ def generatepassword(request):
 
     form = PasswordGeneratorForm()
     try:
-        return render(request, 'pages/generate-password.html', {'form': form, 'score':score, 'cracktime':cracktime, 'strength':strength, 'guesses':guesses})
+        return render(request, 'pages/generate-password.html', {'form': form, 'score':score, 'cracktime':cracktime, 'strength':strength, 'guesses':guesses, 'feedback':feedback})
     except:
         return render(request, 'pages/generate-password.html', {'form': form})
 
@@ -592,7 +626,7 @@ def new_login(request):
                 login_username = request.POST['login_username']
                 login_password = request.POST['login_password']
                 login_notes = request.POST['login_notes']
-                count = NewAccountLogin.objects.count()
+                count = NewAccountLogin.objects.filter(login_user=request.user).count()
                 if count <= 9:
                     #Password Encryption with Salt#
                     enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
@@ -650,10 +684,18 @@ def login_edit(request, login_id):
 
             update=True
             temp_pass = request.POST['login_password3']
+            login_url = request.POST['login_target_url']
+            login_name = request.POST['login_name']
+            login_username = request.POST['login_username']
+            login_notes = request.POST['login_notes']
             enc_password = pbkdf2_sha256.encrypt(temp_pass, rounds=10000, salt=bytes(32))
             user = request.user
             init = NewAccountLogin.objects.get(id=login_id)
             init.login_user = user
+            init.login_name = login_name
+            init.login_username = login_username
+            init.login_notes = login_notes
+            init.login_target_url = login_url
             init.login_password = enc_password
             init.updated=update
             init.save()
@@ -671,10 +713,26 @@ def login_edit(request, login_id):
 
 @login_required
 def login_destroy(request, login_id):
-    temp_ac = TempAccounts.objects.get(id=login_id)
+    temp_ac = TempAccounts.objects.filter(user=request.user).get(id=login_id)
     temp_ac.delete()
-    login = NewAccountLogin.objects.get(id=login_id)
+    print(temp_ac)
+
+    login = NewAccountLogin.objects.filter(login_user=request.user).get(id=login_id)
     login.delete()
+    print(login)
+
+    # weak_pass = WeakPasswords.objects.filter(user=request.user).get(id=login_id)
+    # weak_pass.delete()
+    # print(weak_pass)
+    #
+    # old_pass = OldPasswords.objects.filter(user=request.user).get(id=login_id)
+    # old_pass.delete()
+    # print(old_pass)
+    #
+    # com_pass = CompromisedPasswords.objects.filter(user=request.user).get(id=login_id)
+    # com_pass.delete()
+    # print(com_pass)
+
     return redirect('/', messages.success(request, 'Account was successfully deleted.', 'alert-success'))
 
 @login_required
@@ -731,6 +789,22 @@ def user_stats(request):
     dups_id = [item.id for item in dups_record]
     print(dups_id)
 
+    # get Weak Password instance
+    wp = WeakPasswords.objects.filter(user=request.user)
+    print(wp)
+
+    # count the number of weak passwords
+    count_wp = WeakPasswords.objects.filter(user=request.user).count()
+    print(count_wp)
+
+    # count the number of compromised passwords
+    count_cp = CompromisedPasswords.objects.filter(user=request.user).count()
+    print(count_cp)
+
+    # count the number of old passwords
+    count_op = OldPasswords.objects.filter(user=request.user).count()
+    print(count_op)
+
     temp_id = TempAccounts.objects.values_list('id', flat=True)
     login_id = NewAccountLogin.objects.values_list('id', flat=True)
 
@@ -740,7 +814,7 @@ def user_stats(request):
     duplicate_password = TempAccounts.objects.filter(id__in = dups_id).all()
     # duplicate_id = NewAccountLogin.objects.filter(id__in=dups_id).values_list('id', flat=True)
     # duplicate_password = NewAccountLogin.objects.filter(id__in = dups_id).values_list('login_password', flat=True)
-    #get instance of fields
+
 
 
 
@@ -748,7 +822,7 @@ def user_stats(request):
 
 
 
-    context_dups = {'duplicate_account': duplicate_account, 'dups':dups, 'duplicate_password':duplicate_password}
+    context_dups = {'duplicate_account': duplicate_account, 'dups':dups, 'duplicate_password':duplicate_password, 'wp':wp, 'count_wp':count_wp, 'count_cp':count_cp, 'count_op':count_op}
     return render(request, 'pages/user_stats.html', context_dups)
 
 @login_required
@@ -767,6 +841,7 @@ def send_email(request, login_id):
             html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
             try:
                 send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
+                print('hello')
                 return redirect('/sharedhaven', messages.success(request, 'Credential is shared', 'alert-success'))
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')

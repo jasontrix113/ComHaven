@@ -24,7 +24,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class ExpressLoginsSites(models.Model):
     site_name = models.CharField(max_length=50)
-    site_url = models.CharField(max_length=100, default='')
+    # site_url = models.CharField(max_length=100, default='')
     def __str__(self):
         return self.site_name;
 
@@ -118,29 +118,24 @@ class WeakPasswords(models.Model):
     def __str__(self):
         return str(self.user)
 
-# class DuplicatePasswords(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
-#     login_account = models.CharField(max_length=200, default='')
-#     login_password = models.CharField(max_length=200, default='')
-#     login_score = models.CharField(max_length=20, default=0)
-#     login_strength = models.CharField(max_length=200, default='')
-#     def __str__(self):
-#         return str(self.user)
-#
-# class CompromisedPasswords(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
-#     login_account = models.CharField(max_length=200, default='')
-#     login_password = models.CharField(max_length=200, default='')
-#     login_score = models.CharField(max_length=20, default=0)
-#     login_strength = models.CharField(max_length=200, default='')
-#     def __str__(self):
-#         return str(self.user)
-#
-# class OldPasswords(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
-#     login_account = models.CharField(max_length=200, default='')
-#     login_password = models.CharField(max_length=200, default='')
-#     login_score = models.CharField(max_length=20, default=0)
-#     login_strength = models.CharField(max_length=200, default='')
-#     def __str__(self):
-#         return str(self.user)
+class DuplicatePasswords(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
+    login_account = models.CharField(max_length=200, default='')
+    login_password = models.CharField(max_length=200, default='')
+    def __str__(self):
+        return str(self.user)
+
+class CompromisedPasswords(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
+    login_account = models.CharField(max_length=200, default='')
+    login_password = models.CharField(max_length=200, default='')
+    def __str__(self):
+        return str(self.user)
+
+class OldPasswords(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
+    login_account = models.CharField(max_length=200, default='')
+    login_password = models.CharField(max_length=200, default='')
+    date_last_inserted = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return str(self.user)

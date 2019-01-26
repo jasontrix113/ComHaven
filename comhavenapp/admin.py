@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NewAccountLogin, UserProfile, Tasks, TempAccounts, AccessListOfDevices, ExpressLoginsSites, SecurityChallenges, Status, PasswordGenerator, User_Stats, Rewards, Points, PerformedTasks, WeakPasswords
+from .models import NewAccountLogin, UserProfile, Tasks, TempAccounts, AccessListOfDevices, ExpressLoginsSites, SecurityChallenges, Status, PasswordGenerator, User_Stats, Rewards, Points, PerformedTasks, WeakPasswords, CompromisedPasswords, OldPasswords, DuplicatePasswords
 
 
 admin.site.register(NewAccountLogin)
@@ -16,3 +16,6 @@ admin.site.register(Rewards)
 admin.site.register(Points)
 admin.site.register(PerformedTasks)
 admin.site.register(WeakPasswords)
+admin.site.register(CompromisedPasswords)
+admin.site.register(OldPasswords)
+admin.site.register(DuplicatePasswords)

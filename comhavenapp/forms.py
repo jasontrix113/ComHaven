@@ -97,7 +97,7 @@ class SharedHavenForm(forms.Form):
     # password = forms.CharField(widget=forms.PasswordInput)
 
 class PasswordGeneratorForm(ModelForm):
-    length_choices = [(i,i) for i in range(12,255)]
+    length_choices = [(i,i) for i in range(6,255)]
     pass_length = forms.ChoiceField(choices=length_choices)
     pass_anagram = forms.ChoiceField(label="Choose an anagram",
                                initial='0',

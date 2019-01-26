@@ -61,10 +61,18 @@
                               </div><!-- end .col-md-6 -->
                             </div><!-- end .row -->
                               <hr>
-                              <a href="{% url 'user_profile_edit' %}" class="btn btn-icon btn-default ink-reaction" style="float: right; color: white; background-color: #2b323a;" data-toggle="tooltip" title="Update Profile" data-placement="top"><i class="fa fa-user-edit"></i> Update Profile</a>
-                              <button type="button" data-toggle="modal" class="btn btn-icon btn-danger ink-reaction" data-target="#d-modal" data-toggle="tooltip" title="Delete Account" data-placement="top"><i class="fa fa-user-minus"></i> Delete </button>
-                              <a href="{% url 'user_stats' %}" class="btn btn-icon btn-default ink-reaction" style="color: white; background-color: #2b323a;" data-toggle="tooltip" title="User Stats" data-placement="top"><i class="fa fa-user-shield"></i> User Stats</a>
-                              <a href="" class="btn btn-icon btn-default ink-reaction" data-toggle="modal" data-target="#r-modal" style="color: white; background-color: #2b323a;"data-toggle="tooltip" title="Redeem Rewards" data-placement="top"><i class="fa fa-gift"></i> Redeem </a>
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Options <span class="caret"></span>
+                                  </button>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="" data-toggle="modal" data-target="#d-modal" data-toggle="tooltip" title="Delete Account">
+                                       Delete Account
+                                    </a>
+                                    <a class="dropdown-item" href="{% url 'user_stats' %}">User Stats</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#r-modal" href="">Redeem</a>
+                                  </div><!-- end .dropdown-menu -->
+                              </div><!-- end .btn-group -->
                             <div class="clearfix"></div>
                           </form><!-- end form -->
                         </div><!-- end .card-body -->

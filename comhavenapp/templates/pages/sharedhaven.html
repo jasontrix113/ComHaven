@@ -4,14 +4,6 @@
 
 {% block body %}
 <section>
-    {% if messages %}
-        {% for message in messages %}
-            <p {% if message.tags %} class="alert {{ message.tags }} text-center"{% endif %}>
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{ message }}
-            </p>
-        {% endfor %}
-    {% endif %}
     <div class="section-body" style="padding: 20px;">
 
         <div class="row">
