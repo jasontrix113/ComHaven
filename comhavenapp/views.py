@@ -90,7 +90,11 @@ def auto_login(request, login_id):
 
         elif login.login_name == 'Netflix':
             # try:
-                browser = webdriver.Chrome(executable_path='chromedriver.exe')
+                chrome_exec_shim = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")
+                opts = webdriver.ChromeOptions()
+                opts.binary_location = chrome_exec_shim
+                opts.add_argument('--disable-gpu')
+                browser = webdriver.Chrome(executable_path='chromedriver.exe', chrome_options=opts )
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id('id_userLoginId')
                 username.send_keys(login.login_username)

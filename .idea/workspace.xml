@@ -55,8 +55,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="92" column="76" lean-forward="false" selection-start-line="92" selection-start-column="76" selection-end-line="92" selection-end-column="76" />
+            <state relative-caret-position="157">
+              <caret line="96" column="60" lean-forward="false" selection-start-line="96" selection-start-column="60" selection-end-line="96" selection-end-column="60" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
@@ -248,65 +248,6 @@
               <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
               <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
               <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="partial" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenapp" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="registration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ComHaven" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ComHaven" type="462c0819:PsiDirectoryNode" />
-              <item name="comhavenproject" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -812,8 +753,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="92" column="76" lean-forward="false" selection-start-line="92" selection-start-column="76" selection-end-line="92" selection-end-column="76" />
+        <state relative-caret-position="157">
+          <caret line="96" column="60" lean-forward="false" selection-start-line="96" selection-start-column="60" selection-end-line="96" selection-end-column="60" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
           </folding>
