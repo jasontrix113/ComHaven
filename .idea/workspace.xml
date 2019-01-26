@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a44e852-003c-4f7d-8e8b-522ef931cabc" name="Default Changelist" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/comhavenapp/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/comhavenapp/migrations/0002_remove_expressloginssites_s_user.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/admin.py" afterPath="$PROJECT_DIR$/comhavenapp/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/forms.py" afterPath="$PROJECT_DIR$/comhavenapp/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/models.py" afterPath="$PROJECT_DIR$/comhavenapp/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/generate-password.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/generate-password.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/sharedhaven.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/sharedhaven.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/user_profile.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/user_profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/user_stats.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/user_stats.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/views.py" afterPath="$PROJECT_DIR$/comhavenapp/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenproject/urls.py" afterPath="$PROJECT_DIR$/comhavenproject/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -67,8 +55,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="85" column="36" lean-forward="true" selection-start-line="84" selection-start-column="16" selection-end-line="85" selection-end-column="36" />
+            <state relative-caret-position="208">
+              <caret line="243" column="126" lean-forward="false" selection-start-line="239" selection-start-column="22" selection-end-line="243" selection-end-column="126" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
@@ -826,8 +814,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/comhavenapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="85" column="36" lean-forward="true" selection-start-line="84" selection-start-column="16" selection-end-line="85" selection-end-column="36" />
+        <state relative-caret-position="208">
+          <caret line="243" column="126" lean-forward="false" selection-start-line="239" selection-start-column="22" selection-end-line="243" selection-end-column="126" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
           </folding>

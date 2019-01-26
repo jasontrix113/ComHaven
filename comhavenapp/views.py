@@ -237,13 +237,13 @@ def user_login(request):
                     directory = os.path.dirname(filename)
                     path_exist = directory
                     form = AccessListOfDevices.objects.all()
-                    if os.path.exists(path_exist):
-                        login(request, user)
-                        return redirect('home')
-                    else:
-                        return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
-                    # login(request,user)
-                    # return redirect('home')
+                    # if os.path.exists(path_exist):
+                    #     login(request, user)
+                    #     return redirect('home')
+                    # else:
+                    #     return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
+                    login(request,user)
+                    return redirect('home')
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
