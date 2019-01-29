@@ -44,6 +44,11 @@ import csv
 import platform
 from zxcvbn import zxcvbn
 from django.db.models import Count
+from django.template.loader import render_to_string, get_template
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
+
+from django.conf import settings
 
 @login_required
 def auto_login(request, login_id):
@@ -61,7 +66,10 @@ def auto_login(request, login_id):
         # print(login.id)
         if login.login_name == 'Schoology':
             try:
-                browser = webdriver.Chrome()
+                chrome_bin = os.environ.get('GOOGLE_CHROME_SHIM', None)
+                opts = ChromeOptions()
+                opts.binary_location = chrome_bin
+                browser = webdriver.Chrome(executable_path="chromedriver", chrome_options=opts)
                 browser.get(login.login_target_url)
                 username = browser.find_element_by_id("edit-mail")
                 username.send_keys(login.login_username)
@@ -230,18 +238,18 @@ def user_login(request):
             print(user)
             if user.is_active:
                 if request.user_agent.is_pc == True:
-                    # path = os.getenv('LOCALAPPDATA')
-                    # filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                    # directory = os.path.dirname(filename)
-                    # path_exist = directory
-                    # form = AccessListOfDevices.objects.all()
-                    # if os.path.exists(path_exist):
-                    #     login(request, user)
-                    #     return redirect('home')
-                    # else:
-                    #     return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
-                    login(request,user)
-                    return redirect('home')
+                    path = os.getenv('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    form = AccessListOfDevices.objects.all()
+                    if os.path.exists(path_exist):
+                        login(request, user)
+                        return redirect('home')
+                    else:
+                        return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
+                    # login(request,user)
+                    # return redirect('home')
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
@@ -408,7 +416,11 @@ def securitychallenges(request):
             )
 
     try:
-        if not dups and NewAccountLogin.objects.get(updated=True): #if count in duplication = 0 and updated = True
+        dp_count = DuplicatePasswords.objects.filter(user=request.user).count()
+        print(dp_count)
+        flag = NewAccountLogin.objects.filter(login_user=request.user).values_list('changed_flag', flat=True)
+        print(flag)
+        if dp_count == 0 and flag == True:
             update_score = User_Stats.objects.get(user=request.user)
             update_score.overall_points = int(update_score.overall_points) + 4
             update_score.save()
@@ -489,11 +501,6 @@ def securitychallenges(request):
                 print(t.id)
                 x = 'Weak Password'
 
-
-    # get instance for old passwords
-    old_pass_date = NewAccountLogin.objects.filter(login_user=request.user).values_list('date_inserted', flat=True)
-    print('old-pass-date')
-    print(old_pass_date)
 
 
     # create context for instances
@@ -695,7 +702,7 @@ def login_edit(request, login_id):
             init.login_notes = login_notes
             init.login_target_url = login_url
             init.login_password = enc_password
-            init.updated=update
+            init.changed_flag=update
             init.save()
             # update the secret model
             init2 = TempAccounts.objects.get(id=login_id)
@@ -817,7 +824,8 @@ def user_stats(request):
 
 
     # CHECKING FOR COMPROMISED PASSWORDS
-
+    # archive the generated passwords and used passwords
+    # checked if used again then trigger the compromise password issue
 
 
     context_dups = {'duplicate_account': duplicate_account, 'dups':dups, 'duplicate_password':duplicate_password, 'wp':wp, 'count_wp':count_wp, 'count_cp':count_cp, 'count_op':count_op}
@@ -836,13 +844,20 @@ def send_email(request, login_id):
             from_email = form.cleaned_data['to_email']
             message = form.cleaned_data['message']
             to_email = [from_email, 'to_email']
-            html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
+
+            html = render(request, "pages/html_email.html")
+
+            # html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
+            html_message = render_to_string('pages/html_email.html', {'username':temp.temp_uname, 'password':temp.temp_pword})
+            plain_message = strip_tags(html_message)
+
+
             try:
-                send_mail(subject, message, from_email, to_email, fail_silently=False, html_message=html_message)
-                print('hello')
+
+                send_mail(subject, plain_message, from_email, to_email, fail_silently=False, html_message=html_message)
                 return redirect('/sharedhaven', messages.success(request, 'Credential is shared', 'alert-success'))
-            except BadHeaderError:
-                return HttpResponse('Invalid header found.')
+            except:
+                return redirect('/sharedhaven', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
     return render(request ,"pages/share_credentials.html", {'form': form, 'temp':temp})
 
 def pass_r_done(request):

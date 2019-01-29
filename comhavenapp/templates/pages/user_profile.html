@@ -23,56 +23,69 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="card">
-                        <div class="card-head" style="background: #2b323a; color: white; height: 80px;">
+                        <div class="card-head" style="background: #2b323a; color: white; height: 60px;">
                           <h2 class="text-left" style="margin-left: 20px;"> Account Information</h2>
                         </div><!-- end .card-head -->
                         <div class="card-body">
                           <form>
-                              {% if request.user.userprofile.email == '' %}
+                              {% if request.user.userprofile.firstname == '' %}
                                 <h5 class="text-danger">Complete your profile*</h5>
                               {% endif %}
-                              <br>
+                              <br><!-- break! -->
                             <div class="row">
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Email address</label>
-                                    <h4> {{ user.userprofile.email }}</h4>
-                                </div><!-- end .form-group -->
-                              </div><!-- end .col-md-6 -->
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="floating-label">Notes</label>
-                                    <h4>{{ user.userprofile.notes }}</h4>
-                                </div><!-- end .form-group -->
-                              </div><!-- end .col-md-6 -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">First Name</label>
+                                        <h4> {{ user.userprofile.firstname }} </h4>
+                                    </div><!-- end .form-group -->
+                                </div><!-- end .col-md-6 -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="floating-label">Last Name</label>
+                                        <h4>{{ user.userprofile.lastname }}</h4>
+                                    </div><!-- end .form-group -->
+                                </div><!-- end .col-md-6 -->
                             </div><!-- end .row-->
                             <div class="row">
-                              <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Email address</label>
+                                        <h4> {{ user.email }}</h4>
+                                    </div><!-- end .form-group -->
+                                </div><!-- end .col-md-6 -->
+                                <div class="col-md-6">
                                 <div class="form-group">
-                                  <label class="bmd-label-floating">First Name</label>
-                                  <h4> {{ user.userprofile.firstname }} </h4>
-                                </div>
-                              </div>
-                              <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="floating-label">Last Name</label>
-                                    <h4>{{ user.userprofile.lastname }}</h4>
+                                    <label class="floating-label">Notes</label>
+                                    <h4>{{ user.userprofile.notes }}</h4>
                                 </div><!-- end .form-group -->
                               </div><!-- end .col-md-6 -->
                             </div><!-- end .row -->
                               <hr>
-                              <div class="btn-group">
-                                  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Options <span class="caret"></span>
-                                  </button>
-                                  <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="" data-toggle="modal" data-target="#d-modal" data-toggle="tooltip" title="Delete Account">
-                                       Delete Account
-                                    </a>
-                                    <a class="dropdown-item" href="{% url 'user_stats' %}">User Stats</a>
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#r-modal" href="">Redeem</a>
-                                  </div><!-- end .dropdown-menu -->
-                              </div><!-- end .btn-group -->
+                              <div class="row">
+                                  <div class="option-bar col-sm-6">
+                                      <ul class="nav navbar-nav option-bar-left">
+                                        <li class="dropdown">
+                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Options <i class="fa fa-chevron-down"></i> </span>
+                                            </button>
+                                            <ul class="dropdown-menu animation-dock" id="options-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="" data-toggle="modal" data-target="#d-modal" data-toggle="tooltip" title="Delete Account"><i class="fa fa-trash"></i> Delete Account</a>
+                                                </li><!-- end li -->
+                                                <li>
+                                                    <a class="dropdown-item" href="{% url 'user_stats' %}"><i class="fa fa-user-shield"></i> View User Stats</a>
+                                                </li><!-- end li -->
+                                                <li>
+                                                    <a class="dropdown-item" data-toggle="modal" data-target="#r-modal" href=""><i class="fa fa-gift"></i> Buy/Redeem a Reward</a>
+                                                </li><!-- end li -->
+                                            </ul><!-- end .dropdown-menu -->
+                                        </li><!-- end .dropdown -->
+                                      </ul><!-- end .header-nav .option-bar-left -->
+                                  </div><!-- end .option-bar -->
+                                  <div class="update-bar col-sm-6 text-right">
+                                      <a href="{% url 'user_profile_edit' %}" class="btn btn-default ink-reaction" id="update-btn"><i class="fa fa-edit"></i> Update Profile  </a>
+                                  </div><!-- end .update-bar -->
+                              </div><!-- end .row -->
                             <div class="clearfix"></div>
                           </form><!-- end form -->
                         </div><!-- end .card-body -->

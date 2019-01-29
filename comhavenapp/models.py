@@ -36,7 +36,7 @@ class NewAccountLogin (models.Model):
     login_password = models.CharField(max_length=200, blank=False)
     login_notes = models.CharField(max_length=200)
     date_inserted = models.DateTimeField(auto_now=True)
-    updated = models.BooleanField(default=False)
+    changed_flag = models.BooleanField(default=False)
     def __str__(self):
         return self.login_user.username
 

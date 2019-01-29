@@ -13,6 +13,7 @@
             <br><!-- !break -->
             <br><!-- !break -->
             {% for login in new_login %}
+            {% if login.login_target_url != 'N/A' %}
             <div class="d-inline p-2 bg-primary text-white">
                 <!--first-card -->
                 <div class="col-lg-4">
@@ -32,8 +33,18 @@
                         </div><!-- end .card-body -->
                     </div><!-- end .card -->
                 </div><!-- end .col -->
-            {% empty %}<!-- if empty -->
+            {% else %}
                 <div class="col-sm-12 text-center mx-auto" id="empty" style="color: grey">
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <span><i class="fa fa-paper-plane fa-10x"></i></span>
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <p class="small"> You don't have an account yet. <a href="{% url 'new_login' %}"> Add an account. </a> </p>
+                </div><!-- end .col-sm-12 -->
+            {% endif %}
+            {% empty %}<!-- if empty -->
+                <div class="col-sm-12 text-center mx-auto" style="color: grey">
                     <br><!-- !break -->
                     <br><!-- !break -->
                     <br><!-- !break -->
@@ -43,7 +54,9 @@
                     <br><!-- !break -->
                     <p class="small"> You don't have an account yet. <a href="{% url 'new_login' %}"> Add an account. </a> </p>
                 </div><!-- end .col-sm-12 -->
+
             {% endfor %}<!-- endfor -->
+
             </div><!--end d-inline -->
         </div><!--end .row -->
         <!-- END ACCOUNTS -->
