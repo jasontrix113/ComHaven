@@ -69,7 +69,7 @@ def auto_login(request, login_id):
             # chrome_bin = os.environ.get('GOOGLE_CHROME_SHIM', None)
             # opts = ChromeOptions()
             # opts.binary_location = chrome_bin
-            browser = webdriver.Chrome(executable_path="chromedriver.exe")
+            browser = webdriver.Chrome(executable_path="chromedriver")
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
