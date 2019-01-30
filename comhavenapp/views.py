@@ -238,18 +238,18 @@ def user_login(request):
             print(user)
             if user.is_active:
                 if request.user_agent.is_pc == True:
-                    # path = os.getenv('LOCALAPPDATA')
-                    # filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                    # directory = os.path.dirname(filename)
-                    # path_exist = directory
-                    # form = AccessListOfDevices.objects.all()
-                    # if os.path.exists(path_exist):
-                    #     login(request, user)
-                    #     return redirect('home')
-                    # else:
-                    #     return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
-                    login(request,user)
-                    return redirect('home')
+                    path = os.environ.get('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    form = AccessListOfDevices.objects.all()
+                    if os.path.exists(path_exist):
+                        login(request, user)
+                        return redirect('home')
+                    else:
+                        return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
+                    # login(request,user)
+                    # return redirect('home')
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
@@ -266,7 +266,7 @@ def register(request):
             if request.user_agent.is_pc == True:
                 filename = os.path.expandvars(r"C:")
                 if os.path.exists(filename):
-                    path = os.getenv('LOCALAPPDATA')
+                    path = os.environ('LOCALAPPDATA')
                     filename = os.path.join(path, r"AccessID\cpuinfo.bin")
                     directory = os.path.dirname(filename)
                     path_exist = directory
