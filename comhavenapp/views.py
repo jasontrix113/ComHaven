@@ -65,13 +65,11 @@ def auto_login(request, login_id):
         # print(login.login_target_url)
         # print(login.id)
         if login.login_name == 'Schoology':
-
             # try:
             # chrome_bin = os.environ.get('GOOGLE_CHROME_SHIM', None)
             # opts = ChromeOptions()
             # opts.binary_location = chrome_bin
-            abs_path = r'C:\Users\jason\AppData\Local\Programs\Python\Python37-32\Scripts\chromedriver.exe'
-            browser = webdriver.Chrome(executable_path = abs_path)
+            browser = webdriver.Chrome(executable_path = 'chromedriver')
             print(browser)
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
