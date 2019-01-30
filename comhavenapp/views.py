@@ -70,7 +70,9 @@ def auto_login(request, login_id):
             # chrome_bin = os.environ.get('GOOGLE_CHROME_SHIM', None)
             # opts = ChromeOptions()
             # opts.binary_location = chrome_bin
-            browser = webdriver.Chrome(executable_path = settings.BASE_DIR+'\chromedriver\chromedriver.exe')
+            abs_path = r'C:\Users\jason\AppData\Local\Programs\Python\Python37-32\Scripts\chromedriver.exe'
+            browser = webdriver.Chrome(executable_path = abs_path)
+            print(browser)
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
@@ -375,7 +377,7 @@ def index(request):
 
 @login_required
 def accounts(request):
-    
+
     new_login = NewAccountLogin.objects.filter(login_user=request.user)
     context_login = {'new_login': new_login}
     return render(request, 'pages/home-accounts.html', context_login)
