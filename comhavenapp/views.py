@@ -65,6 +65,7 @@ def auto_login(request, login_id):
         # print(login.login_target_url)
         # print(login.id)
         if login.login_name == 'Schoology':
+
             # try:
             # chrome_bin = os.environ.get('GOOGLE_CHROME_SHIM', None)
             # opts = ChromeOptions()
@@ -374,6 +375,7 @@ def index(request):
 
 @login_required
 def accounts(request):
+    
     new_login = NewAccountLogin.objects.filter(login_user=request.user)
     context_login = {'new_login': new_login}
     return render(request, 'pages/home-accounts.html', context_login)
