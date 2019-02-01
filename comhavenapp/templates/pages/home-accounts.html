@@ -5,8 +5,8 @@
 {% block body %}
 <section>
     <div class="section-body" style="padding: 20px;">
-        <div class="row">
-            <h1 class="text-left mx-auto">&nbsp Accounts</h1>
+        <div class="row" id="btn-add-container">
+            <h1 class="text-left mx-auto" id="page_label">&nbsp Accounts</h1>
             <a href="{% url 'new_login' %}">
                 <button type="submit" class="btn btn-secondary ink-reaction" id="btn-add"> Add an account</button>
             </a>

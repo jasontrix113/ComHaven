@@ -5972,34 +5972,63 @@ section.style-info .btn-flat:hover,
   z-index: 1;
 }
 @media (max-width: 768px) {
-  .card {
-    margin-bottom: 16px;
-    max-width: 100%;
-    width: auto;
-    margin: 0;
-    margin-bottom: 10px;
-  }
-  .card-head header {
-    padding: 11px 16px;
-  }
-  .card-head.card-head-xs header {
-    padding: 8px 16px;
-  }
-  .card-body {
-    padding: 16px;
-  }
-  .card .force-padding {
-    padding: 16px;
-  }
-  .card .small-padding {
-    padding: 8px;
-  }
-  .card .form-padding {
-    padding: 0 16px;
-  }
-  .card .no-side-padding {
-    padding: 16px 0;
-  }
+    #btn-add{
+        width:100%;
+        height: 40px;
+        top: 80px;
+    }
+    #btn-add-container{
+        margin-top: 0x;
+        margin-bottom: 10px;
+        padding: 13px;
+    }
+    #page_label{
+       width: 100%;
+    }
+    #login_content{
+        padding: 10px;
+    }
+    #fpassword_field{
+        padding: 0;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+    #fpassword_field .col-sm-11{
+        float: left;
+        width: 90%;
+    }
+    #fpassword_field .col-sm-1
+    {
+
+    }
+    .card {
+        margin-bottom: 16px;
+        max-width: 100%;
+        width: auto;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    .card-head header {
+        padding: 11px 16px;
+    }
+    .card-head.card-head-xs header {
+        padding: 8px 16px;
+    }
+    .card-body {
+        padding: 16px;
+    }
+    .card .force-padding {
+        padding: 16px;
+    }
+    .card .small-padding {
+        padding: 8px;
+    }
+    .card .form-padding {
+        padding: 0 16px;
+    }
+    .card .no-side-padding {
+        padding: 16px 0;
+    }
 }
 .offcanvas {
   position: fixed;

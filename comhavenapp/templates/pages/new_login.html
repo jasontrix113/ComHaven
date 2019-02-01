@@ -6,7 +6,7 @@
 	<div class="section-body">
 		<div class="row">
 			<!-- BEGIN  - FORM -->
-			<div class="col-sm-12 justify-content-center" style="padding-left: 60px; padding-right: 60px;">
+			<div class="col-sm-12 justify-content-center" id="login_content">
 				<div class="card">
 					<div class="card-head" style="color: white; background-color: #2b323a;">
 				  		<h2 class="text-left" style="margin-left: 20px;"> Add new account</h2>
@@ -46,7 +46,7 @@
 										<label>Username</label>
 									</div><!-- end .form-group -->
 								</div><!-- end .col-sm-6 -->
-								<div class="col-sm-6">
+								<div class="col-sm-6" id="fpassword_field">
 									<div class="col-sm-11">
 										<div class="form-group floating-label">
 											{{ form.login_password | add_class:'form-control'}}
