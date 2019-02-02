@@ -5972,6 +5972,21 @@ section.style-info .btn-flat:hover,
   z-index: 1;
 }
 @media (max-width: 768px) {
+    #update-btn, #optBtn{
+        width: 100%;
+        height: 45px;
+    }
+    #upOpt{
+        padding: 0 7px;
+    }
+    #update-btn{
+        padding-top: 10px;
+    }
+    #loginform{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
     #eyeBtn, #copyBtn, #genBtn{
         width: 100%;
         text-align: center;
