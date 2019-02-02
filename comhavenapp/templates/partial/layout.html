@@ -31,7 +31,9 @@
 							<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
 								<span class="profile-info">
 									{% if user.is_authenticated %}
-										<h4 class="text-lg text-bold text-light"><span><i class="fa fa-user-circle"></i> </span> {{ user.username }} </h4>
+										<h4 class="text-lg text-bold text-light">
+											<span><i class="fa fa-user-circle"></i> </span>
+											<span class="badge badge-notify">{{ request.dups }}</span> {{ user.username }} </h4>
 									{% endif %}
 								</span>
 							</a>

@@ -8,6 +8,12 @@ body{
 #card:hover + #launch-btn{
     display: block;
 }
+.badge-notify{
+    background-color:red;
+    position:relative;
+    top: -13px;
+    left: -9px;
+}
 .card
 {
     font-family: 'Open Sans', san-serif;
@@ -16,14 +22,19 @@ body{
 #card{
     max-height: 250px;
     height:100%;
+    box-shadow: 2px 2px 5px #888888;
 }
 #text-logo
 {
     font-size: 15px;
 }
-.btn-submit
-{
 
+#loginBtn, regBtn{
+    height: 45px;
+    box-shadow: 2px 2px 5px #888888;
+}
+#btn-add, #btn_gen, #update-btn, #optBtn, #chgeBtn{
+    box-shadow: 3px 3px 5px #888888;
 }
 .progress-bar .bg-warning {
     background-color: yellow;
@@ -56,6 +67,7 @@ body{
     font-family: 'Open Sans', san-serif;
     font-weight: 600;
     color: hsl(165, 4%, 34%);
+    background-color: #e5e6e6;
 }
 #label-stats{
     margin:0;
@@ -73,6 +85,10 @@ body{
 {
     margin-top: 94px;
     padding: 0 20px;
+}
+#optBtn{
+    color: white;
+    background-color: #2b323a;
 }
 #btn-add
 {

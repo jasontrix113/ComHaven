@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- END META -->
         <!-- BEGIN STYLESHEETS -->
-
+        <!--&lt;!&ndash; Password Strength Meter CSS &ndash;&gt;-->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/strengthify.css' %}">
         <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
         <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
         <link type="text/css" rel="stylesheet" href="{% static 'css/materialadmin.css' %}" />
@@ -59,6 +60,8 @@
     <script src="{% static 'js/core/Demo.js' %}"></script>
     <script src="{% static 'js/core/DemoTableDynamic.js' %}"></script>
 
+    <!-- Script for zxcvbn password meter -->
+    <script src="{% static 'js/core/jquery.strengthify.js' %}"></script>
     <!--<script src="{% static 'js/zxcvbn.js' %}"></script>-->
     <!-- END JAVASCRIPT -->
 </html>

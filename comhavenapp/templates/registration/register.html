@@ -1,5 +1,5 @@
 {% extends 'partial/base.html' %}
-{% load staticfiles %}
+{% load static %}
 {% load widget_tweaks %}
 {% block title %} Create An Account {% endblock %}
 <html>
@@ -46,7 +46,7 @@
 										<div class="form-group block">
 											<!--<input type="password" class="form-control" name="password1" id="id_password1" data-toggle="password">-->
 											{{ form.password1|add_class:"form-control" }}
-											<div id="complexity" class="default">Password must be at least 12 characters</div>
+											<!--<div id="complexity" class="default">Password must be at least 12 characters</div>-->
 											<label>Master Password</label>
 										</div><!-- end .form-group -->
 										<div class="form-group">
@@ -57,7 +57,7 @@
 										<br><!-- !break -->
 										<div class="row">
 											<div class="col-xs-12">
-												<button class="btn btn-primary btn-block" type="submit">Register</button>
+												<button class="btn btn-primary btn-block" type="submit" id="regBtn">Register</button>
 											</div><!--end .col -->
 											<div class="col-xs-12 text-left">
 												<br><!-- !break -->

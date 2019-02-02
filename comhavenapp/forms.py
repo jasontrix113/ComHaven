@@ -50,19 +50,23 @@ class UserProfileForm(ModelForm):
 class NewAccountLoginForm(ModelForm):
     url_choices = (
         ('N/A', 'None'),
-        ('https://www.facebook.com/', 'https://www.facebook.com/'),
-        ('https://github.com/login', 'https://github.com/login'),
-        ('https://www.instagram.com/accounts/login/', 'https://www.instagram.com/accounts/login/'),
-        ('http://lms.uno-r.edu.ph/login/index.php', 'http://lms.uno-r.edu.ph/login/index.php'),
-        ('https://www.netflix.com/ph/login', 'https://www.netflix.com/ph/login'),
-        ('https://app.schoology.com/login', 'https://app.schoology.com/login'),
-        ('https://accounts.spotify.com/en/login/', 'https://accounts.spotify.com/en/login/'),
-        ('https://trello.com/login', 'https://trello.com/login'),
-        ('https://twitter.com/login', 'https://twitter.com/login'),
-        ('http://uis.uno-r.edu.ph/Student/Account/Login', 'http://uis.uno-r.edu.ph/Student/Account/Login'),
+        ('https://www.edmodo.com/', 'Edmodo'),
+        ('https://www.facebook.com/', 'Facebook'),
+        ('https://github.com/login', 'GitHub'),
+        # ('https://accounts.google.com/AccountChooser/identifier?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&flowName=GlifWebSignIn&flowEntry=AccountChooser',
+        # 'Gmail'),
+        ('https://www.instagram.com/accounts/login/', 'Instagram'),
+        ('http://lms.uno-r.edu.ph/login/index.php', 'LMS'),
+        ('https://www.netflix.com/ph/login', 'Netflix'),
+        ('https://app.schoology.com/login', 'Schoology'),
+        ('https://accounts.spotify.com/en/login/', 'Spotify'),
+        ('https://trello.com/login', 'Trello'),
+        ('https://twitter.com/login', 'Twitter'),
+        ('http://uis.uno-r.edu.ph/Student/Account/Login', 'UIS'),
 
     )
     login_name_choices = (
+        ('Edmodo', 'Edmodo'),
         ('Facebook','Facebook'),
         ('GitHub', 'GitHub'),
         ('Instagram', 'Instagram'),

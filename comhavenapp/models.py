@@ -37,13 +37,9 @@ class NewAccountLogin (models.Model):
     login_notes = models.CharField(max_length=200)
     date_inserted = models.DateTimeField(auto_now=True)
     changed_flag = models.BooleanField(default=False)
+    issue_flag = models.BooleanField(default=False)
     def __str__(self):
         return self.login_user.username
-
-class Points(models.Model):
-    points = models.IntegerField(unique=True)
-    def __str__(self):
-        return str(self.points)
 
 class Tasks(models.Model):
     tasks = models.CharField(max_length=200, unique=True, default='')
@@ -59,7 +55,7 @@ class Status(models.Model):
 class SecurityChallenges(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='', to_field='username')
     tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, default='', to_field='tasks')
-    points = models.ForeignKey(Points, on_delete=models.CASCADE, default='', to_field='points')
+    points = models.IntegerField(default=0)
     date_completed = models.DateTimeField(auto_now_add=True)
     date_initiated = models.DateTimeField(auto_now_add=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, default='')
@@ -78,6 +74,7 @@ class TempAccounts(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
     temp_uname = models.CharField(max_length=30)
     temp_pword = models.CharField(max_length=200)
+    ch_flag = models.BooleanField(default=False)
     def __str__(self):
         return str(self.user)
 
@@ -96,11 +93,10 @@ class User_Stats(models.Model):
         return str(self.user)
 
 class Rewards(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
     reward = models.CharField(max_length=200, default='')
     points_required = models.IntegerField()
     def __str__(self):
-        return self.user.username
+        return str(self.reward)
 
 class PerformedTasks(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
@@ -120,8 +116,7 @@ class WeakPasswords(models.Model):
 
 class DuplicatePasswords(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
-    login_account = models.CharField(max_length=200, default='')
-    login_password = models.CharField(max_length=200, default='')
+    account_id = models.IntegerField(default=0)
     def __str__(self):
         return str(self.user)
 

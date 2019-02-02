@@ -40,8 +40,8 @@
                                 <hr>
                             </div><!-- end .card-head -->
                             <div class="card-body text-left">
-                                <p><b>Email:</b> {{ login.login_username }}</p>
-                                <p><b>URL: </b>{{ login.login_target_url }}</p>
+                                <p><b class="h-text">Email:</b> {{ login.login_username }}</p>
+                                <p><b class="h-text">URL: </b>{{ login.login_target_url }}</p>
                             </div><!--end .card-body -->
                         </div><!--end .card -->
                     </div><!--end .col -->
@@ -62,7 +62,7 @@
             <br><!-- !break -->
             <br><!-- !break -->
         </div><!--end .row -->
-        {% for login in new_login %}
+        {% for login in temp %}
         <!-- MODAL FOR ACCOUNT DELETION -->
         <div class="modal" id="d-modal">
             <div class="modal-dialog">

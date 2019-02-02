@@ -21,7 +21,6 @@
             <hr>
         </div>
         <!-- STATUS BUTTONS -->
-
         <div class="row">
             <nav class="navbar navbar-primary" id="nav-pills">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -79,14 +78,13 @@
                     {% endfor %}
                 </ul><!-- end ul -->
             </nav><!-- end nav -->
-            {% for account in duplicate_account %}
+
             <!-- TABLE -->
-            <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
                             <form class="form" action="" method="post">
-                                <table class="table table-stripped table-responsive">
+                                <table class="table table-stripped table-hover table-responsive table-dark">
                                     <thead>
                                         <tr>
                                             <th>Accounts</th>
@@ -95,61 +93,30 @@
                                         </tr><!-- end table-row -->
                                     </thead><!-- end table-head-->
                                     <tbody>
+                                    {% for account in duplicate_account %}
                                         <tr>
                                             <td>{{ account.login_name }}</td>
                                             <td>{{ account.date_inserted }}</td>
                                             <td>
-                                                <a href="{% url 'edit' account.id %}" class="btn btn-danger ink-reaction"> Change</a>
+                                                <a href="{% url 'edit' account.id %}" class="btn btn-danger ink-reaction" id="chgeBtn"> Change</a>
                                             </td>
                                         </tr><!-- end table-row -->
+                                    {% empty %}
+                                        <div class="col-sm-12 text-center mx-auto" id="empty2" style="color: grey;">
+                                            <br><!-- !break -->
+                                            <br><!-- !break -->
+                                            <span><i class="fa fa-user-shield fa-10x"></i></span>
+                                            <br><!-- !break -->
+                                            <br><!-- !break -->
+                                            <p class="small"> You don't have any issue with your passwords.</p>
+                                        </div><!-- end .col-sm-12 -->
+                                    {% endfor %}
                                     </tbody><!-- end .table-body -->
                                 </table><!-- end .table-->
                             </form><!-- end .form -->
                         </div><!-- end .card-body -->
                     </div><!-- end .card -->
                 </div><!-- end .col-sm-12 -->
-            </div><!-- end .row -->
-            {% endfor %}
-            {% for weak_pass in wp %}
-            <!-- TABLE -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form class="form" action="" method="post">
-                                <table class="table table-stripped table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th>Accounts</th>
-                                            <th>Last Changes</th>
-                                            <th>Action</th>
-                                        </tr><!-- end table-row -->
-                                    </thead><!-- end table-head-->
-                                    <tbody>
-                                        <tr>
-                                            <td>{{ weak_pass.login_account }}</td>
-                                            <td>{{ weak_pass.login_strength }}</td>
-                                            <td>
-                                                <a href="" class="btn btn-danger ink-reaction"> Change</a>
-                                            </td>
-                                        </tr><!-- end table-row -->
-                                    </tbody><!-- end .table-body -->
-                                </table><!-- end .table-->
-                            </form><!-- end .form -->
-                        </div><!-- end .card-body -->
-                    </div><!-- end .card -->
-                </div><!-- end .col-sm-12 -->
-            </div><!-- end .row -->
-            {% empty %}
-            <div class="col-sm-12 text-center mx-auto" id="empty2" style="color: grey;">
-                <br><!-- !break -->
-                <br><!-- !break -->
-                <span><i class="fa fa-user-shield fa-10x"></i></span>
-                <br><!-- !break -->
-                <br><!-- !break -->
-                <p class="small"> You don't have any issue with your passwords.</p>
-            </div><!-- end .col-sm-12 -->
-            {% endfor %}
         </div><!--end .row -->
     </div><!--end .section-body -->
 </section><!-- end section -->

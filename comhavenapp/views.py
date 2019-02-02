@@ -9,7 +9,7 @@ from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, Points, PerformedTasks, WeakPasswords, Rewards, CompromisedPasswords, OldPasswords, DuplicatePasswords
+from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, PerformedTasks, WeakPasswords, Rewards, CompromisedPasswords, OldPasswords, DuplicatePasswords
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -221,7 +221,40 @@ def auto_login(request, login_id):
                 return redirect('/express-login',
                                 messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
-
+        elif login.login_name == 'Edmodo':
+            try:
+                browser = webdriver.Chrome()
+                browser.get(login.login_target_url)
+                loginBtn = browser.find_element_by_id('qa-test-top-login-button')
+                loginBtn.click()
+                username = browser.find_element_by_id('un')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('pw')
+                password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('qa-test-lightbox-login');
+                signInButton.click()
+            except:
+                return redirect('/express-login',
+                                messages.error(request, 'Something is not right. Check your Internet Connection',
+                                               'alert-danger'))
+        # elif login.login_name == 'Gmail':
+        #     try:
+        #         browser = webdriver.Chrome()
+        #         browser.get(login.login_target_url)
+        #         username = browser.find_element_by_id('identifierId')
+        #         username.send_keys(login.login_username)
+        #         nextBtn = browser.find_element_by_id('identifierNext')
+        #         nextBtn.click()
+        #         password = WebDriverWait(browser, 10).until(
+        #             EC.presence_of_element_located((By.ID, 'password')))
+        #         password1 = browser.find_element_by_class_name('whsOnd')
+        #         password1.send_keys(temp_ac.temp_pword)
+        #         signInButton = browser.find_element_by_id('passwordNext');
+        #         signInButton.click()
+        #     except:
+        #         return redirect('/express-login',
+        #                         messages.error(request, 'Something is not right. Check your Internet Connection',
+        #                                        'alert-danger'))
 
         else:
             return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection',
@@ -398,40 +431,45 @@ def securitychallenges(request):
     #get Security challenge model instance
     sc = SecurityChallenges.objects.filter(user=request.user)
     dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1)
-    print(dups)
+
     cnt_dups = dups.count()
+
     # display the id's of duplicate passwords
     dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups])
     dups_id = [item.id for item in dups_record]
 
     record = TempAccounts.objects.filter(id__in=dups_id)
+    print(record)
     cnt = DuplicatePasswords.objects.filter(user=request.user).count()
 
-    if cnt == 0:
-        for r in record:
-            user = request.user
-            DuplicatePasswords.objects.create(
-                user = user,
-                login_account = r.temp_uname,
-                login_password = r.temp_uname,
-            )
 
-    try:
-        dp_count = DuplicatePasswords.objects.filter(user=request.user).count()
-        print(dp_count)
-        flag = NewAccountLogin.objects.filter(login_user=request.user).values_list('changed_flag', flat=True)
-        print(flag)
-        if dp_count == 0 and flag == True:
-            update_score = User_Stats.objects.get(user=request.user)
-            update_score.overall_points = int(update_score.overall_points) + 4
-            update_score.save()
-    except:
-        print('atleast i try')
+    # store the accounts with duplicate
+
+    if cnt_dups > 0 and not DuplicatePasswords.objects.exists():
+        for id in record:
+            stored_dup_acc = DuplicatePasswords.objects.create(
+                user = user,
+                account_id = id.id
+            )
+            nl = NewAccountLogin.objects.filter(login_user=user).get(id=id.id)
+            nl.issue_flag = True
+            nl.save()
+
+    # try:
+    #     dp_count = DuplicatePasswords.objects.filter(user=request.user).count()
+    #     print(dp_count)
+    #     flag = NewAccountLogin.objects.filter(login_user=request.user).values_list('changed_flag', flat=True)
+    #     print(flag)
+    #     if dp_count == 0 and flag == True:
+    #         update_score = User_Stats.objects.get(user=request.user)
+    #         update_score.overall_points = int(update_score.overall_points) + 4
+    #         update_score.save()
+    # except:
+    #     print('atleast i try')
     user = request.user
     tasks = Tasks.objects.get(tasks='Duplicate Passwords')
     status = Status.objects.get(status='Unfinished')
     status2 = Status.objects.get(status='Completed')
-    points = Points.objects.get(points=4)
 
     count_sc = SecurityChallenges.objects.filter(user=request.user).count()
     try:
@@ -439,7 +477,7 @@ def securitychallenges(request):
             SecurityChallenges.objects.create(
                 user=user,
                 tasks=tasks,
-                points=points,
+                points = 4,
                 date_completed='',
                 date_initiated='',
                 status=status
@@ -448,7 +486,7 @@ def securitychallenges(request):
             SecurityChallenges.objects.create(
                 user=user,
                 tasks=tasks,
-                points=points,
+                points = 4,
                 date_completed='',
                 date_initiated='',
                 status=status
@@ -476,8 +514,6 @@ def securitychallenges(request):
         pass_results = zxcvbn(t.temp_pword)
         res = pass_results['score']
         count_wp = WeakPasswords.objects.filter(user=request.user).count()
-        print(count_wp)
-        print(res)
         if res == 0 or res == 1:
             try:
                 if count_wp == 0:
@@ -686,8 +722,15 @@ def login_edit(request, login_id):
             # temp_init = TempAccounts.objects.get(id=login_id)
             # temp_init.temp_pword = temp_pass
             # temp_init.save()
-            # update account in the database
 
+            # get accounts with duplication
+            acc_dup = NewAccountLogin.objects.filter(login_user=request.user).all()
+            for x in acc_dup:
+                if x.issue_flag == True:
+                    print('true')
+
+            # update account in the database
+            issue_flag = True
             update=True
             temp_pass = request.POST['login_password3']
             login_url = request.POST['login_target_url']
@@ -706,6 +749,7 @@ def login_edit(request, login_id):
             init.changed_flag=update
             init.save()
             # update the secret model
+            ch_flag = True
             init2 = TempAccounts.objects.get(id=login_id)
             init2.user = user
             init2.temp_pword = temp_pass
@@ -718,15 +762,12 @@ def login_edit(request, login_id):
     return render(request, 'pages/login_edit.html', {'form':form, 'temp':temp})
 
 @login_required
-def login_destroy(request, login_id):
-    temp_ac = TempAccounts.objects.filter(user=request.user).get(id=login_id)
-    temp_ac.delete()
-    print(temp_ac)
-
-    login = NewAccountLogin.objects.filter(login_user=request.user).get(id=login_id)
-    login.delete()
-    print(login)
-
+def login_destroy(request, destroy_id):
+    login = NewAccountLogin.get(id=destroy_id)
+    temp = TempAccounts.objects.filter(id=destroy_id)
+    print(login.id)
+    print(temp)
+    context_temp = { 'temp': temp, 'login':login}
     # weak_pass = WeakPasswords.objects.filter(user=request.user).get(id=login_id)
     # weak_pass.delete()
     # print(weak_pass)
@@ -739,7 +780,7 @@ def login_destroy(request, login_id):
     # com_pass.delete()
     # print(com_pass)
 
-    return redirect('/', messages.success(request, 'Account was successfully deleted.', 'alert-success'))
+    return redirect('/', messages.success(request, 'Account was successfully deleted.', 'alert-success'), context_temp)
 
 @login_required
 def user_profile(request):
