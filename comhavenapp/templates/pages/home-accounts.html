@@ -29,7 +29,7 @@
                                       <button type="button" class="btn btn-icon-toggle dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" aria-expanded="false" aria-haspopup="true">
                                           <i class="fas fa-ellipsis-h"></i>
                                       </button>
-                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="min-width: 100px;">
+                                      <div id="submenu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <a href="{% url 'edit' login.id %}" class="btn btn-toggle"><i class="fa fa-wrench"></i> Edit </a><br>
                                             <button type="button" data-toggle="modal" class="btn btn-toggle" data-target="#d-modal" style="background: none;">
                                                 <i class="fa fa-trash"></i> Delete

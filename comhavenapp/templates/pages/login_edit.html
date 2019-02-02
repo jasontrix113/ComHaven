@@ -6,7 +6,7 @@
 	<div class="section-body">
 		<div class="row">
 			<!-- BEGIN  - FORM -->
-			<div class="col-sm-12 justify-content-center" style="padding-left: 60px; padding-right: 60px;">
+			<div class="col-sm-12 justify-content-center" id="login-edit-content">
 				<div class="card">
 					<div class="card-head" style="color: white; background-color: #2b323a;">
 				  		<h2 class="text-left" style="margin-left: 20px;">Edit Account</h2>
@@ -35,20 +35,20 @@
 								</div><!-- end .col-sm-6 -->
 								{% for pp in temp %}
 								<div class="col-sm-6">
-									<div class="col-sm-9">
+									<div class="col-sm-9" id="fpassword_field">
 										<div class="form-group floating-label">
 											<input type="password" class="form-control" id="id_login_password" name="login_password3" value="{{ pp.temp_pword }}" required="False">
 											<!--{{ form.login_password | add_class:'form-control'}}-->
 											<label>Password</label>
 										</div><!-- end .form-group -->
 									</div>
-									<div class="col-sm-1">
+									<div class="col-sm-1" id="copyBtn">
 										<i class="fa fa-clipboard" data-toggle="tooltip" title="Copy to Clipboard" onclick="copy()" data-placement="top" style="margin-top:30px;"></i>
 									</div>
-									<div class="col-sm-1">
-										<i class="fa fa-eye-slash" id="show_eye" onclick="show()" data-toggle="tooltip" title="Show/Hide Password" style="margin-top:30px;"></i>
+									<div class="col-sm-1" id="eyeBtn">
+										<i class="fa fa-eye-slash" id="show_eye" onclick="show()" data-toggle="tooltip" title="Show/Hide Password"  style="margin-top:30px;"></i>
 									</div><!-- end .col-sm-1 -->
-									<div class="col-sm-1">
+									<div class="col-sm-1" id="genBtn">
 										<a href="{% url 'generate-password' %}"><i class="fa fa-key" style="margin-top:30px;" data-toggle="tooltip" title="Generate a Password"></i></a>
 									</div><!-- end .col-sm-1 -->
 								</div><!-- end .col-sm-6 -->
@@ -62,9 +62,9 @@
 								<div class="col-md-12">
 									<hr><!-- !line-break-->
 									<div class="card-actionbar-row">
-										<input type="submit" class="btn btn-default ink-reaction" value="Save" style="color: white; background-color: #2b323a;">
+										<input type="submit" class="btn btn-default ink-reaction" value="Save" style="color: white; background-color: #2b323a;" id="btnSave">
 										<a href="{% url 'accounts' %}">
-											<input type="button" class="btn btn-secondary ink-reaction" value="Cancel">
+											<input type="button" class="btn btn-secondary ink-reaction" value="Cancel" id="btnCancel">
 										</a>
 									</div><!-- end .card-actionbar-row -->
 								</div><!-- end col-md-12 -->

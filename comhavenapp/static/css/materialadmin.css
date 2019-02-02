@@ -5972,6 +5972,27 @@ section.style-info .btn-flat:hover,
   z-index: 1;
 }
 @media (max-width: 768px) {
+    #eyeBtn, #copyBtn, #genBtn{
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+    }
+    #app-logo{
+        max-width:100%;
+        width: 350px;
+        max-height: 400px;
+    }
+    #btnCancel{
+        width: 100%;
+        margin-top: 15px;
+        height: 45px;
+        outline: solid 2px grey;
+        margin-left: 0;
+    }
+    #btnSave{
+        width: 100%;
+        height: 45px;
+    }
     #btn-add{
         width:100%;
         height: 40px;
@@ -5984,6 +6005,9 @@ section.style-info .btn-flat:hover,
     }
     #page_label{
        width: 100%;
+    }
+    #login-edit-content{
+        padding:10px;
     }
     #login_content{
         padding: 10px;

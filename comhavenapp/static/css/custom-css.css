@@ -2,6 +2,14 @@ body{
     font-family: 'Roboto', san-serif;
     font-weight: 600;
 }
+#submenu{
+    box-shadow: 2px 2px 5px #888888;
+    border: 0;
+    position:absolute;
+    top: 30px;
+    left: -50px;
+    min-width: 100px;
+}
 #launch-btn{
     display: none;
 }
@@ -24,12 +32,16 @@ body{
     height:100%;
     box-shadow: 2px 2px 5px #888888;
 }
+
 #text-logo
 {
     font-size: 15px;
 }
-
-#loginBtn, regBtn{
+#btnCancel{
+    height: 45px;
+    box-shadow: 2px 2px 5px #888888;
+}
+#loginBtn, #regBtn, #btnSave{
     height: 45px;
     box-shadow: 2px 2px 5px #888888;
 }
