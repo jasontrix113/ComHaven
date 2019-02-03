@@ -67,7 +67,7 @@ def auto_login(request, login_id):
 
     if login:
         if login.login_name == 'Schoology':
-            chrome_exec_shim = "/app/.apt/opt/google/chrome/chrome"
+            chrome_exec_shim = "/chromedriver/"
             opts = webdriver.ChromeOptions()
             opts.binary_location = chrome_exec_shim
             browser = webdriver.Chrome(executable_path = chrome_exec_shim, chrome_options=opts)
