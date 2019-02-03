@@ -26,6 +26,11 @@ from selenium.webdriver.common.keys import Keys
 #send Email
 from django.core.mail import send_mail
 from django.template import loader
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+from email import encoders
+from email.mime.base import MIMEBase
 
 #Password Hasher
 import hashlib
@@ -403,9 +408,14 @@ def index(request):
 
 @login_required
 def accounts(request):
-
+    el_image = ExpressLoginsSites.objects.all()
     new_login = NewAccountLogin.objects.filter(login_user=request.user)
-    context_login = {'new_login': new_login}
+
+
+    s_icon = "fa fa-"
+
+
+    context_login = {'new_login': new_login, 's_icon': s_icon}
     return render(request, 'pages/home-accounts.html', context_login)
 
 @login_required
@@ -451,17 +461,7 @@ def securitychallenges(request):
             nl.issue_flag = True
             nl.save()
 
-    # try:
-    #     dp_count = DuplicatePasswords.objects.filter(user=request.user).count()
-    #     print(dp_count)
-    #     flag = NewAccountLogin.objects.filter(login_user=request.user).values_list('changed_flag', flat=True)
-    #     print(flag)
-    #     if dp_count == 0 and flag == True:
-    #         update_score = User_Stats.objects.get(user=request.user)
-    #         update_score.overall_points = int(update_score.overall_points) + 4
-    #         update_score.save()
-    # except:
-    #     print('atleast i try')
+
     user = request.user
     tasks = Tasks.objects.get(tasks='Duplicate Passwords')
     status = Status.objects.get(status='Unfinished')
@@ -720,10 +720,6 @@ def login_edit(request, login_id):
             # temp_init.save()
 
             # get accounts with duplication
-            acc_dup = NewAccountLogin.objects.filter(login_user=request.user).all()
-            for x in acc_dup:
-                if x.issue_flag == True:
-                    print('true')
 
             # update account in the database
             issue_flag = True
@@ -750,6 +746,51 @@ def login_edit(request, login_id):
             init2.user = user
             init2.temp_pword = temp_pass
             init2.save()
+
+            # check if issue has been solved during the update of accounts
+            # verify if that there is no duplication issue raised
+            # get passwords with duplication
+            dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(
+                dup_pword_count__gt=1)
+            cnt_dup = dups.count
+            # get the duplication of passwords instance
+            dup_acc = DuplicatePasswords.objects.filter(user = request.user).all()
+
+            # get all of the account instance in New Account login
+            nl_acc = NewAccountLogin.objects.filter(login_user=user).all()
+
+            for d in nl_acc:
+                if d.issue_flag == True and d.changed_flag == True and not dups:
+                    d.issue_flag = False
+                    d.save()
+                    print('Problem Solved!!!')
+                    dp = DuplicatePasswords.objects.filter(user=request.user).delete()
+                    cnt_dp = DuplicatePasswords.objects.filter(user=request.user).count()
+                    tasks = Tasks.objects.get(tasks='Duplicate Passwords')
+                    status = Status.objects.get(status='Unfinished')
+                    status2 = Status.objects.get(status='Completed')
+                    try:
+                        if cnt_dp == 0:
+                            update_score = User_Stats.objects.get(user=request.user)
+                            update_score.overall_points = int(update_score.overall_points) + 4
+                            update_score.save()
+                            sc_status = SecurityChallenges.objects.get(user=request.user)
+                            sc_status.status = status2
+                            sc_status.save()
+                            break
+                    except:
+                        print('no challenge yet')
+
+
+
+
+
+
+            # # display the id's of duplicate passwords
+            # dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups])
+            # dups_id = [item.id for item in dups_record]
+
+
             return redirect('/', messages.success(request, 'Account was successfully updated.', 'alert-success'))
         else:
             return redirect('/', messages.error(request, 'Form is not valid', 'alert-danger'))
@@ -758,11 +799,11 @@ def login_edit(request, login_id):
     return render(request, 'pages/login_edit.html', {'form':form, 'temp':temp})
 
 @login_required
-def login_destroy(request, destroy_id):
-    login = NewAccountLogin.get(id=destroy_id)
-    temp = TempAccounts.objects.filter(id=destroy_id)
-    print(login.id)
-    print(temp)
+def login_destroy(request, login_id):
+    login = NewAccountLogin.objects.get(id=login_id).all()
+    login.delete()
+    temp = TempAccounts.objects.filter(id=login_id).all()
+    temp.delete()
     context_temp = { 'temp': temp, 'login':login}
     # weak_pass = WeakPasswords.objects.filter(user=request.user).get(id=login_id)
     # weak_pass.delete()
@@ -824,13 +865,13 @@ def user_stats(request):
     temp = TempAccounts.objects.values_list('temp_pword', flat=True)
     print(temp)
     context_dups = {'temp': temp}
+
     # get passwords with duplication
     dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1)
     print(dups)
     # display the id's of duplicate passwords
     dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups])
     dups_id = [item.id for item in dups_record]
-    print(dups_id)
 
     # get Weak Password instance
     wp = WeakPasswords.objects.filter(user=request.user)
@@ -884,6 +925,9 @@ def send_email(request, login_id):
             to_email = [from_email, 'to_email']
 
             html = render(request, "pages/html_email.html")
+
+            # create txt file attachment to email
+
 
             # html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
             html_message = render_to_string('pages/html_email.html', {'username':temp.temp_uname, 'password':temp.temp_pword})

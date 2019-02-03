@@ -26,7 +26,7 @@ urlpatterns = [
     # Page CRUD URLs #
     url(r'^logins/new_login/$', views.new_login, name='new_login'),
     url(r'^logins/edit/(?P<login_id>\d+)/$', views.login_edit, name='edit'),
-    url(r'^logins/delete/(?P<destroy_id>\d+)/$', views.login_destroy, name='delete'),
+    url(r'^logins/delete/(?P<login_id>\d+)/$', views.login_destroy, name='delete'),
 
     # User Profile
     url(r'^users/user_profile/', views.user_profile, name='user_profile'),

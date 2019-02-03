@@ -1392,6 +1392,10 @@ a.text-success:hover {
   }
 }
 @media (max-width: 768px) {
+  #options-menu{
+    box-shadow: 2px 2px 5px #888888;
+    border: 0;
+  }
   #header {
     position: relative;
     color: #2b323a;

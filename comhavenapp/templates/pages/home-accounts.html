@@ -1,6 +1,5 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
-{% load staticfiles %}
 {% block title %} Accounts {% endblock %}
 {% block body %}
 <section>
@@ -22,7 +21,8 @@
                     <div class="col-sm-4">
                         <div class="card" id="card">
                             <div class="card-head">
-                                <header>{{ login.login_name }}</header>
+
+                                <header><i class="{{ s_icon }}"></i> {{ login.login_name }}</header>
                                 <div class="divider"></div>
                                 <div class="tools" style="margin-top:20px;">
                                     <div class="dropdown">

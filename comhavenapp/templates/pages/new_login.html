@@ -1,5 +1,6 @@
 {% extends 'partial/layout.html' %}
 {% load widget_tweaks %}
+{% load static %}
 {% block title %} Add New Account Logins {% endblock %}
 {% block body %}
 <section>
@@ -26,6 +27,7 @@
 										<!--{{ form.login_name | add_class:'form-control' }}-->
 										<input type="text" list="accounts" name="login_name" class="form-control" id="id_login_name">
 										<datalist id="accounts">
+											<option value="Edmodo">
 											<option value="Facebook">
 											<option value="GitHub">
 											<option value="Instagram">

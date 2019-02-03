@@ -1,0 +1,11 @@
+ # try:
+    #     dp_count = DuplicatePasswords.objects.filter(user=request.user).count()
+    #     print(dp_count)
+    #     flag = NewAccountLogin.objects.filter(login_user=request.user).values_list('changed_flag', flat=True)
+    #     print(flag)
+    #     if dp_count == 0 and flag == True:
+    #         update_score = User_Stats.objects.get(user=request.user)
+    #         update_score.overall_points = int(update_score.overall_points) + 4
+    #         update_score.save()
+    # except:
+    #     print('atleast i try')

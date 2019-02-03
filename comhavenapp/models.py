@@ -24,6 +24,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 class ExpressLoginsSites(models.Model):
     site_name = models.CharField(max_length=50)
+    image_path = models.CharField(max_length=200, default='')
     # site_url = models.CharField(max_length=100, default='')
     def __str__(self):
         return self.site_name;
