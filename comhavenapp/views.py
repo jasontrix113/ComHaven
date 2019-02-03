@@ -67,12 +67,8 @@ def auto_login(request, login_id):
 
     if login:
         if login.login_name == 'Schoology':
-            chrome_exec_shim = r'/ComHaven/chromedriver/chromedriver.exe'
-            opts = webdriver.ChromeOptions()
-            opts.binary_location = chrome_exec_shim
-            opts.add_argument("--no-sandbox");
-            opts.add_argument("--disable-gpu");
-            browser = webdriver.Chrome(executable_path = chrome_exec_shim, chrome_options=opts)
+
+            browser = webdriver.Chrome()
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
@@ -225,8 +221,8 @@ def auto_login(request, login_id):
                                 messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
         elif login.login_name == 'Edmodo':
-            path = r'C:\Users\jason\AppData\Local\Programs\Python\Python37-32\Scripts'
-            browser = webdriver.Firefox(executable_path=path)
+
+            browser = webdriver.Firefox()
             browser.get(login.login_target_url)
             loginBtn = browser.find_element_by_id('qa-test-top-login-button')
             loginBtn.click()
