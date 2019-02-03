@@ -225,7 +225,7 @@ def auto_login(request, login_id):
                                 messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
         elif login.login_name == 'Edmodo':
-            path = '/usr/local/bin/geckodriver'
+            path = r'C:\Users\jason\AppData\Local\Programs\Python\Python37-32\Scripts'
             browser = webdriver.Firefox(executable_path=path)
             browser.get(login.login_target_url)
             loginBtn = browser.find_element_by_id('qa-test-top-login-button')
