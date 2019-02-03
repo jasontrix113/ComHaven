@@ -7,6 +7,11 @@ body{
     width: 60px;
     height: 60px;
 }
+#btn_gen{
+    float: left;
+    color: white;
+    background-color: #2b323a;
+}
 #submenu{
     box-shadow: 2px 2px 5px #888888;
     border: 0;
