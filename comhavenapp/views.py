@@ -67,7 +67,7 @@ def auto_login(request, login_id):
 
     if login:
         if login.login_name == 'Schoology':
-            chrome_exec_shim = "/ComHaven/chromedriver/chromedriver.exe"
+            chrome_exec_shim = r'/ComHaven/chromedriver/chromedriver.exe'
             opts = webdriver.ChromeOptions()
             opts.binary_location = chrome_exec_shim
             opts.add_argument("--no-sandbox");
