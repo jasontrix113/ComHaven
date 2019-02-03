@@ -70,8 +70,6 @@ def auto_login(request, login_id):
             chrome_exec_shim = "/chromedriver/chromedriver.exe"
             opts = webdriver.ChromeOptions()
             opts.binary_location = chrome_exec_shim
-            opts.add_arguments("--no-sandbox");
-            opts.add_arguments("--disable-gpu");
             browser = webdriver.Chrome(executable_path = chrome_exec_shim, chrome_options=opts)
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
