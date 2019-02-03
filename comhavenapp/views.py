@@ -225,21 +225,21 @@ def auto_login(request, login_id):
                                 messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
         elif login.login_name == 'Edmodo':
-            try:
-                browser = webdriver.Firefox()
-                browser.get(login.login_target_url)
-                loginBtn = browser.find_element_by_id('qa-test-top-login-button')
-                loginBtn.click()
-                username = browser.find_element_by_id('un')
-                username.send_keys(login.login_username)
-                password = browser.find_element_by_id('pw')
-                password.send_keys(temp_ac.temp_pword)
-                signInButton = browser.find_element_by_id('qa-test-lightbox-login');
-                signInButton.click()
-            except:
-                return redirect('/express-login',
-                                messages.error(request, 'Something is not right. Check your Internet Connection',
-                                               'alert-danger'))
+            path = '/usr/local/bin/geckodriver'
+            browser = webdriver.Firefox(executable_path=path)
+            browser.get(login.login_target_url)
+            loginBtn = browser.find_element_by_id('qa-test-top-login-button')
+            loginBtn.click()
+            username = browser.find_element_by_id('un')
+            username.send_keys(login.login_username)
+            password = browser.find_element_by_id('pw')
+            password.send_keys(temp_ac.temp_pword)
+            signInButton = browser.find_element_by_id('qa-test-lightbox-login');
+            signInButton.click()
+
+                # return redirect('/express-login',
+                #                 messages.error(request, 'Something is not right. Check your Internet Connection',
+                #                                'alert-danger'))
         # elif login.login_name == 'Gmail':
         #     try:
         #         browser = webdriver.Chrome()

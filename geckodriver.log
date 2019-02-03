@@ -1425,3 +1425,16 @@ console.error: BroadcastService:
 [GPU 1696, Ch
 ###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
 
+1549207850687	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\jason\\AppData\\Local\\Temp\\rust_mozprofile.mNi4bQI9iLnr"
+1549207852065	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1549207852066	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1549207857369	Marionette	INFO	Listening on port 54686
+1549207857678	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 15408, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 332
+[Parent 15408, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 332
+[Parent 15408, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 332
+[Child 7584, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 332
+[Child 7584, Chrome_ChildThread] WARNING: pipe error: 109: file 1549207905354	Marionette	INFO	Stopped listening on port 54686
+[GPU 11524, C
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
