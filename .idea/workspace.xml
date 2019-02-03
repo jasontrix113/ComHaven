@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a44e852-003c-4f7d-8e8b-522ef931cabc" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/forms.py" afterPath="$PROJECT_DIR$/comhavenapp/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/static/css/custom-css.css" afterPath="$PROJECT_DIR$/comhavenapp/static/css/custom-css.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css" afterPath="$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/dashboard.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/dashboard.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/home-accounts.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/home-accounts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/pages/user_profile_edit.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/pages/user_profile_edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/registration/login.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/registration/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/templates/registration/password_reset_email.html" afterPath="$PROJECT_DIR$/comhavenapp/templates/registration/password_reset_email.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenapp/views.py" afterPath="$PROJECT_DIR$/comhavenapp/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/comhavenproject/urls.py" afterPath="$PROJECT_DIR$/comhavenproject/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -99,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
-              <caret line="1417" column="30" lean-forward="false" selection-start-line="1417" selection-start-column="30" selection-end-line="1417" selection-end-column="30" />
+              <caret line="1429" column="19" lean-forward="false" selection-start-line="1429" selection-start-column="19" selection-end-line="1429" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -840,7 +829,7 @@
     <entry file="file://$PROJECT_DIR$/comhavenapp/static/css/materialadmin.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
-          <caret line="1417" column="30" lean-forward="false" selection-start-line="1417" selection-start-column="30" selection-end-line="1417" selection-end-column="30" />
+          <caret line="1429" column="19" lean-forward="false" selection-start-line="1429" selection-start-column="19" selection-end-line="1429" selection-end-column="19" />
           <folding />
         </state>
       </provider>

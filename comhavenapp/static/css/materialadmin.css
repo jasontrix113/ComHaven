@@ -1427,8 +1427,7 @@ a.text-success:hover {
     min-height: 64px;
     top: 64px;
     float: none !important;
-    background-color: #2b323a;
-    color: white;
+    color: #2b323a;
     border: 0;
     -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
