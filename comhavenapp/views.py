@@ -4,7 +4,7 @@ from django.views import generic
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm
+from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm, PasswordResetForm
 from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
@@ -65,11 +65,7 @@ def auto_login(request, login_id):
         # print(login.login_target_url)
         # print(login.id)
         if login.login_name == 'Schoology':
-            # try:
-            # chrome_bin = os.environ.get('GOOGLE_CHROME_SHIM', None)
-            # opts = ChromeOptions()
-            # opts.binary_location = chrome_bin
-            browser = webdriver.Chrome('/path/to/chromedriver')
+            browser = webdriver.Chrome()
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
@@ -907,3 +903,13 @@ def pass_r_done(request):
 
 def pass_r_confirm(request):
     return redirect('/accounts/password_reset/done', messages.success(request, 'Email sent successfully!', 'alert-success'))
+
+def password_reset(request):
+
+    form = PasswordResetForm(request.POST)
+    if form.is_valid():
+        domain = 'comhaven.herokuapp.com'
+        form.save(domain_override=domain, email_template_name='registration/password_reset_email.html')
+        return redirect('/accounts/password_reset',
+                        messages.success(request, 'Email sent successfully!', 'alert-success'))
+    return render(request, 'registration/password_reset_form.html', {'form': form})

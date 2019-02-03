@@ -10,7 +10,7 @@
     </div><!-- end .row -->
     <div class="row">
         <div class="content">
-            <div class="container-fluid">
+            <div class="container-fluid" style="padding: 20px;">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -23,25 +23,19 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="bmd-label-floating">Email Address*</label>
-                                                {{ form.email | add_class:'form-control'}}
-                                            </div><!-- end .form-group -->
-                                        </div><!-- end .col-md-6 -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
                                                 <label class="bmd-label-floating">First Name*</label>
                                                 {{ form.firstname | add_class:'form-control'}}
                                             </div><!-- end .form-group -->
                                         </div><!-- end .col-md-6 -->
-                                    </div><!-- end .row -->
-                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="floating-label">Last Name*</label>
                                                 {{ form.lastname | add_class:'form-control'}}
                                             </div><!-- end .form-group -->
                                         </div><!-- end .col-md-6 -->
-                                        <div class="col-md-6">
+                                    </div><!-- end .row -->
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="floating-label">Notes</label>
                                                 {{ form.notes | add_class:'form-control '}}

@@ -37,7 +37,7 @@ urlpatterns = [
     # Account Recovery
     url(r'^password_reset/done/', views.pass_r_done, name='password_reset_done'),
     url(r'^password_reset/confirm/', views.pass_r_confirm, name='password_reset_confirm'),
-
+    url(r'^accounts/password_reset/$', views.password_reset, name='pass_reset'),
     # Express Login
     url(r'^auto_login/(?P<login_id>\d+)', views.auto_login, name='auto_login'),
 

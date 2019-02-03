@@ -45,7 +45,7 @@ body{
     height: 45px;
     box-shadow: 2px 2px 5px #888888;
 }
-#btn-add, #btn_gen, #update-btn, #optBtn, #chgeBtn{
+#btn-add, #btn-add2, #btn_gen, #update-btn, #optBtn, #chgeBtn{
     box-shadow: 3px 3px 5px #888888;
 }
 .progress-bar .bg-warning {
@@ -78,8 +78,8 @@ body{
 {
     font-family: 'Open Sans', san-serif;
     font-weight: 600;
-    color: hsl(165, 4%, 34%);
-    background-color: #e5e6e6;
+    color: white;
+    background-color: #2b323a;
 }
 #label-stats{
     margin:0;
@@ -102,7 +102,7 @@ body{
     color: white;
     background-color: #2b323a;
 }
-#btn-add
+#btn-add, #btn-add2
 {
     float: right;
     color: white;
