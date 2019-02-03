@@ -69,7 +69,6 @@ def auto_login(request, login_id):
         if login.login_name == 'Schoology':
 
             browser = webdriver.Chrome()
-
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
@@ -223,7 +222,7 @@ def auto_login(request, login_id):
                                                'alert-danger'))
         elif login.login_name == 'Edmodo':
 
-            browser = webdriver.Firefox()
+            browser = webdriver.Chrome()
             browser.get(login.login_target_url)
             loginBtn = browser.find_element_by_id('qa-test-top-login-button')
             loginBtn.click()
