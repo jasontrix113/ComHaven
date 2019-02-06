@@ -71,7 +71,7 @@ def auto_login(request, login_id):
             opts = webdriver.ChromeOptions()
             opts.binary_location = chrome_exec_shim
             opts.add_argument('--disable-gpu')
-            browser = webdriver.Chrome(xecutable_path='/app/.chromedriver/bin/chromedriver', chrome_options=opts)
+            browser = webdriver.Chrome(executable_path='/app/.chromedriver/bin/chromedriver', chrome_options=opts)
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
