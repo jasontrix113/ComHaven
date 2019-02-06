@@ -47,10 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pinax.points',
     'django_user_agents',
-    'django_gamification',
-    'django_password_strength',
     'zxcvbn_password',
 ]
 
