@@ -67,13 +67,18 @@ def auto_login(request, login_id):
 
     if login:
         if login.login_name == 'Schoology':
-            chrome_exec_shim = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")
-            opts = webdriver.ChromeOptions()
-            opts.binary_location = chrome_exec_shim
-            opts.add_argument('--headless')
-            opts.add_argument('--no-sandbox')
-            opts.add_argument('--disable-dev-shm-usage')
-            browser = webdriver.Chrome(executable_path=chrome_exec_shim, chrome_options=opts)
+            options = webdriver.ChromeOptions()
+            CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+            GOOGLE_CHROME_SHIM = os.getenv('GOOGLE_CHROME_SHIM', "chromedriver")
+
+            options.binary_location = '/app/.apt/usr/bin/google-chrome-stable'
+            options.add_argument("start-maximized")
+            options.add_argument('--disable-gpu')
+            options.add_argument("disable-infobars")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            browser = webdriver.Chrome(options=options)
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
