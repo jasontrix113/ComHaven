@@ -73,7 +73,7 @@ def auto_login(request, login_id):
             opts.add_argument('--headless')
             opts.add_argument('--no-sandbox')
             opts.add_argument('--disable-dev-shm-usage')
-            browser = webdriver.Chrome(chrome_options=opts)
+            browser = webdriver.Chrome(executable_path=chrome_exec_shim, chrome_options=opts)
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
