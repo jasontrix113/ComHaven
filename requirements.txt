@@ -16,7 +16,7 @@ openpyxl==2.5.12
 passlib==1.7.1
 pinax-points==1.0
 py-cpuinfo==4.0.0
-pytz==2018.7
+
 PyYAML==3.13
 selenium==3.141.0
 tablib==0.12.1
