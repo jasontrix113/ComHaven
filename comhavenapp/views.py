@@ -338,7 +338,7 @@ def register(request):
                         User_Stats.objects.create(
                             user=user,
                             overall_points=0,
-                            count = 0
+                            count = 10
                         )
                         return redirect('/accounts/login',
                                 messages.success(request, 'Account created successfully.', 'alert-success'))
@@ -367,7 +367,7 @@ def register(request):
                                 User_Stats.objects.create(
                                     user=user,
                                     overall_points=0,
-                                    count = 0
+                                    count = 10
                                 )
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
                 else:
@@ -387,7 +387,7 @@ def register(request):
                     User_Stats.objects.create(
                         user=user,
                         overall_points=0,
-                        count = 0
+                        count = 10
                     )
                     return redirect('/accounts/login',
                                     messages.success(request, 'Account created successfully.', 'alert-success'))
@@ -757,7 +757,7 @@ def new_login(request):
                 us_count = int(user_count.count)
 
                 count = count + 1
-
+                print(count)
                 if count <= us_count:
                     #Password Encryption with Salt#
                     enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
@@ -895,7 +895,7 @@ def login_edit(request, login_id):
 def login_destroy(request, login_id):
     login = NewAccountLogin.objects.get(id=login_id)
     login.delete()
-    temp = TempAccounts.objects.filter(id=login_id)
+    temp = TempAccounts.objects.get(id=login_id)
     temp.delete()
     # sc = SecurityChallenges.objects.get(user=request.user)
     # sc.delete()
