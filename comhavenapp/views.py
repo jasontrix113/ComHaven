@@ -4,10 +4,11 @@ from django.views import generic
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm, PasswordResetForm
+from comhavenapp.forms import RegistrationForm, UserProfileForm, PasswordGeneratorForm
 from django.contrib import auth
 
 from django.contrib.auth.decorators import login_required
+
 
 from .models import NewAccountLogin, UserProfile, TempAccounts, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, PerformedTasks, WeakPasswords, Rewards, CompromisedPasswords, OldPasswords, DuplicatePasswords
 from .forms import NewAccountLoginForm, SharedHavenForm
@@ -46,6 +47,8 @@ from collections import defaultdict
 from django.template import RequestContext
 import csv
 
+
+
 import platform
 from zxcvbn import zxcvbn
 from django.db.models import Count
@@ -67,18 +70,18 @@ def auto_login(request, login_id):
 
     if login:
         if login.login_name == 'Schoology':
-            options = webdriver.ChromeOptions()
-            CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-            GOOGLE_CHROME_SHIM = os.getenv('GOOGLE_CHROME_SHIM', "chromedriver")
-
-            options.binary_location = '/app/.apt/usr/bin/google-chrome-stable'
-            options.add_argument("start-maximized")
-            options.add_argument('--disable-gpu')
-            options.add_argument("disable-infobars")
-            options.add_argument("--disable-extensions")
-            options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
-            browser = webdriver.Chrome(options=options)
+            # options = webdriver.ChromeOptions()
+            # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+            # GOOGLE_CHROME_SHIM = os.getenv('GOOGLE_CHROME_SHIM', "chromedriver")
+            #
+            # options.binary_location = '/app/.apt/usr/bin/google-chrome-stable'
+            # options.add_argument("start-maximized")
+            # options.add_argument('--disable-gpu')
+            # options.add_argument("disable-infobars")
+            # options.add_argument("--disable-extensions")
+            # options.add_argument("--no-sandbox")
+            # options.add_argument("--disable-dev-shm-usage")
+            browser = webdriver.Chrome()
             browser.get(login.login_target_url)
             username = browser.find_element_by_id("edit-mail")
             username.send_keys(login.login_username)
@@ -277,21 +280,37 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user:
             # Is the account active? It could have been disabled.
-            print(user)
             if user.is_active:
                 if request.user_agent.is_pc == True:
-                    # path = os.environ.get('LOCALAPPDATA')
-                    # filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                    # directory = os.path.dirname(filename)
-                    # path_exist = directory
-                    # form = AccessListOfDevices.objects.all()
-                    # if os.path.exists(path_exist):
-                    #     login(request, user)
-                    #     return redirect('home')
-                    # else:
-                    #     return redirect('/accounts/login', messages.error(request, 'Cannot find access ID', 'alert-danger'))
-                    login(request,user)
-                    return redirect('home')
+                    path = os.getenv('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    form = AccessListOfDevices.objects.all()
+                    if os.path.exists(path_exist):
+                        login(request, user)
+                        return redirect('home')
+                    else:
+                        # the application will send an email confirming that the user wants to register a new device
+                        user_email = User.objects.filter(username=username).values_list('email', flat=True).first()
+                        subject = 'Register a New Device'
+                        from_email = user_email
+                        to_email = [from_email, 'comhaven.test.mail@gmail.com']
+
+                        # Generate a random token
+
+                        html_message = render_to_string('pages/register_device_email_template.html')
+                        plain_message = strip_tags(html_message)
+                        try:
+                            send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
+                                      html_message=html_message)
+                            # return redirect('/sharedhaven',
+                            #                 messages.success(request, 'Credential is shared', 'alert-success'))
+                        except:
+                             print('failed')
+
+                        return redirect('/accounts/login', messages.error(request, 'Cannot find access ID.' + "<br>" + 'Please check your email address.', 'alert-danger'))
+
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
@@ -308,7 +327,7 @@ def register(request):
             if request.user_agent.is_pc == True:
                 filename = os.path.expandvars(r"C:")
                 if os.path.exists(filename):
-                    path = os.environ('LOCALAPPDATA')
+                    path = os.getenv('LOCALAPPDATA')
                     filename = os.path.join(path, r"AccessID\cpuinfo.bin")
                     directory = os.path.dirname(filename)
                     path_exist = directory
@@ -319,6 +338,7 @@ def register(request):
                         User_Stats.objects.create(
                             user=user,
                             overall_points=0,
+                            count = 0
                         )
                         return redirect('/accounts/login',
                                 messages.success(request, 'Account created successfully.', 'alert-success'))
@@ -332,12 +352,14 @@ def register(request):
                                 user = request.POST['username']
                                 device_model = request.user_agent.device
                                 device_platform = platform.system()
+                                device_name = os.name
                                 print(device_model)
                                 # f.save()
                                 form.save()
                                 print("Success")
                                 AccessListOfDevices.objects.create(
                                     acl_user = user,
+                                    device_name = device_name,
                                     device_model=device_model,
                                     access_id_path=directory,
                                     device_platform = device_platform
@@ -345,6 +367,7 @@ def register(request):
                                 User_Stats.objects.create(
                                     user=user,
                                     overall_points=0,
+                                    count = 0
                                 )
                                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
                 else:
@@ -352,9 +375,11 @@ def register(request):
                     user = request.POST['username']
                     directory = 'path'
                     device_model = request.user_agent.device
-                    device_platform = platform.system()
+                    device_name = os.uname()
+                    device_platform = platform.system
                     AccessListOfDevices.objects.create(
                         acl_user=user,
+                        device_name = device_name,
                         device_model=device_model,
                         access_id_path=directory,
                         device_platform=device_platform
@@ -362,6 +387,7 @@ def register(request):
                     User_Stats.objects.create(
                         user=user,
                         overall_points=0,
+                        count = 0
                     )
                     return redirect('/accounts/login',
                                     messages.success(request, 'Account created successfully.', 'alert-success'))
@@ -370,9 +396,11 @@ def register(request):
                  user = request.POST['username']
                  directory = 'path'
                  device_model = request.user_agent.device
-                 device_platform = platform.system()
+                 device_platform = platform.system
+                 device_name = os.uname()
                  AccessListOfDevices.objects.create(
                      acl_user=user,
+                     device_name = device_name,
                      device_model=device_model,
                      access_id_path=directory,
                      device_platform=device_platform
@@ -380,16 +408,19 @@ def register(request):
                  User_Stats.objects.create(
                      user=user,
                      overall_points=0,
+                     count = 0,
                  )
                  return redirect('/accounts/login',messages.success(request, 'Account created successfully.', 'alert-success'))
 
             else:
                 user = request.POST['username']
                 directory = 'path'
+                device_name = os.uname()
                 device_model = request.user_agent.device
                 device_platform = platform.system()
                 AccessListOfDevices.objects.create(
                     acl_user=user,
+                    device_name = device_name,
                     device_model=device_model,
                     access_id_path=directory,
                     device_platform=device_platform
@@ -397,6 +428,7 @@ def register(request):
                 User_Stats.objects.create(
                     user=user,
                     overall_points=0,
+                    count = 0
                 )
                 form.save()
                 return redirect('/accounts/login', messages.success(request, 'Account created successfully.', 'alert-success'))
@@ -444,7 +476,7 @@ def securitychallenges(request):
     user = request.user
     #get Security challenge model instance
     sc = SecurityChallenges.objects.filter(user=request.user)
-    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1)
+    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1, user=request.user)
 
     cnt_dups = dups.count()
 
@@ -556,6 +588,38 @@ def sharedhaven(request):
     return render(request, 'pages/sharedhaven.html', context_login)
 
 @login_required
+def test_password(request):
+    if request.POST:
+        form = PasswordGeneratorForm(request.POST)
+        if request.method == "POST":
+            password = request.POST['pass_result']
+            print(password)
+            res = zxcvbn(password)
+            score = res['score']
+            print(res)
+            cracktime = res['crack_times_display']
+            guesses = res['guesses']
+            feedback = res['feedback']
+            if score == 0:
+                strength = "Very Weak"
+            elif score == 1:
+                strength = "Weak"
+            elif score == 2:
+                strength = "Medium"
+            elif score == 3:
+                strength = "Strong"
+            elif score == 4:
+                strength = "Very Strong"
+    form = PasswordGeneratorForm(request.POST)
+    try:
+        return render(request, 'pages/generate-password.html',
+                      {'form': form, 'score': score, 'cracktime': cracktime, 'strength': strength, 'guesses': guesses,
+                       'feedback': feedback})
+    except:
+        return render(request, 'pages/generate-password.html', {'form': form})
+
+
+@login_required
 def generatepassword(request):
     try:
         del request.session['result']
@@ -616,6 +680,23 @@ def generatepassword(request):
                 # create session and store password result in session
                 request.session['result'] = res1
 
+                #store generated passwords in the database
+                user = request.user
+                pwds = PasswordGenerator.objects.create(
+                    user = user,
+                    identifier = 1,
+                    pass_result = res1
+                )
+
+                # export generated passwords in the csv
+                # header = ['passwords']
+                # with open('password.csv', 'wb') as out:
+                #     writer = csv.DictWriter(out, header, extrasaction='ignore')
+                #     writer.writeheader()
+                #     for line in reader:
+                #         writer.writerow(line)
+
+                # password evaluation based on generated passwords
                 results = zxcvbn(res1)
                 score = results['score']
                 print(results)
@@ -632,7 +713,6 @@ def generatepassword(request):
                     strength = "Strong"
                 elif score == 4:
                     strength = "Very Strong"
-
 
         else:
             del request.session['result']
@@ -673,7 +753,12 @@ def new_login(request):
                 login_password = request.POST['login_password']
                 login_notes = request.POST['login_notes']
                 count = NewAccountLogin.objects.filter(login_user=request.user).count()
-                if count <= 9:
+                user_count = User_Stats.objects.get(user=request.user)
+                us_count = int(user_count.count)
+
+                count = count + 1
+
+                if count <= us_count:
                     #Password Encryption with Salt#
                     enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
                     user = request.user
@@ -759,7 +844,7 @@ def login_edit(request, login_id):
             # verify if that there is no duplication issue raised
             # get passwords with duplication
             dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(
-                dup_pword_count__gt=1)
+                dup_pword_count__gt=1, user=request.user)
             cnt_dup = dups.count
             # get the duplication of passwords instance
             dup_acc = DuplicatePasswords.objects.filter(user = request.user).all()
@@ -808,10 +893,12 @@ def login_edit(request, login_id):
 
 @login_required
 def login_destroy(request, login_id):
-    login = NewAccountLogin.objects.get(id=login_id).all()
+    login = NewAccountLogin.objects.get(id=login_id)
     login.delete()
-    temp = TempAccounts.objects.filter(id=login_id).all()
+    temp = TempAccounts.objects.filter(id=login_id)
     temp.delete()
+    # sc = SecurityChallenges.objects.get(user=request.user)
+    # sc.delete()
     context_temp = { 'temp': temp, 'login':login}
     # weak_pass = WeakPasswords.objects.filter(user=request.user).get(id=login_id)
     # weak_pass.delete()
@@ -875,10 +962,10 @@ def user_stats(request):
     context_dups = {'temp': temp}
 
     # get passwords with duplication
-    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1)
+    dups = TempAccounts.objects.values('temp_pword').annotate(dup_pword_count=Count('temp_pword')).filter(dup_pword_count__gt=1, user = request.user)
     print(dups)
     # display the id's of duplicate passwords
-    dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups])
+    dups_record = TempAccounts.objects.filter(temp_pword__in=[item['temp_pword'] for item in dups],user=request.user)
     dups_id = [item.id for item in dups_record]
 
     # get Weak Password instance
@@ -902,8 +989,8 @@ def user_stats(request):
 
 
 
-    duplicate_account = NewAccountLogin.objects.filter(id__in = dups_id).all()
-    duplicate_password = TempAccounts.objects.filter(id__in = dups_id).all()
+    duplicate_account = NewAccountLogin.objects.filter(id__in = dups_id, login_user= request.user).all()
+    duplicate_password = TempAccounts.objects.filter(id__in = dups_id, user = request.user).all()
     # duplicate_id = NewAccountLogin.objects.filter(id__in=dups_id).values_list('id', flat=True)
     # duplicate_password = NewAccountLogin.objects.filter(id__in = dups_id).values_list('login_password', flat=True)
 
@@ -936,14 +1023,14 @@ def send_email(request, login_id):
 
             # create txt file attachment to email
 
-
+            # url = 'http://127.0.0.1:8000/logins/edit/7/'
+            # token = RequestToken.objects.create_token(scope="foo")
             # html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
-            html_message = render_to_string('pages/html_email.html', {'username':temp.temp_uname, 'password':temp.temp_pword})
+            html_message = render_to_string('pages/html_email.html')
             plain_message = strip_tags(html_message)
 
 
             try:
-
                 send_mail(subject, plain_message, from_email, to_email, fail_silently=False, html_message=html_message)
                 return redirect('/sharedhaven', messages.success(request, 'Credential is shared', 'alert-success'))
             except:
@@ -965,3 +1052,55 @@ def password_reset(request):
         return redirect('/accounts/password_reset',
                         messages.success(request, 'Email sent successfully!', 'alert-success'))
     return render(request, 'registration/password_reset_form.html', {'form': form})
+
+def redeem_rewards(request):
+    userprofile = UserProfile.objects.filter(user=request.user)
+    rewards = Rewards.objects.all()
+    user_stats = User_Stats.objects.filter(user=request.user).values_list('overall_points', flat=True).first()
+    print(user_stats)
+    overall_points = User_Stats.objects.filter(user=request.user)
+    rewards = Rewards.objects.all()
+    context_up = {'userprofile': userprofile, 'overall_points': overall_points, 'rewards': rewards}
+
+    # get the number of account logins of the user
+    nl_count = NewAccountLogin.objects.filter(login_user=request.user).count()
+    # get the current count in the user stats model, user overall points
+    userpt = User_Stats.objects.get(user=request.user)
+    userpt.overall_points = int(userpt.overall_points)
+
+    print(userpt.overall_points)
+    # check if the points of the user reach the required points for rewards
+    p1 = 25
+    p2 = 50
+    p3 = 75
+    p4 = 100
+    if(userpt.overall_points >= 25):
+        userpt.count = userpt.count + 15
+        userpt.overall_points = userpt.overall_points - 25
+        userpt.save()
+        print('world')
+
+
+    return render(request, 'pages/user_profile.html', context_up)
+
+
+
+
+
+def register_device(request):
+    path = os.getenv('LOCALAPPDATA')
+    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+    directory = os.path.dirname(filename)
+    os.mkdir(directory)
+    with open(filename, "w") as f:
+        info = cpuinfo.get_cpu_info()
+        CPUINFO = {'CPUINFO': info}
+        f.write(json.dumps(CPUINFO))
+    return render(request, 'pages/register_device.html')
+
+# @use_request_token(scope="foo")
+# def share_credentials(request):
+#
+#     token = RequestToken.objects.create_token(scope="foo")
+
+

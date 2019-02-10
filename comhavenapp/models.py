@@ -65,6 +65,7 @@ class SecurityChallenges(models.Model):
 
 class AccessListOfDevices(models.Model):
     acl_user = models.CharField(max_length=30)
+    device_name = models.CharField(max_length=30, default='')
     device_model = models.CharField(max_length=30, default='')
     access_id_path = models.CharField(max_length=30, default='')
     device_platform = models.CharField(max_length=30, default='')
@@ -90,6 +91,7 @@ class User_Stats(models.Model):
     user = models.CharField(max_length=30)
     # points_awarded = models.IntegerField()
     overall_points = models.CharField(max_length=200, default=0)
+    count = models.IntegerField(default=10)
     def __str__(self):
         return str(self.user)
 

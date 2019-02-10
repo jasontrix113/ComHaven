@@ -1,0 +1,16 @@
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en">
+<head>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialadmin.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <title>{% block title %} {% endblock %} | COMHAVEN</title>
+</head>
+<body>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main><!-- end main-->
+</body>
+</html>

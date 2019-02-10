@@ -9,4 +9,15 @@
 <p>Username: {{username}}</p>
 <p>Password: <input type="password" id="pass" name="password" value="{{ password }}"> <a href="" onclick="show()">Show</a> </p>
 </body>
+<script>
+    function show()
+		{
+		if( $("#pass").attr("type") == "password" ){
+			$("#pass").attr("type", "text");
+		}else{
+			$("#pass").attr("type", "password");
+		}
+			return false;
+		}
+</script>
 </html>

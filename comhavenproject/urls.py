@@ -19,7 +19,8 @@ urlpatterns = [
     url(r'^security-challenges/', views.securitychallenges, name='security-challenges'),
     url(r'^sharedhaven/', views.sharedhaven, name='sharedhaven'),
     url(r'^generate-password/', views.generatepassword, name='generate-password'),
-
+    url(r'^test-password/', views.test_password, name='test-password'),
+    url(r'^register-device/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.register_device, name='register-device'),
     # Authentication
     url('user_login/', views.user_login, name='user_login'),
 
@@ -43,4 +44,10 @@ urlpatterns = [
 
     # SharedHaven
     url(r'^send_email/(?P<login_id>\d+)', views.send_email, name='send_email'),
+
+    # Redeem a Rewards
+
+    url(r'^redeem_rewards/', views.redeem_rewards, name='redeem-rewards'),
+
+
 ]

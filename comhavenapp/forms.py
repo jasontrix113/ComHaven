@@ -12,6 +12,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.tokens import default_token_generator
 
+
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
     # password1 = PasswordField()
@@ -121,72 +122,72 @@ class PasswordGeneratorForm(ModelForm):
         model = PasswordGenerator
         fields = ['pass_length', 'pass_phrase', 'pass_up_lo_case','pass_no_case','pass_ch_case']
 
-# noinspection PyClassHasNoInit
-class PasswordResetForm(BasePasswordResetForm):
-    """A self-reset form for users."""
-
-    def save(self, domain_override='comhaven.herokuapp.com', subject_template_name='registration/password_reset_subject.txt',
-             email_template_name='registration/password_reset_email.html', use_https=False,
-             token_generator=default_token_generator, from_email=None, request=None,
-             html_email_template_name=None,
-             extra_email_context=None):
-        """Override the default in order to return the UID and token for use in the view. This also differs from the
-        default behavior by working with one user at a time.
-        :rtype: list[str]
-        """
-
-        # Get the email. That's why we're here.
-        email = self.cleaned_data["email"]
-
-        # Find the user.
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            return None, None
-
-        # Generate token and UID.
-        token = token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-
-        # Get site info.
-        if domain_override:
-            site_title = domain = domain_override
-        else:
-            current_site = request.site
-            site_title = current_site.name
-            domain = current_site.domain
-        # Create the template context.
-        context = {
-            'domain': 'comhaven.herokuapp.com',
-            'email': email,
-            'protocol': 'https' if use_https else 'http',
-            'site_title': site_title,
-            'token': token,
-            'uid': uid,
-            'user': user,
-        }
-
-        if extra_email_context is not None:
-            context.update(extra_email_context)
-
-        # Send the email.
-        # noinspection PyUnusedLocal
-        try:
-            self.send_mail(
-                subject_template_name,
-                email_template_name,
-                context,
-                from_email,
-                email
-            )
-        except (SMTPAuthenticationError, SocketError) as e:
-            # TODO: Need to deal with email errors.
-            pass
-
-        # Return the token and uid for use in the view.
-        return token, uid
-
-
+# # noinspection PyClassHasNoInit
+# class PasswordResetForm(BasePasswordResetForm):
+#     """A self-reset form for users."""
+#
+#     def save(self, domain_override='comhaven.herokuapp.com', subject_template_name='registration/password_reset_subject.txt',
+#              email_template_name='registration/password_reset_email.html', use_https=False,
+#              token_generator=default_token_generator, from_email=None, request=None,
+#              html_email_template_name=None,
+#              extra_email_context=None):
+#         """Override the default in order to return the UID and token for use in the view. This also differs from the
+#         default behavior by working with one user at a time.
+#         :rtype: list[str]
+#         """
+#
+#         # Get the email. That's why we're here.
+#         email = self.cleaned_data["email"]
+#
+#         # Find the user.
+#         try:
+#             user = User.objects.get(email=email)
+#         except User.DoesNotExist:
+#             return None, None
+#
+#         # Generate token and UID.
+#         token = token_generator.make_token(user)
+#         uid = urlsafe_base64_encode(force_bytes(user.pk))
+#
+#         # Get site info.
+#         if domain_override:
+#             site_title = domain = domain_override
+#         else:
+#             current_site = request.site
+#             site_title = current_site.name
+#             domain = current_site.domain
+#         # Create the template context.
+#         context = {
+#             'domain': 'comhaven.herokuapp.com',
+#             'email': email,
+#             'protocol': 'https' if use_https else 'http',
+#             'site_title': site_title,
+#             'token': token,
+#             'uid': uid,
+#             'user': user,
+#         }
+#
+#         if extra_email_context is not None:
+#             context.update(extra_email_context)
+#
+#         # Send the email.
+#         # noinspection PyUnusedLocal
+#         try:
+#             self.send_mail(
+#                 subject_template_name,
+#                 email_template_name,
+#                 context,
+#                 from_email,
+#                 email
+#             )
+#         except (SMTPAuthenticationError, SocketError) as e:
+#             # TODO: Need to deal with email errors.
+#             pass
+#
+#         # Return the token and uid for use in the view.
+#         return token, uid
+#
+#
 
 # class UpdateProfile(forms.ModelForm):
 #     username = forms.CharField(required=True)

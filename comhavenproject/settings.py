@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_user_agents',
     'zxcvbn_password',
+    'request_token',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
+    'request_token.middleware.RequestTokenMiddleware',
 ]
 
 ROOT_URLCONF = 'comhavenproject.urls'
@@ -133,7 +135,7 @@ PASSWORD_MIN_LENGTH = 12 # Defaults to 12
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Hong_Kong'
 
 USE_I18N = True
 

@@ -1,0 +1,38 @@
+{% extends 'partial/base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% block title %} Register Device
+{% endblock %}
+
+<html>
+	{% block content %}
+	<body class="menubar-hoverable header-fixed" style="background-color: white">
+		<div class="row">
+			<div class="col-sm-6 text-center">
+				<img src="{% static 'img/comhaven_logo4.png' %}" id="app-logo">
+			</div><!-- end .col-sm-6 -->
+			<div class="col-sm-6" style="margin-top: 80px;">
+				<!-- BEGIN RESET SECTION -->
+				<section class="section-account">
+					<div class="card contain-sm style-transparent" style="max-width:450px; background: transparent;">
+						<div class="card-body">
+							<br><!-- !break -->
+							<div class="card">
+								<div class="card-body">
+									<br><!-- !break -->
+									<h4><span class="text-lg text-bold text-primary">Your device has been registered!</span></h4>
+									<br><!-- !break -->
+									<br><!-- !break -->
+								</div><!-- end .card-body -->
+							</div><!-- end .card -->
+						</div><!--end .card -->
+					</div><!-- end .section-account -->
+				</section><!-- end section -->
+				<!-- END LOGIN SECTION -->
+			</div><!-- end .col-sm-6 -->
+		</div><!-- end .row -->
+	{% endblock %}<!-- endblock -->
+	</body><!-- end body -->
+</html><!-- end html -->
+
+

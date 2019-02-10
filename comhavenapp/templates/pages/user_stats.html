@@ -81,6 +81,7 @@
 
             <!-- TABLE -->
                 <div class="col-sm-12">
+                    {% for account in duplicate_account %}
                     <div class="card">
                         <div class="card-body">
                             <form class="form" action="" method="post">
@@ -93,7 +94,7 @@
                                         </tr><!-- end table-row -->
                                     </thead><!-- end table-head-->
                                     <tbody>
-                                    {% for account in duplicate_account %}
+
                                         <tr>
                                             <td>{{ account.login_name }}</td>
                                             <td>{{ account.date_inserted }}</td>

@@ -1,8 +1,18 @@
-{% extends 'partial/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
-{% block title %} Create An Account {% endblock %}
 <html>
+	<head>
+		<!--zxcvbn password strength library-->
+		<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    	<link type="text/css" rel="stylesheet" href="{% static 'css/materialadmin.css' %}" />
+		<link type="text/css" rel="stylesheet" href="{% static 'css/material-design-iconic-font.min.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/custom-css.css' %}" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/comhaven_logo3.png' %}">
+
+		<title>Create An Account | COMHAVEN</title>
+	</head>
 	{% block content %}
 	<body class="menubar-hoverable header-fixed" style="background-color: white">
 		<div class="row col-sm-12" style="padding:0; margin:0;">
@@ -12,28 +22,14 @@
 			<div class="col-sm-6">
 				<!-- BEGIN SIGN-UP SECTION -->
 				<section class="section-account">
-					<div class="card contain-sm style-transparent mt-0" style="max-width:450px; background: transparent; max-height: 200px;">
+					<div class="card contain-sm style-transparent mt-0" style="max-width: 450px; height: auto;">
 						<br><!-- !break -->
 						<div class="card-body">
-							<div class="card">
+							<div class="card" id="regForm">
 								<div class="card-body">
 									<h2 class="text-bold text-center text-primary">Create an account</h2>
 									<br><!-- !break -->
-									<form class="form floating-label" action="{% url 'register' %}" accept-charset="utf-8" method="post" id="form">
-										{% if form.errors %}
-											<div class="alert alert-danger">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-												<strong></strong> Oops! It seems your inputs are incorrect. Please try again.
-											</div><!-- emd .alert .alert-danger -->
-										{% endif %}<!-- endif -->
-										{% if messages %}
-											{% for message in messages %}
-												<p {% if message.tags %} class="alert {{ message.tags }} alert-dismissible text-center"{% endif %}>
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													{{ message|safe }}
-												</p><!-- end .alert -->
-											{% endfor %}<!-- endfor -->
-										{% endif %}<!-- endif -->
+									<form class="form floating-label" action="{% url 'register' %}" accept-charset="utf-8" method="post">
 										{% csrf_token %}
 										<div class="form-group">
 											{{ form.username|add_class:"form-control" }}
@@ -53,7 +49,13 @@
 											{{ form.password2|add_class:"form-control" }}
 											<label>Confirm Master Password</label>
 										</div><!-- end .form-group -->
-										<span class="error" style="color:red"></span><br />
+										<div class="form-group">
+											<label >Password Strength</label><br>
+												<div class="progress">
+													<div id="StrengthProgressBar" class="progress-bar"></div>
+												</div><!-- end .progress -->
+										</div><!-- end .form-group -->
+										<span class="error" style="color:#f44336"></span><br />
 										<br><!-- !break -->
 										<div class="row">
 											<div class="col-xs-12">
@@ -74,4 +76,22 @@
 		</div><!--end .row-->
 	{% endblock %}<!-- endblock -->
 	</body><!-- end body -->
+	<!--JQuery-->
+	<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+	<script src="{% static 'js/core/AppForm.js' %}"></script>
+	<script src="{% static 'js/core/pass_con.js' %}"></script>
+	<script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
+	<!-- zxcvbn -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>
+	<script src="{% static 'js/core/zxcvbn-bootstrap-strength-meter.js' %}"></script>
+	<script type="text/javascript">
+			$(document).ready(function()
+			{
+				$("#StrengthProgressBar").zxcvbnProgressBar({
+					passwordInput: "#id_password1",
+					ratings: ["Very Weak", "Weak", "Medium", "Strong", "Very strong"],
+				});
+
+			});
+		</script>
 </html><!-- end html -->
