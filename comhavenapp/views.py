@@ -272,15 +272,15 @@ def user_login(request):
             # Is the account active? It could have been disabled.
             if user.is_active:
                 if request.user_agent.is_pc == True:
-                    path = os.getenv('LOCALAPPDATA')
-                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                    directory = os.path.dirname(filename)
-                    path_exist = directory
-                    form = AccessListOfDevices.objects.all()
-                    if os.path.exists(path_exist):
-                        login(request, user)
-                        return redirect('home')
-                    else:
+                    # path = os.getenv('LOCALAPPDATA')
+                    # filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    # directory = os.path.dirname(filename)
+                    # path_exist = directory
+                    # form = AccessListOfDevices.objects.all()
+                    # if os.path.exists(path_exist):
+                    login(request, user)
+                    return redirect('home')
+                else:
                         # the application will send an email confirming that the user wants to register a new device
                         user_email = User.objects.filter(username=username).values_list('email', flat=True).first()
                         subject = 'Register a New Device'
