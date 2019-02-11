@@ -65,10 +65,10 @@ class SecurityChallenges(models.Model):
 
 class AccessListOfDevices(models.Model):
     acl_user = models.CharField(max_length=30)
-    device_name = models.CharField(max_length=30, default='')
+    device_name = models.CharField(max_length=30, default='Windows-PC')
     device_model = models.CharField(max_length=30, default='')
     access_id_path = models.CharField(max_length=30, default='')
-    device_platform = models.CharField(max_length=30, default='')
+    device_platform = models.CharField(max_length=30, default='Windows')
     def __str__(self):
         return self.acl_user
 

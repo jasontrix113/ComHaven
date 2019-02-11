@@ -6,8 +6,10 @@
 
 </head>
 <body>
-<p>Username: {{username}}</p>
-<p>Password: <input type="password" id="pass" name="password" value="{{ password }}"> <a href="" onclick="show()">Show</a> </p>
+{% for login in temp %}
+<p>Username: {{login.temp_uname }}</p>
+<p>Password: <input type="password" id="pass" name="password" value="{{ login.temp_pword }}"> <a href="" onclick="show()">Show</a> </p>
+{% endfor %}
 </body>
 <script>
     function show()

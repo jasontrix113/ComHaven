@@ -70,28 +70,18 @@ def auto_login(request, login_id):
 
     if login:
         if login.login_name == 'Schoology':
-            # options = webdriver.ChromeOptions()
-            # CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-            # GOOGLE_CHROME_SHIM = os.getenv('GOOGLE_CHROME_SHIM', "chromedriver")
-            #
-            # options.binary_location = '/app/.apt/usr/bin/google-chrome-stable'
-            # options.add_argument("start-maximized")
-            # options.add_argument('--disable-gpu')
-            # options.add_argument("disable-infobars")
-            # options.add_argument("--disable-extensions")
-            # options.add_argument("--no-sandbox")
-            # options.add_argument("--disable-dev-shm-usage")
-            browser = webdriver.Chrome()
-            browser.get(login.login_target_url)
-            username = browser.find_element_by_id("edit-mail")
-            username.send_keys(login.login_username)
-            password = browser.find_element_by_id("edit-pass")
-            password.send_keys(temp_ac.temp_pword)
-            signInButton = browser.find_element_by_id('edit-submit');
-            signInButton.click()
 
-            # except:
-            #     return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
+            try:
+                browser = webdriver.Chrome()
+                browser.get(login.login_target_url)
+                username = browser.find_element_by_id("edit-mail")
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id("edit-pass")
+                password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('edit-submit');
+                signInButton.click()
+            except:
+                return redirect('/express-login', messages.error(request, 'Something is not right. Check your Internet Connection', 'alert-danger'))
 
 
         elif login.login_name == 'LMS':
@@ -234,21 +224,21 @@ def auto_login(request, login_id):
                                 messages.error(request, 'Something is not right. Check your Internet Connection',
                                                'alert-danger'))
         elif login.login_name == 'Edmodo':
-
-            browser = webdriver.Chrome()
-            browser.get(login.login_target_url)
-            loginBtn = browser.find_element_by_id('qa-test-top-login-button')
-            loginBtn.click()
-            username = browser.find_element_by_id('un')
-            username.send_keys(login.login_username)
-            password = browser.find_element_by_id('pw')
-            password.send_keys(temp_ac.temp_pword)
-            signInButton = browser.find_element_by_id('qa-test-lightbox-login');
-            signInButton.click()
-
-                # return redirect('/express-login',
-                #                 messages.error(request, 'Something is not right. Check your Internet Connection',
-                #                                'alert-danger'))
+            try:
+                browser = webdriver.Chrome()
+                browser.get(login.login_target_url)
+                loginBtn = browser.find_element_by_id('qa-test-top-login-button')
+                loginBtn.click()
+                username = browser.find_element_by_id('un')
+                username.send_keys(login.login_username)
+                password = browser.find_element_by_id('pw')
+                password.send_keys(temp_ac.temp_pword)
+                signInButton = browser.find_element_by_id('qa-test-lightbox-login');
+                signInButton.click()
+            except:
+                return redirect('/express-login',
+                                messages.error(request, 'Something is not right. Check your Internet Connection',
+                                                'alert-danger'))
         # elif login.login_name == 'Gmail':
         #     try:
         #         browser = webdriver.Chrome()
@@ -359,10 +349,10 @@ def register(request):
                                 print("Success")
                                 AccessListOfDevices.objects.create(
                                     acl_user = user,
-                                    device_name = device_name,
+                                    device_name = 'Windows-PC',
                                     device_model=device_model,
                                     access_id_path=directory,
-                                    device_platform = device_platform
+                                    device_platform = 'Windows 10'
                                 )
                                 User_Stats.objects.create(
                                     user=user,
@@ -379,10 +369,10 @@ def register(request):
                     device_platform = platform.system
                     AccessListOfDevices.objects.create(
                         acl_user=user,
-                        device_name = device_name,
+                        device_name = 'Windows-PC',
                         device_model=device_model,
                         access_id_path=directory,
-                        device_platform=device_platform
+                        device_platform='Windows 10'
                     )
                     User_Stats.objects.create(
                         user=user,
@@ -753,12 +743,12 @@ def new_login(request):
                 login_password = request.POST['login_password']
                 login_notes = request.POST['login_notes']
                 count = NewAccountLogin.objects.filter(login_user=request.user).count()
-                user_count = User_Stats.objects.get(user=request.user)
-                us_count = int(user_count.count)
+                # user_count = User_Stats.objects.get(user=request.user)
+                # us_count = int(user_count.count)
 
                 count = count + 1
                 print(count)
-                if count <= us_count:
+                if count <= 10:
                     #Password Encryption with Salt#
                     enc_password = pbkdf2_sha256.encrypt(login_password, rounds=10000, salt=bytes(32))
                     user = request.user
@@ -1007,7 +997,7 @@ def user_stats(request):
 
 @login_required
 def send_email(request, login_id):
-    temp = TempAccounts.objects.get(id=login_id)
+    temp = TempAccounts.objects.filter(id=login_id).all()
     if request.method == 'GET':
         form = SharedHavenForm()
     else:
@@ -1026,7 +1016,7 @@ def send_email(request, login_id):
             # url = 'http://127.0.0.1:8000/logins/edit/7/'
             # token = RequestToken.objects.create_token(scope="foo")
             # html_message = "Username: " + temp.temp_uname + '\n' + 'Password: ' + temp.temp_pword
-            html_message = render_to_string('pages/html_email.html')
+            html_message = render_to_string('pages/html_email.html', {'temp': temp})
             plain_message = strip_tags(html_message)
 
 
@@ -1078,9 +1068,12 @@ def redeem_rewards(request):
         userpt.count = userpt.count + 15
         userpt.overall_points = userpt.overall_points - 25
         userpt.save()
-        print('world')
-
-
+    # if(userpt.overall_points == 25):
+    #     return redirect('users/user_profile/',
+    #                 messages.success(request, 'Rewards Redeemed Successfully!', 'alert-success'))
+    # else:
+    #     return redirect('users/user_profile/',
+    #                     messages.error(request, 'You don not have enough points to redeem a reward.', 'alert-danger'))
     return render(request, 'pages/user_profile.html', context_up)
 
 
