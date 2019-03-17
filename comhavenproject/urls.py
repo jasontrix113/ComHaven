@@ -18,13 +18,15 @@ urlpatterns = [
     url(r'^access-control/', views.accesscontrol, name='access-control'),
     url(r'^security-challenges/', views.securitychallenges, name='security-challenges'),
     url(r'^sharedhaven/', views.sharedhaven, name='sharedhaven'),
+    url(r'^sharedhaven/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.sharedhaven_token, name='sharedhaven-token'),
     url(r'^generate-password/', views.generatepassword, name='generate-password'),
     url(r'^test-password/', views.test_password, name='test-password'),
-    url(r'^register-device/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.register_device, name='register-device'),
+    url(r'^register-device/$', views.register_device, name='register-device'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
     # Authentication
     url('user_login/', views.user_login, name='user_login'),
 
-    # Page CRUD URLs #
+    # Page CRUD URLs  #
     url(r'^logins/new_login/$', views.new_login, name='new_login'),
     url(r'^logins/edit/(?P<login_id>\d+)/$', views.login_edit, name='edit'),
     url(r'^logins/delete/(?P<login_id>\d+)/$', views.login_destroy, name='delete'),

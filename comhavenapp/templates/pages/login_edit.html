@@ -1,8 +1,9 @@
-{% extends 'partial/layout.html' %}
+{% extends 'partial/layout2.html' %}
 {% load widget_tweaks %}
+{% load static %}
 {% block title %} Edit Account Logins {% endblock %}
 {% block body %}
-<section>
+<section oncontextmenu="return false">
 	<div class="section-body">
 		<div class="row">
 			<!-- BEGIN  - FORM -->
@@ -33,15 +34,25 @@
 										<label>Username</label>
 									</div><!-- end .form-group -->
 								</div><!-- end .col-sm-6 -->
-								{% for pp in temp %}
+
 								<div class="col-sm-6">
+									{% if login.issue_flag %}
 									<div class="col-sm-9" id="fpassword_field">
 										<div class="form-group floating-label">
-											<input type="password" class="form-control" id="id_login_password" name="login_password3" value="{{ pp.temp_pword }}" required="False">
+											<input type="password" class="form-control" id="id_login_password" name="login_password3" value="{{ login.login_tp }}" required="False">
 											<!--{{ form.login_password | add_class:'form-control'}}-->
 											<label>Password</label>
 										</div><!-- end .form-group -->
 									</div>
+									{% elif not login.issue_flag  %}
+										<div class="col-sm-9" id="ftpassword_field">
+										<div class="form-group floating-label">
+											<input type="password" readonly class="form-control" id="id_login_password" name="login_password3" value="{{ login.login_tp }}" required="False">
+											<!--{{ form.login_password | add_class:'form-control'}}-->
+											<label>Password</label>
+										</div><!-- end .form-group -->
+									</div>
+									{% endif %}
 									<div class="col-sm-1" id="copyBtn">
 										<i class="fa fa-clipboard" data-toggle="tooltip" title="Copy to Clipboard" onclick="copy()" data-placement="top" style="margin-top:30px;"></i>
 									</div>
@@ -52,13 +63,20 @@
 										<a href="{% url 'generate-password' %}"><i class="fa fa-key" style="margin-top:30px;" data-toggle="tooltip" title="Generate a Password"></i></a>
 									</div><!-- end .col-sm-1 -->
 								</div><!-- end .col-sm-6 -->
-								{% endfor %}
-								<div class="col-sm-12">
+								<div class="col-sm-6">
 									<div class="form-group floating-label">
 										{{ form.login_notes | add_class:'form-control' | attr:'rows:4'}}
 										<label>Notes</label>
 									</div><!-- end .form-group -->
-								</div><!-- end .col-sm-12 -->
+								</div><!-- end .col-sm-6 -->
+								<div class="col-sm-6" style="padding: 25px;">
+									<div class="form-group">
+										<label>Password Strength</label><br>
+										<div class="progress">
+											<div id="StrengthProgressBar" class="progress-bar"></div>
+										</div><!-- end .progress -->
+									</div><!-- end .form-group -->
+								</div><!-- end .col-sm-6 -->
 								<div class="col-md-12">
 									<hr><!-- !line-break-->
 									<div class="card-actionbar-row">
@@ -77,6 +95,14 @@
 		</div><!--end .row -->
 	</div><!--end .section-body -->
 </section><!-- end section -->
+<script src="{% static 'js/core/App.js' %}"></script>
+<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+<script src="{% static 'js/core/AppForm.js' %}"></script>
+<script src="{% static 'js/core/pass_con.js' %}"></script>
+<script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>
+<script src="{% static 'js/core/zxcvbn-bootstrap-strength-meter.js' %}"></script>
 <script>
 	function show()
 		{
@@ -100,5 +126,15 @@
 	  document.execCommand("copy");
 
 	}
+</script>
+<script type="text/javascript">
+	$(document).ready(function()
+	{
+		$("#StrengthProgressBar").zxcvbnProgressBar({
+			passwordInput: "#id_login_password",
+			ratings: ["Very Weak", "Weak", "Medium", "Strong", "Very strong"],
+		});
+
+	});
 </script>
 {% endblock %}<!-- endfor -->

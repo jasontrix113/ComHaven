@@ -1,7 +1,10 @@
+
 {% load static %}
 {% load widget_tweaks %}
 <html>
 	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!--zxcvbn password strength library-->
 		<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     	<link type="text/css" rel="stylesheet" href="{% static 'css/materialadmin.css' %}" />
@@ -27,7 +30,7 @@
 			</div><!-- 	end .col-sm-6 -->
 			<div class="col-sm-6">
 				<!-- BEGIN SIGN-UP SECTION -->
-				<section class="section-account">
+				<section class="section-account" id="registerform">
 					<div class="card contain-sm style-transparent mt-0" style="max-width: 450px; height: auto;">
 						<br><!-- !break -->
 						<div class="card-body">
@@ -36,6 +39,14 @@
 									<h2 class="text-bold text-center text-primary">Create an account</h2>
 									<br><!-- !break -->
 									<form class="form floating-label" action="{% url 'register' %}" accept-charset="utf-8" method="post">
+									{% if messages %}
+										{% for message in messages %}
+											<p {% if message.tags %} class="alert {{ message.tags }} alert-dismissible text-center"{% endif %}>
+												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+												{{ message|safe }}
+											</p>
+										{% endfor %}
+									{% endif %}
 										{% csrf_token %}
 										<div class="form-group">
 											{{ form.username|add_class:"form-control" }}
@@ -92,13 +103,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>
 	<script src="{% static 'js/core/zxcvbn-bootstrap-strength-meter.js' %}"></script>
 	<script type="text/javascript">
-			$(document).ready(function()
-			{
-				$("#StrengthProgressBar").zxcvbnProgressBar({
-					passwordInput: "#id_password1",
-					ratings: ["Very Weak", "Weak", "Medium", "Strong", "Very strong"],
-				});
-
+		$(document).ready(function()
+		{
+			$("#StrengthProgressBar").zxcvbnProgressBar({
+				passwordInput: "#id_password1",
+				ratings: ["Very Weak", "Weak", "Medium", "Strong", "Very strong"],
 			});
-		</script>
+
+		});
+	</script>
 </html><!-- end html -->

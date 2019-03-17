@@ -35,6 +35,7 @@ class NewAccountLogin (models.Model):
     login_name = models.CharField(max_length=200)
     login_username = models.CharField(max_length=200)
     login_password = models.CharField(max_length=200, blank=False)
+    login_tp = models.CharField(max_length=200, default='')
     login_notes = models.CharField(max_length=200)
     date_inserted = models.DateTimeField(auto_now=True)
     changed_flag = models.BooleanField(default=False)
@@ -48,7 +49,8 @@ class Tasks(models.Model):
         return str(self.tasks)
 
 class Status(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username", default='')
+    user = models.CharField(max_length=50)
     status = models.CharField(max_length=50)
     def __str__(self):
         return str(self.status)
@@ -72,13 +74,13 @@ class AccessListOfDevices(models.Model):
     def __str__(self):
         return self.acl_user
 
-class TempAccounts(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
-    temp_uname = models.CharField(max_length=30)
-    temp_pword = models.CharField(max_length=200)
-    ch_flag = models.BooleanField(default=False)
-    def __str__(self):
-        return str(self.user)
+# class TempAccounts(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')
+#     temp_uname = models.CharField(max_length=30)
+#     temp_pword = models.CharField(max_length=200)
+#     ch_flag = models.BooleanField(default=False)
+#     def __str__(self):
+#         return str(self.user)
 
 class PasswordGenerator(models.Model):
     user  = models.ForeignKey(User, on_delete=models.CASCADE, to_field='username', default='')

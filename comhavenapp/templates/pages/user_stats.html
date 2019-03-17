@@ -14,7 +14,6 @@
             </p>
         {% endfor %}
     {% endif %}
-
     <div class="section-body" style="padding: 20px;">
         <div class="row">
             <h1 class="text-left mx-auto" id="page_label">&nbsp Detailed User Stats</h1>
@@ -78,10 +77,18 @@
                     {% endfor %}
                 </ul><!-- end ul -->
             </nav><!-- end nav -->
-
             <!-- TABLE -->
+            {% if da_count == 0 %}
+                <div class="col-sm-12 text-center mx-auto" id="empty3" style="color: grey;">
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <span><i class="fa fa-user-shield fa-10x"></i></span>
+                    <br><!-- !break -->
+                    <br><!-- !break -->
+                    <p class="small"> You don't have any issue with your passwords.</p>
+                </div><!-- end .col-sm-12 -->
+            {% else %}
                 <div class="col-sm-12">
-                    {% for account in duplicate_account %}
                     <div class="card">
                         <div class="card-body">
                             <form class="form" action="" method="post">
@@ -94,7 +101,7 @@
                                         </tr><!-- end table-row -->
                                     </thead><!-- end table-head-->
                                     <tbody>
-
+                                    {% for account in duplicate_account %}
                                         <tr>
                                             <td>{{ account.login_name }}</td>
                                             <td>{{ account.date_inserted }}</td>
@@ -118,6 +125,7 @@
                         </div><!-- end .card-body -->
                     </div><!-- end .card -->
                 </div><!-- end .col-sm-12 -->
+            {% endif %}<!-- endif -->
         </div><!--end .row -->
     </div><!--end .section-body -->
 </section><!-- end section -->

@@ -1,7 +1,7 @@
-{% extends 'partial/base.html' %}
-{% load staticfiles %}
-
-<html oncontextmenu="return false">
+{% extends 'partial/base2.html' %}
+{% load static %}
+<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+<html lang="en" oncontextmenu="return false">
 	<head>
 	</head>
 	{% block content %}
@@ -32,7 +32,8 @@
 								<span class="profile-info">
 									{% if user.is_authenticated %}
 										<h4 class="text-lg text-bold text-light">
-											<span><i class="fa fa-user-circle"></i> </span>{{ user.username }} </h4>
+											<span><i class="fa fa-user-circle"></i> </span>
+											<span class="badge badge-notify">{{ request.dups }}</span> {{ user.username }} </h4>
 									{% endif %}
 								</span>
 							</a>
@@ -133,7 +134,7 @@
 						<li class="nav-link">
 							<a href="{% url 'security-challenges' %}">
 								<div class="gui-icon"><i class="fa fa-shield-alt"></i></div>
-								<span class="title">SECURITY CHALLENGES</span><span class="badge badge-notify">{% if sc_count > 0 %}{{ sc_count }}{% endif %}</span>
+								<span class="title">SECURITY CHALLENGES</span>
 							</a>
 						</li><!--end /menu-li -->
 						<!-- END SECURITY-CHALLENGES -->

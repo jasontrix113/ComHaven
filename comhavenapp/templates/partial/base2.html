@@ -2,9 +2,23 @@
 {% load widget_tweaks %}
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--zxcvbn password strength library-->
     <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/materialadmin.css' %}" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/material-design-iconic-font.min.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/custom-css.css' %}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/comhaven_logo3.png' %}">
+    <script src="{% static 'js/core/AppNavigation.js' %}"></script>
+    <script src="{% static 'js/core/AppOffcanvas.js' %}"></script>
+    <script src="{% static 'js/core/AppCard.js' %}"></script>
+    <script src="{% static 'js/core/AppForm.js' %}"></script>
+    <script src="{% static 'js/core/AppVendor.js' %}"></script>
+    <script src="{% static 'js/core/Demo.js' %}"></script>
+    <script src="{% static 'js/core/DemoTableDynamic.js' %}"></script>
     <title>{% block title %} {% endblock %} | COMHAVEN</title>
 </head>
 <body>
@@ -13,4 +27,12 @@
         {% endblock %}
     </main><!-- end main-->
 </body>
+<script src="{% static 'js/core/App.js' %}"></script>
+<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+<script src="{% static 'js/core/AppForm.js' %}"></script>
+<script src="{% static 'js/core/pass_con.js' %}"></script>
+<script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/libs/jquery/jquery-1.11.2.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>
+<script src="{% static 'js/core/zxcvbn-bootstrap-strength-meter.js' %}"></script>
 </html>

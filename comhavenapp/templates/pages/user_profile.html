@@ -119,6 +119,30 @@
         </div><!-- end .modal -->
         <!-- END ACCOUNTS -->
 
+        <!-- MODAL FOR REDEEM CONFIRMATION -->
+        <div class="modal" id="c-modal" style="z-index: 9999;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                   <!--MODAL HEADER -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Redeem Confirmation</h4>
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            Are you sure you want to redeem this reward?
+                        </div><!-- end .modal-body -->
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <a href="{% url 'redeem-rewards' %}">
+                                <button type="submit" class="btn btn-danger">Redeem</button>
+                            </a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div><!-- end .modal-footer -->
+                    </div><!-- end .modal-header -->
+                </div><!-- end .modal-content -->
+            </div><!-- end .modal-dialog -->
+        </div><!-- end .modal -->
+        <!-- END Redeem -->
+
         <!-- MODAL FOR REDEEMING REWARDS -->
         <div class="modal" id="r-modal">
             <div class="modal-dialog">
@@ -153,7 +177,7 @@
                                   <td>{{ rewards.reward }}</td>
                                   <td>{{ rewards.points_required }} pts.</td>
                                   <td>
-                                      <a href="{% url 'redeem-rewards' %}" class="btn btn-secondary" id="redBtn"><i class="fa fa-gift"></i></a>
+                                      <a href="" class="btn btn-secondary" id="redBtn" data-toggle="modal" data-target="#c-modal"><i class="fa fa-gift"></i></a>
                                   </td>
                                   <td><button type="button" class="btn btn-secondary" style="background-color: #2b323a; color: white;" id="buyBtn" data-dismiss="modal"><i class="fa fa-shopping-cart"></i> </button></td>
                                 </tr>

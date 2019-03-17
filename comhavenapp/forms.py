@@ -21,8 +21,7 @@ class RegistrationForm(UserCreationForm):
     # password1 =  PasswordField()
     # password2 =  PasswordConfirmationField(confirm_with='password1')
 
-    class Media:
-        js = ('zxcvbn-async.js')
+
     class Meta:
         model = User
         #fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )

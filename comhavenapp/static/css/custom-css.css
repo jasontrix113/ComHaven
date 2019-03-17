@@ -33,13 +33,25 @@ body{
 .badge-notify{
     background-color:red;
     position:relative;
-    top: -13px;
-    left: -9px;
+    top: 15px;
+    left: 8px;
 }
 .card
 {
     font-family: 'Open Sans', san-serif;
     font-weight: 200;
+}
+#sc_header
+{
+    background: red;
+    margin-top: 15px;
+    color: white;
+    border-bottom-right-radius: 20px;
+    /*box-shadow: 3px 3px 3px #888888;*/
+}
+.sc_points
+{
+    margin-top: 15px;
 }
 #regForm
 {
@@ -66,7 +78,7 @@ body{
     height: 45px;
     box-shadow: 2px 2px 5px #888888;
 }
-#btn-add, #btn-add2, #btn_gen, #update-btn, #optBtn, #chgeBtn{
+#btn-add, #btn-add2, #btn_gen, #update-btn, #optBtn, #chgeBtn, #btn-vus{
     box-shadow: 3px 3px 5px #888888;
 }
 .progress-bar .bg-warning {
@@ -129,6 +141,12 @@ body{
     color: white;
     background-color: #2b323a;
     margin-top: -40px;
+}
+#btn-vus{
+    float: right;
+    color: white;
+    background-color: #2b323a;
+    margin-top: 20px;
 }
 .jumbotron
 {

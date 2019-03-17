@@ -32,7 +32,14 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'comhaven-app.herokuapp.com',
     '127.0.0.1',
-    'comhaven.herokuapp.com'
+    'comhaven.herokuapp.com',
+    '192.168.1.112',
+    '10.0.1.166',
+    '20.0.1.199',
+    '172.16.0.228',
+    '192.168.254.110',
+    '192.168.254.198',
+    '192.168.1.140',
 ]
 
 
