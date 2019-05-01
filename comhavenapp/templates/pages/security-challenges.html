@@ -14,9 +14,19 @@
                     <!--<h3 class="text-right">POINTS: {{ pp.overall_points }}</h3>-->
                 <!--{% endfor %}-->
             <!--</div>&lt;!&ndash; end .col-sm-2 &ndash;&gt;-->
-            <a href="{% url 'user_stats' %}">
-                <button type="submit" class="btn btn-secondary ink-reaction" id="btn-vus"> View User Stats</button>
-            </a>
+            <div class="col-sm-12 text-right" style="margin-top: -50px;">
+                <a href="{% url 'user_stats' %}">
+                    <button type="submit" class="btn btn-secondary ink-reaction" id="btn-vus"> View User Stats</button>
+                </a>
+                <a href="" data-toggle="modal" data-target="#c-modal">
+                    <button class="btn btn-default ink-reaction" id="btn-ac"><i class="fas fa-trophy"></i></button>
+                </a>
+                <a href="" data-toggle="modal" data-target="#h-modal">
+                    <button class="btn btn-default ink-reaction" id="btn-hl"><i class="fas fa-history"></i></button>
+                </a>
+
+
+            </div><!-- end . col-sm-12 -->
             <!--<hr>&lt;!&ndash; !line-break &ndash;&gt;-->
         </div><!-- end .row -->
         <hr>
@@ -61,6 +71,90 @@
                 </div><!-- end .d-inline-->
             </div><!-- end .row -->
         </div><!-- end .row -->
+
+        <!-- MODAL FOR HISTORY LOGS -->
+        <div class="modal" id="h-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                   <!--MODAL HEADER -->
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fa fa-history"></i> History Logs</h4>
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            <table class="table bg-dark table-responsive table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Task</th>
+                                        <th scope="col">Rewards</th>
+                                        <th scope="col">Status</th>
+                                    </tr><!-- end table row-->
+                                </thead><!-- end table head-->
+                                {% for history in ht %}
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ history.date_initiated }}</td>
+                                            <td>{{ history.tasks}}</td>
+                                            <td>{{ history.points }} pts.</td>
+                                            <td>{{ history.status }}</td>
+                                        </tr><!-- end table row-->
+                                    </tbody><!-- end table body -->
+
+                                {% endfor %}
+                            </table>
+                        </div><!-- end .modal-body -->
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div><!-- end .modal-footer -->
+                    </div><!-- end .modal-header -->
+                </div><!-- end .modal-content -->
+            </div><!-- end .modal-dialog -->
+        </div><!-- end .modal -->
+        <!-- END History Logs -->
+
+        <!-- MODAL FOR HISTORY LOGS -->
+        <div class="modal" id="c-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                   <!--MODAL HEADER -->
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fa fa-trophy"></i> Achievements</h4>
+                        <!-- MODAL BODY -->
+                        <div class="modal-body">
+                            <table class="table bg-dark table-responsive table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Task</th>
+                                        <th scope="col">Rewards</th>
+                                        <th scope="col">Status</th>
+                                    </tr><!-- end table row-->
+                                </thead><!-- end table head-->
+                                {% for history in ht %}
+                                    {% if history.status == "Completed" %}
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ history.date_initiated }}</td>
+                                                <td>{{ history.tasks}}</td>
+                                                <td>{{ history.points }} pts.</td>
+                                                <td>{{ history.status }}</td>
+                                            </tr><!-- end table row-->
+                                        </tbody><!-- end table body -->
+                                    {% endif %}
+                                {% endfor %}
+                            </table>
+                        </div><!-- end .modal-body -->
+                        <!-- MODAL FOOTER -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div><!-- end .modal-footer -->
+                    </div><!-- end .modal-header -->
+                </div><!-- end .modal-content -->
+            </div><!-- end .modal-dialog -->
+        </div><!-- end .modal -->
+        <!-- END History Logs -->
+
     </div><!--end .section-body -->
 </section><!-- end section -->
 {% endblock %}

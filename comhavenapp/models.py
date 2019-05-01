@@ -61,10 +61,18 @@ class SecurityChallenges(models.Model):
     points = models.IntegerField(default=0)
     date_completed = models.DateTimeField(auto_now_add=True)
     date_initiated = models.DateTimeField(auto_now_add=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, default='')
+    status = models.CharField(max_length=255, default="Unfinished")
     def __str__(self):
         return str(self.user)
-
+class HistoryLogs(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='', to_field='username')
+    tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, default='', to_field='tasks')
+    points = models.IntegerField(default=0)
+    date_completed = models.DateTimeField(auto_now_add=True)
+    date_initiated = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=255, default="Unfinished")
+    def __str__(self):
+        return str(self.user)
 class AccessListOfDevices(models.Model):
     acl_user = models.CharField(max_length=30)
     device_name = models.CharField(max_length=30, default='Windows-PC')

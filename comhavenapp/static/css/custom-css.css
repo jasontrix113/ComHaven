@@ -78,7 +78,7 @@ body{
     height: 45px;
     box-shadow: 2px 2px 5px #888888;
 }
-#btn-add, #btn-add2, #btn_gen, #update-btn, #optBtn, #chgeBtn, #btn-vus{
+#btn-add, #btn-add2, #btn_gen, #update-btn, #optBtn, #chgeBtn, #btn-vus, #btn-hl, #btn-ac{
     box-shadow: 3px 3px 5px #888888;
 }
 .progress-bar .bg-warning {
@@ -143,10 +143,14 @@ body{
     margin-top: -40px;
 }
 #btn-vus{
-    float: right;
     color: white;
     background-color: #2b323a;
-    margin-top: 20px;
+
+}
+#btn-hl, #btn-ac{
+    color: white;
+    background-color: #2b323a;
+    height: 37px;
 }
 .jumbotron
 {

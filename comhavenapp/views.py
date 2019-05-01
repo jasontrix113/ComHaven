@@ -10,7 +10,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
 
-from .models import NewAccountLogin, UserProfile, AccessListOfDevices, ExpressLoginsSites, Status, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, PerformedTasks, WeakPasswords, Rewards, CompromisedPasswords, OldPasswords, DuplicatePasswords
+from .models import NewAccountLogin, UserProfile, AccessListOfDevices, ExpressLoginsSites, Status, HistoryLogs, SecurityChallenges, PasswordGenerator, User_Stats, Tasks, PerformedTasks, WeakPasswords, Rewards, CompromisedPasswords, OldPasswords, DuplicatePasswords
 from .forms import NewAccountLoginForm, SharedHavenForm
 from django.contrib import messages
 import os, string, random, hashlib, cpuinfo, json, uuid
@@ -263,43 +263,45 @@ def user_login(request):
         if user:
             # Is the account active? It could have been disabled.
             if user.is_active:
-                # if request.user_agent.is_pc == True:
-                #     path = os.getenv('LOCALAPPDATA')
-                #     filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-                #     directory = os.path.dirname(filename)
-                #     path_exist = directory
-                #     form = AccessListOfDevices.objects.all()
-                #     if os.path.exists(path_exist):
-                #         login(request, user)
-                #         return redirect('home')
-                #     else:
-                #
-                #         # the application will send an email confirming that the user wants to register a new device
-                #         user_email = User.objects.filter(username=username).values_list('email', flat=True).first()
-                #         subject = 'Register a New Device'
-                #         from_email = 'comhaven.test.mail@gmail.com'
-                #         to_email = [from_email, user_email]
-                #
-                #         # Generate a random token
-                #
-                #         html_message = render_to_string('pages/register_device_email_template.html')
-                #         plain_message = strip_tags(html_message)
-                #         try:
-                #             send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
-                #                       html_message=html_message)
-                #             # return redirect('/sharedhaven',
-                #             #                 messages.success(request, 'Credential is shared', 'alert-success'))
-                #         except:
-                #              print('failed')
-                #
-                #         return redirect('/accounts/login', messages.error(request, 'Cannot find access ID.' + "<br>" + 'Please check your email address.', 'alert-danger'))
+                # ACTUAL RUN TEST
+                if request.user_agent.is_pc == True:
+                    path = os.getenv('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    form = AccessListOfDevices.objects.all()
+                    if os.path.exists(path_exist):
+                        login(request, user)
+                        return redirect('home')
+                    else:
+
+                        # the application will send an email confirming that the user wants to register a new device
+                        user_email = User.objects.filter(username=username).values_list('email', flat=True).first()
+                        subject = 'Register a New Device'
+                        from_email = 'comhaven.test.mail@gmail.com'
+                        to_email = [from_email, user_email]
+
+                        # Generate a random token
+
+                        html_message = render_to_string('pages/register_device_email_template.html')
+                        plain_message = strip_tags(html_message)
+                        try:
+                            send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
+                                      html_message=html_message)
+                            # return redirect('/sharedhaven',
+                            #                 messages.success(request, 'Credential is shared', 'alert-success'))
+                        except:
+                             print('failed')
+
+                        return redirect('/accounts/login', messages.error(request, 'Cannot find access ID.' + "<br>" + 'Please check your email address.', 'alert-danger'))
 
                 if request.user_agent.is_mobile == True:
                     login(request, user)
                     return redirect('home')
-                elif request.user_agent.is_pc == True:
-                    login(request, user)
-                    return redirect('home')
+                # # FOR HEROKU TEST #
+                # elif request.user_agent.is_pc == True:
+                #     login(request, user)
+                #     return redirect('home')
         else:
             return redirect('/accounts/login', messages.error(request, 'username or password is incorrect.', 'alert-danger'))
     else:
@@ -329,180 +331,180 @@ def register(request):
                 return redirect('/accounts/register',
                             messages.error(request, 'Password must be at least 8 characters', 'alert-danger'))
         if form.is_valid():
-            # FOR HEROKU TEST #
-            if request.user_agent.is_pc == True:
-                user = request.POST['username']
-                directory = r"C:\Users\%user%\AppData\Local\AccessID"
-                device_model = request.user_agent.device
-                # device_platform = platform.system
-
-                AccessListOfDevices.objects.create(
-                    acl_user=user,
-                    device_name='Android',
-                    device_model='Android',
-                    access_id_path=directory,
-                    device_platform='Android'
-                )
-                User_Stats.objects.create(
-                    user=user,
-                    overall_points=0,
-                    count=10
-                )
-                # email verification upon registration
-                from_email = 'comhaven.test.mail@gmail.com'
-                to_email = [from_email, email]
-
-                user = form.save(commit=False)
-                user.is_active = False
-                user.save()
-                current_site = get_current_site(request)
-                subject = 'Activate your ComHaven Account'
-
-                html_message = render_to_string(
-                    'registration/activate_acc_email.html', {
-                        'user': user,
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                        'token': account_activation_token.make_token(user)
-
-                    }
-                )
-                plain_message = strip_tags(html_message)
-                try:
-                    send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
-                              html_message=html_message)
-                    # return redirect('/sharedhaven',
-                    #                 messages.success(request, 'Credential is shared', 'alert-success'))
-                except:
-                    print('failed')
-
-                return redirect('/accounts/login',
-                                messages.success(request, 'Account Verification Sent. Check your email.',
-                                                 'alert-success'))
+            # # FOR HEROKU TEST #
             # if request.user_agent.is_pc == True:
-            #     filename = os.path.expandvars(r"C:")
-            #     if os.path.exists(filename): # checks if access id already exists
-            #         path = os.getenv('LOCALAPPDATA')
-            #         filename = os.path.join(path, r"AccessID\cpuinfo.bin")
-            #         directory = os.path.dirname(filename)
-            #         path_exist = directory
-            #         if os.path.exists(path_exist):
-            #             # form.save()
-            #             user = request.POST['username']
-            #             User_Stats.objects.create(
-            #                 user=user,
-            #                 overall_points=0,
-            #                 count = 10
-            #             )
-            #             # email verification upon registration
-            #             from_email = 'comhaven.test.mail@gmail.com'
-            #             to_email = [from_email, email]
+            #     user = request.POST['username']
+            #     directory = r"C:\Users\%user%\AppData\Local\AccessID"
+            #     device_model = request.user_agent.device
+            #     # device_platform = platform.system
             #
-            #             user = form.save(commit=False)
-            #             user.is_active = False
-            #             user.save()
-            #             current_site = get_current_site(request)
-            #             subject = 'Activate your ComHaven Account'
+            #     AccessListOfDevices.objects.create(
+            #         acl_user=user,
+            #         device_name='Android',
+            #         device_model='Android',
+            #         access_id_path=directory,
+            #         device_platform='Android'
+            #     )
+            #     User_Stats.objects.create(
+            #         user=user,
+            #         overall_points=0,
+            #         count=10
+            #     )
+            #     # email verification upon registration
+            #     from_email = 'comhaven.test.mail@gmail.com'
+            #     to_email = [from_email, email]
             #
-            #             html_message = render_to_string(
-            #                 'registration/activate_acc_email.html', {
-            #                     'user': user,
-            #                     'domain': current_site.domain,
-            #                     'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-            #                     'token': account_activation_token.make_token(user)
+            #     user = form.save(commit=False)
+            #     user.is_active = False
+            #     user.save()
+            #     current_site = get_current_site(request)
+            #     subject = 'Activate your ComHaven Account'
             #
-            #                 }
-            #             )
-            #             plain_message = strip_tags(html_message)
-            #             try:
-            #                 send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
-            #                           html_message=html_message)
-            #                 # return redirect('/sharedhaven',
-            #                 #                 messages.success(request, 'Credential is shared', 'alert-success'))
-            #             except:
-            #                 print('failed')
+            #     html_message = render_to_string(
+            #         'registration/activate_acc_email.html', {
+            #             'user': user,
+            #             'domain': current_site.domain,
+            #             'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+            #             'token': account_activation_token.make_token(user)
             #
-            #             return redirect('/accounts/login',
-            #                     messages.success(request, 'Account Verification Sent. Check your email.', 'alert-success'))
-            #         else:
-            #             # email verification upon registration
-            #             user_email = User.objects.filter(username=username).values_list('email', flat=True).first()
-            #             from_email = 'comhaven.test.mail@gmail.com'
-            #             to_email = [from_email, user_email]
+            #         }
+            #     )
+            #     plain_message = strip_tags(html_message)
+            #     try:
+            #         send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
+            #                   html_message=html_message)
+            #         # return redirect('/sharedhaven',
+            #         #                 messages.success(request, 'Credential is shared', 'alert-success'))
+            #     except:
+            #         print('failed')
             #
-            #             user = form.save(commit=False)
-            #             user.is_active = False
-            #             user.save()
-            #             current_site = get_current_site(request)
-            #             subject = 'Activate your ComHaven Account'
-            #
-            #             html_message = render_to_string(
-            #                 'registration/activate_acc_email.html',{
-            #                  'user': user,
-            #                  'domain': current_site.domain,
-            #                  'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-            #                  'token': account_activation_token.make_token(user)
-            #
-            #                 }
-            #             )
-            #             plain_message = strip_tags(html_message)
-            #             try:
-            #                 send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
-            #                           html_message=html_message)
-            #                 # return redirect('/sharedhaven',
-            #                 #                 messages.success(request, 'Credential is shared', 'alert-success'))
-            #             except:
-            #                 print('failed')
-            #
-            #
-            #             os.mkdir(directory)
-            #             with open(filename, "w") as f:
-            #                 info = cpuinfo.get_cpu_info()
-            #                 CPUINFO = {'CPUINFO': info}
-            #                 f.write(json.dumps(CPUINFO))
-            #                 if request.method == 'POST':
-            #                     user = request.POST['username']
-            #                     device_model = request.user_agent.device
-            #                     device_platform = platform.system()
-            #                     device_name = os.name
-            #                     print(device_model)
-            #                     # f.save()
-            #                     # form.save()
-            #                     print("Success")
-            #                     AccessListOfDevices.objects.create(
-            #                         acl_user = user,
-            #                         device_name = 'Windows-PC',
-            #                         device_model=device_model,
-            #                         access_id_path=directory,
-            #                         device_platform = 'Windows 10'
-            #                     )
-            #                     User_Stats.objects.create(
-            #                         user=user,
-            #                         overall_points=0,
-            #                         count = 10
-            #                     )
-            #                     return redirect('/accounts/login', messages.success(request, 'Account Verification Sent. Check your email.', 'alert-success'))
-                # else:
-                #     form.save()
-                #     user = request.POST['username']
-                #     directory = 'path'
-                #     device_model = request.user_agent.device
-                #     device_name = os.uname()
-                #     device_platform = platform.system
-                #     AccessListOfDevices.objects.create(
-                #         acl_user=user,
-                #         device_name = 'Windows-PC',
-                #         device_model=device_model,
-                #         access_id_path=directory,
-                #         device_platform='Windows 10'
-                #     )
-                #     User_Stats.objects.create(
-                #         user=user,
-                #         overall_points=0,
-                #         count = 10
-                #     )
-                #     return redirect('/accounts/login',
-                #                     messages.success(request, 'Account created successfully.', 'alert-success'))
+            #     return redirect('/accounts/login',
+            #                     messages.success(request, 'Account Verification Sent. Check your email.',
+            #                                      'alert-success'))
+            # ACTUAL LOCAL APP
+            if request.user_agent.is_pc == True:
+                filename = os.path.expandvars(r"C:")
+                if os.path.exists(filename): # checks if access id already exists
+                    path = os.getenv('LOCALAPPDATA')
+                    filename = os.path.join(path, r"AccessID\cpuinfo.bin")
+                    directory = os.path.dirname(filename)
+                    path_exist = directory
+                    if os.path.exists(path_exist):
+                        # form.save()
+                        user = request.POST['username']
+                        User_Stats.objects.create(
+                            user=user,
+                            overall_points=0,
+                            count = 10
+                        )
+                        # email verification upon registration
+                        from_email = 'comhaven.test.mail@gmail.com'
+                        to_email = [from_email, email]
+
+                        user = form.save(commit=False)
+                        user.is_active = False
+                        user.save()
+                        current_site = get_current_site(request)
+                        subject = 'Activate your ComHaven Account'
+
+                        html_message = render_to_string(
+                            'registration/activate_acc_email.html', {
+                                'user': user,
+                                'domain': current_site.domain,
+                                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                                'token': account_activation_token.make_token(user)
+
+                            }
+                        )
+                        plain_message = strip_tags(html_message)
+                        try:
+                            send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
+                                      html_message=html_message)
+
+                        except:
+                            print('failed')
+
+                        return redirect('/accounts/login',
+                                messages.success(request, 'Account Verification Sent. Check your email.', 'alert-success'))
+                    else:
+                        # email verification upon registration
+                        user_email = User.objects.filter(username=username).values_list('email', flat=True).first()
+                        from_email = 'comhaven.test.mail@gmail.com'
+                        to_email = [from_email, user_email]
+
+                        user = form.save(commit=False)
+                        user.is_active = False
+                        user.save()
+                        current_site = get_current_site(request)
+                        subject = 'Activate your ComHaven Account'
+
+                        html_message = render_to_string(
+                            'registration/activate_acc_email.html',{
+                             'user': user,
+                             'domain': current_site.domain,
+                             'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                             'token': account_activation_token.make_token(user)
+
+                            }
+                        )
+                        plain_message = strip_tags(html_message)
+                        try:
+                            send_mail(subject, plain_message, from_email, to_email, fail_silently=False,
+                                      html_message=html_message)
+                            # return redirect('/sharedhaven',
+                            #                 messages.success(request, 'Credential is shared', 'alert-success'))
+                        except:
+                            print('failed')
+
+
+                        os.mkdir(directory)
+                        with open(filename, "w") as f:
+                            info = cpuinfo.get_cpu_info()
+                            CPUINFO = {'CPUINFO': info}
+                            f.write(json.dumps(CPUINFO))
+                            if request.method == 'POST':
+                                user = request.POST['username']
+                                device_model = request.user_agent.device
+                                device_platform = platform.system()
+                                device_name = os.name
+                                print(device_model)
+                                # f.save()
+                                # form.save()
+                                print("Success")
+                                AccessListOfDevices.objects.create(
+                                    acl_user = user,
+                                    device_name = 'Windows-PC',
+                                    device_model=device_model,
+                                    access_id_path=directory,
+                                    device_platform = 'Windows 10'
+                                )
+                                User_Stats.objects.create(
+                                    user=user,
+                                    overall_points=0,
+                                    count = 10
+                                )
+                                return redirect('/accounts/login', messages.success(request, 'Account Verification Sent. Check your email.', 'alert-success'))
+                else:
+                    form.save()
+                    user = request.POST['username']
+                    directory = 'path'
+                    device_model = request.user_agent.device
+                    device_name = os.uname()
+                    device_platform = platform.system
+                    AccessListOfDevices.objects.create(
+                        acl_user=user,
+                        device_name = 'Windows-PC',
+                        device_model=device_model,
+                        access_id_path=directory,
+                        device_platform='Windows 10'
+                    )
+                    User_Stats.objects.create(
+                        user=user,
+                        overall_points=0,
+                        count = 10
+                    )
+                    return redirect('/accounts/login',
+                                    messages.success(request, 'Account created successfully.', 'alert-success'))
             elif request.user_agent.is_mobile == True:
                  form.save()
                  user = request.POST['username']
@@ -610,8 +612,9 @@ def securitychallenges(request):
     # create context for instances
     sc_count = SecurityChallenges.objects.filter(user=request.user).count()
     sc = SecurityChallenges.objects.filter(user=request.user)
+    ht = HistoryLogs.objects.filter(user=request.user)
     us = User_Stats.objects.filter(user=request.user)
-    context_us_sc = {'sc': sc, 'us': us, 'sc_count': sc_count}
+    context_us_sc = {'sc': sc, 'us': us, 'ht':ht, 'sc_count': sc_count}
 
     ##########################OLD PASSWORDS ############################
     login_user = request.user
@@ -866,21 +869,26 @@ def new_login(request):
                     # cnt = DuplicatePasswords.objects.filter(user=request.user).count()
 
                     # store the accounts with duplicate
-                    if cnt_dups > 0 and not DuplicatePasswords.objects.exists():
-                        for id in record:
-                            stored_dup_acc = DuplicatePasswords.objects.create(
-                                user=user,
-                                account_id=id.id
-                            )
-                            nl = NewAccountLogin.objects.filter(login_user=user).get(id=id.id)
-                            nl.issue_flag = True
-                            nl.save()
+                    if cnt_dups > 0 or not DuplicatePasswords.objects.exists():
+                        try:
+                            for id in record:
+                                stored_dup_acc = DuplicatePasswords.objects.create(
+                                    user=user,
+                                    account_id=id.id
+                                )
+                                nl = NewAccountLogin.objects.filter(login_user=user).get(id=id.id)
+                                nl.issue_flag = True
+                                nl.save()
+                        except:
+                            print('a')
                     else:
-                        for id in dups_record:
-                            nl = NewAccountLogin.objects.filter(login_user=user).get(id=id.id)
-                            nl.issue_flag = True
-                            nl.save()
-
+                        try:
+                            for id in dups_record:
+                                nl = NewAccountLogin.objects.filter(login_user=user).get(id=id.id)
+                                nl.issue_flag = True
+                                nl.save()
+                        except:
+                            print('a')
                     ############################ WEAK PASSWORD ######################################
                     try:
                         tp_init = NewAccountLogin.objects.filter(login_user=request.user)
@@ -940,6 +948,14 @@ def new_login(request):
                                 date_initiated='',
                                 status=status
                             )
+                            HistoryLogs.objects.create(
+                                user=user,
+                                tasks=tasks,
+                                points=4,
+                                date_completed='',
+                                date_initiated='',
+                                status=status
+                            )
                             update_status = NewAccountLogin.objects.filter(login_user=request.user).all()
                             for x in update_status:
                                 x.issue_flag=True
@@ -947,6 +963,14 @@ def new_login(request):
                                 print("dadada")
                         elif dups_id == record and not count_sc == 0:
                             SecurityChallenges.objects.create(
+                                user=user,
+                                tasks=tasks,
+                                points=4,
+                                date_completed='',
+                                date_initiated='',
+                                status=status
+                            )
+                            HistoryLogs.objects.create(
                                 user=user,
                                 tasks=tasks,
                                 points=4,
@@ -1036,7 +1060,7 @@ def login_edit(request, login_id):
             nl_acc = NewAccountLogin.objects.filter(login_user=user).all()
 
             for d in nl_acc:
-                if d.issue_flag == True and d.changed_flag == True and not dups:
+                if d.issue_flag == True and d.changed_flag == False and not dups:
                     d.issue_flag = False
                     d.save()
                     print('Problem Solved!!!')
@@ -1050,9 +1074,9 @@ def login_edit(request, login_id):
                             update_score = User_Stats.objects.get(user=request.user)
                             update_score.overall_points = int(update_score.overall_points) + 4
                             update_score.save()
-                            sc_status = SecurityChallenges.objects.get(user=request.user)
-                            sc_status.status = status2
-                            sc_status.save()
+                            # sc_status = SecurityChallenges.objects.filter(user=request.user)
+                            # sc_status.delete()
+                            print('yey')
                             break
                     except:
                         print('no challenge yet')
