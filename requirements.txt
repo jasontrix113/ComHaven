@@ -35,6 +35,6 @@ chromedriver==2.24.1
 django-access-tokens==0.9.2
 django-request-token==0.9.2
 psycopg2-binary==2.7.7
-PyJWT==1.7.1
+PyJWT==2.4.0
 pytz==2018.9
 sqlparse==0.2.4
